@@ -4,8 +4,7 @@
  */
 
 import React from 'react'
-import {Drawer, MenuItem, RaisedButton} from "material-ui";
-import {MuiThemeProvider} from "material-ui/styles/index";
+import Adminbtn from "../common/admin_btn";
 
 class Manage extends React.Component {
 
@@ -14,21 +13,12 @@ class Manage extends React.Component {
         this.state = {open: false};
     }
 
-    handleToggle = () => this.setState({open: !this.state.open});
+
 
     render() {
         return (
             <div>
-                <MuiThemeProvider>
-                    <RaisedButton
-                        label="Toggle Drawer"
-                        onClick={this.handleToggle}
-                    />
-                    <Drawer open={this.state.open}>
-                        <MenuItem>Menu Item</MenuItem>
-                        <MenuItem>Menu Item 2</MenuItem>
-                    </Drawer>
-                </MuiThemeProvider>
+                <Adminbtn></Adminbtn>
             </div>
         )
     }
