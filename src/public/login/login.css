@@ -1,0 +1,34 @@
+
+
+.form {
+    height: 400px;
+    width: 300px;
+    border: 1px solid #888888;
+    border-radius: 10px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    position: absolute;
+    margin: auto;
+}
+
+.btn_login{
+    margin: 20px auto;
+}
+
+.img_login{
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    border: 1px solid #000000;
+    margin: auto;
+}
+
+.a_login{
+    font-size: 12px;
+    margin-left: 50px;
+    text-decoration: none;
+    color: #888888;
+}
