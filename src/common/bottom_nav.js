@@ -10,6 +10,8 @@ import {MuiThemeProvider} from "material-ui/styles/index";
 import './css/bottom_nav.css'
 import 'react-bootstrap'
 import Adminbtn from "./admin_btn";
+import UserPage from "../public/admin/userPage";
+import ManagePage from "../public/admin/managePage";
 
 class BottomNav extends React.Component {
     constructor(props) {
@@ -41,11 +43,15 @@ class BottomNav extends React.Component {
     }
 
     userPage(){
-        return(<div>1111</div>)
+        return(
+            <UserPage />
+        )
     }
 
     managementPage(){
-        return(<div>222</div>)
+        return(
+            <ManagePage />
+        )
     }
 
 

@@ -35,7 +35,7 @@ class Adminbtn extends React.Component {
                         openSecondary={true}
                         onRequestChange={(open) => this.setState({open})}
                     >
-                        <MenuItem>退出登录</MenuItem>
+                        <MenuItem>修改个人信息</MenuItem>
                         <Link to={'/'} style={{'textDecoration':'none'}}><MenuItem onClick={this.reLogin()}>重新登录</MenuItem></Link>
                     </Drawer>
                 </MuiThemeProvider>
