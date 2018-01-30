@@ -19,8 +19,7 @@ class Manage extends React.Component {
     render() {
         return (
             <div>
-                <Adminbtn></Adminbtn>
-                <BottomNav></BottomNav>
+                <BottomNav/>
             </div>
         )
     }

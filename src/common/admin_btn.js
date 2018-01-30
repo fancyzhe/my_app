@@ -9,6 +9,8 @@ import React from 'react'
 import {Drawer, MenuItem, RaisedButton} from "material-ui";
 import {MuiThemeProvider} from "material-ui/styles/index";
 import {Link} from "react-router-dom";
+import './css/admin_btn.css'
+import {Label} from "react-bootstrap";
 
 class Adminbtn extends React.Component {
 
@@ -28,7 +30,7 @@ class Adminbtn extends React.Component {
         return (
             <div>
                 <MuiThemeProvider>
-                    <RaisedButton onClick={this.handleToggle} label="系统操作"/>
+                    <Label onClick={this.handleToggle}>系统操作</Label>
                     <Drawer
                         open={this.state.open}
                         width={100}

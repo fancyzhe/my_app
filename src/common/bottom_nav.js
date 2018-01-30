@@ -6,14 +6,10 @@
 import React from "react";
 import {FontIcon, Paper} from 'material-ui';
 import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation';
-import IconLocationOn from 'material-ui/svg-icons/communication/location-on';
 import {MuiThemeProvider} from "material-ui/styles/index";
 import './css/bottom_nav.css'
-
-
-const recentsIcon = <FontIcon className="material-icons">用户操作</FontIcon>;
-const favoritesIcon = <FontIcon className="material-icons">favorite</FontIcon>;
-const nearbyIcon = <IconLocationOn/>;
+import 'react-bootstrap'
+import Adminbtn from "./admin_btn";
 
 class BottomNav extends React.Component {
     constructor(props) {
@@ -25,7 +21,17 @@ class BottomNav extends React.Component {
 
     select = (index) => this.setState({selectedIndex: index});
 
+    adminBtn(){
+        console.log(1);
+        return(<Adminbtn />)
+    }
+
     render() {
+
+        const recentsIcon = <FontIcon className="material-icons">用户操作</FontIcon>;
+        const favoritesIcon = <FontIcon className="material-icons">favorite</FontIcon>;
+        const nearbyIcon = <FontIcon className="material-icons">系统操作</FontIcon>;
+
         return (
             <MuiThemeProvider>
                 <Paper zDepth={1} className="nav_bottom">
@@ -41,9 +47,12 @@ class BottomNav extends React.Component {
                             onClick={() => this.select(1)}
                         />
                         <BottomNavigationItem
-                            label="Nearby"
+                            label="setting"
                             icon={nearbyIcon}
-                            onClick={() => this.select(2)}
+                            onClick={() => {
+                                this.select(2);
+                                this.adminBtn()
+                            }}
                         />
                     </BottomNavigation>
                 </Paper>
