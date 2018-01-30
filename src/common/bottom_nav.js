@@ -21,15 +21,38 @@ class BottomNav extends React.Component {
 
     select = (index) => this.setState({selectedIndex: index});
 
-    adminBtn(){
-        console.log(1);
-        return(<Adminbtn />)
+    adminBtn() {
+        return (
+            <Adminbtn/>
+        )
     }
+
+    adminPage() {
+        const select = this.state.selectedIndex;
+        return (
+           <div>
+               {
+                    select === 0 ? this.userPage()
+                                 : select === 1 ? this.managementPage()
+                                                : this.adminBtn()
+               }
+           </div>
+        )
+    }
+
+    userPage(){
+        return(<div>1111</div>)
+    }
+
+    managementPage(){
+        return(<div>222</div>)
+    }
+
 
     render() {
 
-        const recentsIcon = <FontIcon className="material-icons">用户操作</FontIcon>;
-        const favoritesIcon = <FontIcon className="material-icons">favorite</FontIcon>;
+        const recentsIcon = <FontIcon className="material-icons">居民信息</FontIcon>;
+        const favoritesIcon = <FontIcon className="material-icons">水电费管理</FontIcon>;
         const nearbyIcon = <FontIcon className="material-icons">系统操作</FontIcon>;
 
         return (
@@ -39,23 +62,29 @@ class BottomNav extends React.Component {
                         <BottomNavigationItem
                             label="user"
                             icon={recentsIcon}
-                            onClick={() => this.select(0)}
+                            onClick={() => {
+                                this.select(0);
+                            }}
                         />
                         <BottomNavigationItem
                             label="Favorites"
                             icon={favoritesIcon}
-                            onClick={() => this.select(1)}
+                            onClick={() => {
+                                this.select(1)
+                            }}
                         />
                         <BottomNavigationItem
                             label="setting"
                             icon={nearbyIcon}
                             onClick={() => {
                                 this.select(2);
-                                this.adminBtn()
                             }}
                         />
                     </BottomNavigation>
                 </Paper>
+                {
+                    this.adminPage()
+                }
             </MuiThemeProvider>
         )
     }

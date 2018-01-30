@@ -10,7 +10,7 @@ import {setTitle} from "./common/utils";
 ReactDOM.render((
         <BrowserRouter>
             <div>
-                <Route exact path = '/' component = {App} onEnter={setTitle('主页')}/>
+                <Route exact path = '/' component = {App} onEnter={setTitle('登陆')}/>
                 <Route  path = '/manage' component = {Manage}  onEnter={setTitle('信息')}/>
             </div>
         </BrowserRouter>
