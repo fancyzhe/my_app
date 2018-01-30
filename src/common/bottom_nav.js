@@ -45,6 +45,7 @@ class BottomNav extends React.Component {
                             label="Favorites"
                             icon={favoritesIcon}
                             onClick={() => this.select(1)}
+                            to={'/Manage'}
                         />
                         <BottomNavigationItem
                             label="setting"

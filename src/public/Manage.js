@@ -4,7 +4,6 @@
  */
 
 import React from 'react'
-import Adminbtn from "../common/admin_btn";
 import BottomNav from "../common/bottom_nav";
 
 class Manage extends React.Component {
