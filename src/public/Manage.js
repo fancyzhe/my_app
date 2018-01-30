@@ -5,6 +5,7 @@
 
 import React from 'react'
 import Adminbtn from "../common/admin_btn";
+import BottomNav from "../common/bottom_nav";
 
 class Manage extends React.Component {
 
@@ -19,6 +20,7 @@ class Manage extends React.Component {
         return (
             <div>
                 <Adminbtn></Adminbtn>
+                <BottomNav></BottomNav>
             </div>
         )
     }
