@@ -4,48 +4,81 @@
  */
 
 import React from "react";
-import {FontIcon, Paper} from 'material-ui';
+import {Badge, Drawer, FontIcon, IconButton, MenuItem, Paper} from 'material-ui';
 import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation';
 import {MuiThemeProvider} from "material-ui/styles/index";
 import './css/bottom_nav.css'
 import 'react-bootstrap'
-import Adminbtn from "./admin_btn";
+import UserPage from "../public/admin/userPage";
+import ManagePage from "../public/admin/managePage";
+import {Link} from "react-router-dom";
+import './css/bottom_nav.css';
+import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
 
 class BottomNav extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedIndex: 0
+            selectedIndex: 0,
+            open: false
         }
     }
+
+    reLogin() {
+        //清楚登陆信息的缓存
+
+    }
+
 
     select = (index) => this.setState({selectedIndex: index});
 
     adminBtn() {
+        console.log(this.state.open);
         return (
-            <Adminbtn/>
+            <div className="center">
+                <Paper className="paper" zDepth={5}>
+
+                </Paper>
+                <MuiThemeProvider>
+                    <Drawer
+                        open={this.state.open}
+                        width={150}
+                        docked={false}
+                        openSecondary={true}
+                        onRequestChange={(open) => this.setState({open})}
+                    >
+                        <MenuItem>修改个人信息</MenuItem>
+                        <Link to={'/'} style={{'textDecoration': 'none'}}><MenuItem
+                            onClick={this.reLogin()}>重新登录</MenuItem></Link>
+                    </Drawer>
+                </MuiThemeProvider>
+            </div>
         )
     }
 
     adminPage() {
         const select = this.state.selectedIndex;
         return (
-           <div>
-               {
+            <div>
+                {
                     select === 0 ? this.userPage()
-                                 : select === 1 ? this.managementPage()
-                                                : this.adminBtn()
-               }
-           </div>
+                        : select === 1 ? this.managementPage()
+                        : this.adminBtn()
+                }
+            </div>
         )
     }
 
-    userPage(){
-        return(<div>1111</div>)
+    userPage() {
+        return (
+            <UserPage/>
+        )
     }
 
-    managementPage(){
-        return(<div>222</div>)
+    managementPage() {
+        return (
+            <ManagePage/>
+        )
     }
 
 
@@ -76,8 +109,9 @@ class BottomNav extends React.Component {
                         <BottomNavigationItem
                             label="setting"
                             icon={nearbyIcon}
-                            onClick={() => {
+                            onClick={(open) => {
                                 this.select(2);
+                                this.setState({open})
                             }}
                         />
                     </BottomNavigation>
