@@ -1,2 +1,14 @@
-.nav_bottom{
+.paper{
+    width:  1000px;
+    height: 500px;
+    margin-top: 20px;
+    display: inline-block;
+}
+
+.center{
+    text-align: center;
+}
+
+.tip{
+
 }
