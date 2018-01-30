@@ -10,16 +10,14 @@ import {Drawer, MenuItem, RaisedButton} from "material-ui";
 import {MuiThemeProvider} from "material-ui/styles/index";
 import {Link} from "react-router-dom";
 import './css/admin_btn.css'
-import {Label} from "react-bootstrap";
 
 class Adminbtn extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {open: false};
+        this.state = {open: true};
     }
 
-    handleToggle = () => this.setState({open: !this.state.open});
 
     reLogin(){
         //清楚登陆信息的缓存
@@ -30,7 +28,6 @@ class Adminbtn extends React.Component {
         return (
             <div>
                 <MuiThemeProvider>
-                    <Label onClick={this.handleToggle}>系统操作</Label>
                     <Drawer
                         open={this.state.open}
                         width={100}
