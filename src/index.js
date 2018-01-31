@@ -5,7 +5,8 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import {BrowserRouter, Route} from "react-router-dom";
 import Manage from "./public/Manage";
-import {setTitle} from "./common/utils";
+
+const setTitle = title => ()=> document.title = title;
 
 ReactDOM.render((
         <BrowserRouter>

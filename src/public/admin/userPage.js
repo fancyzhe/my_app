@@ -6,6 +6,7 @@
 import React from "react";
 import {Paper} from "material-ui";
 import './admin.css'
+import MyTable from "../../common/table";
 
     //管理员居民信息管理界面
 
@@ -20,7 +21,7 @@ class UserPage extends React.Component{
         return(
             <div style={{'textAlign':'center'}}>
                 <Paper className="paper" zDepth={5} >
-                    2
+                    <MyTable />
                 </Paper>
             </div>
         )
