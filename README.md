@@ -1,9 +1,8 @@
 **居民水电收费系统。**
 
-react项目文件
+react + material-ui项目文件。下载项目文件后，初始化文件（yarn或者npm i）再启动文件（yarn start或npm start）
 
 xmind文件是整个项目的思维导图
-
 
 命令行中 create-react-app 初始化项目文件
 

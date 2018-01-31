@@ -1,12 +1,30 @@
 /*user*/
 
-.paper{
-    width:  1000px;
-    height: 500px;
+.paper {
+    width: 1000px;
+    height: 700px;
     margin-top: 20px;
     display: inline-block;
 }
 
-.table{
+.paper_header {
+}
+
+.paper_header .p_select {
+    display: inline-block;
+    margin: 0 100px;
+}
+
+.paper_header .search_text {
+    display: inline-block;
+    width: 50px;
+    margin: 0 20px;
+}
+
+.paper_header .p_btn {
+    margin-left: 150px;
+}
+
+.table {
     margin: 20px;
 }
