@@ -5,6 +5,7 @@ import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import {BrowserRouter, Route} from "react-router-dom";
 import Manage from "./public/Manage";
+import User from "./public/User";
 
 const setTitle = title => ()=> document.title = title;
 
@@ -13,6 +14,7 @@ ReactDOM.render((
             <div>
                 <Route exact path = '/' component = {App} onEnter={setTitle('登陆')}/>
                 <Route  path = '/manage' component = {Manage}  onEnter={setTitle('信息')}/>
+                <Route  path = '/user' component = {User}  onEnter={setTitle('用户')}/>
             </div>
         </BrowserRouter>
     ),

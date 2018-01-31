@@ -13,7 +13,6 @@ import UserPage from "../public/admin/userPage";
 import ManagePage from "../public/admin/managePage";
 import {Link} from "react-router-dom";
 import './css/bottom_nav.css';
-import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
 
 class BottomNav extends React.Component {
     constructor(props) {
@@ -33,11 +32,10 @@ class BottomNav extends React.Component {
     select = (index) => this.setState({selectedIndex: index});
 
     adminBtn() {
-        console.log(this.state.open);
         return (
             <div className="center">
                 <Paper className="paper" zDepth={5}>
-
+                    <h1>公告</h1>
                 </Paper>
                 <MuiThemeProvider>
                     <Drawer
@@ -48,6 +46,7 @@ class BottomNav extends React.Component {
                         onRequestChange={(open) => this.setState({open})}
                     >
                         <MenuItem>修改个人信息</MenuItem>
+                        <MenuItem>发布公告</MenuItem>
                         <Link to={'/'} style={{'textDecoration': 'none'}}><MenuItem
                             onClick={this.reLogin()}>重新登录</MenuItem></Link>
                     </Drawer>
