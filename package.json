@@ -12,6 +12,7 @@
     "material-ui": "^0.20.0",
     "react": "^16.2.0",
     "react-bootstrap": "^0.32.1",
+    "react-document-title": "^2.0.3",
     "react-dom": "^16.2.0",
     "react-layout": "^1.1.0",
     "react-router": "^4.2.0",

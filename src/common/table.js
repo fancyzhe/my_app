@@ -8,65 +8,62 @@ import React from 'react';
 import {Table} from 'material-ui/Table'
 import {TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from "material-ui/Table/index";
 
-const tableData = [
-    {
-        name: 'John Smith',
-        status: 'Employed',
-    },
-    {
-        name: 'Randal White',
-        status: 'Unemployed',
-    },
-    {
-        name: 'Stephanie Sanders',
-        status: 'Employed',
-    },
-    {
-        name: 'Steve Brown',
-        status: 'Employed',
-    },
-    {
-        name: 'Joyce Whitten',
-        status: 'Employed',
-    },
-    {
-        name: 'Samuel Roberts',
-        status: 'Employed',
-    },
-    {
-        name: 'Adam Moore',
-        status: 'Employed',
-    },
-];
 
-const tableHead = ['id', 'name', 'status'];
+class myTable extends React.Component {
 
+    constructor(props){
+        super(props);
+    }
 
-class Table extends React.Component {
     render() {
-        return (
-            <Table>
 
-                <TableHeader>
+        const {tableHeader,tableData,selectable,height,
+            fixedHeader,fixedFooter,multiSelectable,
+            showRowHover,displayRowCheckbox,className} = this.props;
+
+        return (
+            <Table
+                height={height}
+                selectable={selectable}
+                fixedHeader={fixedHeader}
+                fixedFooter={fixedFooter}
+                multiSelectable={multiSelectable}
+            >
+
+                <TableHeader
+                    displaySelectAll={displayRowCheckbox}
+                >
                     {
-                        _.map(tableHead, item => {
-                            <TableHeaderColumn>
-                                {item}
-                            </TableHeaderColumn>
+                        _.map(tableHeader, item => {
+                            return (
+                                <TableHeaderColumn>
+                                    {
+                                        item
+                                    }
+                                </TableHeaderColumn>
+                            )
                         })
                     }
                 </TableHeader>
-                <TableBody>
+                <TableBody
+                    showRowHover={showRowHover}
+                    displayRowCheckbox={displayRowCheckbox}
+                >
                     {
-                        _.map(tableData, item => {
+                        _.map(tableData, (x,index) => {
                             return (
                                 <TableRow>
                                     {
-                                        _.map(item, (index, x) => <TableRowColumn>
+                                        <TableRowColumn>
+                                            {index}
+                                        </TableRowColumn>
+                                    }
+                                    {
+                                        _.map(x,item=><TableHeaderColumn>
                                             {
-                                                x[index]
+                                                item
                                             }
-                                        </TableRowColumn>)
+                                        </TableHeaderColumn>)
                                     }
                                 </TableRow>
                             )
@@ -79,4 +76,4 @@ class Table extends React.Component {
     }
 }
 
-export default Table
+export default myTable

@@ -1,7 +1,13 @@
 这是范喆居民水电收费系统。
 
+react项目文件
+
+
 命令行中 create-react-app 初始化项目文件
 
+安装修改文档title插件 react-document-title
+
+     npm install --save react-document-title   
 
 代码命名规范：
         common文件夹中存放公共组件或者方法（以下划线的方式命名js）
