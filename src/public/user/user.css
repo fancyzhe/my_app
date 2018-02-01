@@ -1,10 +1,16 @@
-/*user*/
-
-.paper {
-    width: 1000px;
-    height: 800px;
+.paper{
+    width:  1000px;
+    height: 700px;
     margin-top: 20px;
     display: inline-block;
+}
+
+.center{
+    text-align: center;
+}
+
+.tip{
+
 }
 
 .paper_header {
