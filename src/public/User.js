@@ -11,6 +11,7 @@ import {Link} from "react-router-dom";
 import Cost from "./user/cost";
 import History from "./user/history";
 import './user/user.css'
+import Dialog from "../common/dialog";
 
 class User extends React.Component {
 
@@ -18,12 +19,26 @@ class User extends React.Component {
         super(props);
         this.state = {
             selectedIndex: 0,
-            open: false
+            open: false,
+            url: '',
         }
     }
 
+    delCookie() {
+
+
+
+    } //删除登陆信息
+
     reLogin() {
-        //清楚登陆信息的缓存
+        console.log(1);
+
+        return (
+            <Dialog
+                sure={this.delCookie()}
+                text="确定退出？"
+            />
+        )
 
     }
 
@@ -46,8 +61,7 @@ class User extends React.Component {
                     >
                         <MenuItem>修改个人信息</MenuItem>
                         <MenuItem>发布公告</MenuItem>
-                        <Link to={'/'} style={{'textDecoration': 'none'}}><MenuItem
-                            onClick={this.reLogin()}>重新登录</MenuItem></Link>
+                        <MenuItem onClick={this.reLogin()}>重新登录</MenuItem>
                     </Drawer>
                 </MuiThemeProvider>
             </div>
