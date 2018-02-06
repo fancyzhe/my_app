@@ -11,7 +11,7 @@ import {Link} from "react-router-dom";
 import Cost from "./user/cost";
 import History from "./user/history";
 import './user/user.css'
-import Dialog from "../common/dialog";
+import myDialog from "../common/dialog";
 
 class User extends React.Component {
 
@@ -26,15 +26,13 @@ class User extends React.Component {
 
     delCookie() {
 
-
-
+        console.log(1);
     } //删除登陆信息
 
     reLogin() {
-        console.log(1);
 
         return (
-            <Dialog
+            <myDialog
                 sure={this.delCookie()}
                 text="确定退出？"
             />
@@ -61,7 +59,7 @@ class User extends React.Component {
                     >
                         <MenuItem>修改个人信息</MenuItem>
                         <MenuItem>发布公告</MenuItem>
-                        <MenuItem onClick={this.reLogin()}>重新登录</MenuItem>
+                        <MenuItem onClick={this.reLogin.bind(this)}>重新登录</MenuItem>
                     </Drawer>
                 </MuiThemeProvider>
             </div>

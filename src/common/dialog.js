@@ -10,18 +10,21 @@ import FlatButton from 'material-ui/FlatButton';
 
 //警告框
 
-export default class extends Dialog {
+export default class myDialog extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            open: true
+        }
     }
 
-    handleClose=() => {this.setState({open:false})}
+    handleClose=() => {this.setState({open:false})};
 
     render() {
 
         const {text,sure} = this.props;
+        console.log(1);
 
         const actions= [
             <FlatButton
