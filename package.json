@@ -1,6 +1,7 @@
 {
   "name": "my_app",
   "version": "0.1.0",
+  "description": "居民水电收费系统",
   "private": true,
   "dependencies": {
     "babel-core": "^6.26.0",
