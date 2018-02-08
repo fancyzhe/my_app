@@ -7,7 +7,7 @@ import React from "react";
 import {MuiThemeProvider} from "material-ui/styles/index";
 import {Drawer, FontIcon, MenuItem, Paper} from "material-ui";
 import {BottomNavigation, BottomNavigationItem} from "material-ui/BottomNavigation/index";
-import {Link} from "react-router-dom";
+import {Link} from "react-router";
 import Cost from "./user/cost";
 import History from "./user/history";
 import './user/user.css'

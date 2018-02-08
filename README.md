@@ -1,6 +1,6 @@
 **居民水电收费系统。**
 
-react + material-ui项目文件。下载项目文件后，初始化文件（yarn或者npm i）再启动文件（yarn start或npm start）
+MySQL + node + react + material-ui项目文件。下载项目文件后，初始化文件（yarn或者npm i）再启动文件（yarn start或npm start）
 
 xmind文件是整个项目的思维导图
 
@@ -11,9 +11,9 @@ xmind文件是整个项目的思维导图
      npm install --save react-document-title   
      
      
+前端部分：
 
-
-代码命名规范：
+    代码命名规范：
         
         common文件夹中存放公共组件或者方法（以下划线的方式命名js）
               
@@ -28,10 +28,14 @@ xmind文件是整个项目的思维导图
                --| user是用户
 
 
-分支规范：
+    分支规范：
 
        常用分支以 f-xxxx 的格式，修复bug分支为 bg-xxx  的格式
        
        f-login 开发登陆界面分支
        f-user 开发用户界面分支
        f-admin 开发管理员界面分支
+       
+后端部分：
+      
+      开发分支f-dao

@@ -1,6 +1,6 @@
 import React from "react";
 
-import {Link} from "react-router-dom";
+import {Link,browserHistory} from "react-router";
 import {TextField, RaisedButton} from 'material-ui';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import "./login.css"
@@ -19,11 +19,14 @@ class LoginForm extends React.Component {
             pwd:'',
             errorIdText: '',
             errorPwdText: '',
+            status:false
         }
     }
 
     check() {
         const {id, pwd} = this.state;
+        browserHistory .push('/user')
+
     }
 
 
@@ -42,7 +45,7 @@ class LoginForm extends React.Component {
 
     render() {
 
-        const {errorIdText,errorPwdText} = this.state;
+        const {errorIdText,errorPwdText,status} = this.state;
 
         return (
             <div>
@@ -65,17 +68,15 @@ class LoginForm extends React.Component {
                                 errorText={errorPwdText}
                                 onChange={(e,v)=> this.setPwd(e,v)}
                             />
-                            <Link to={'/User'}>
-                                <RaisedButton
+                            <RaisedButton
                                     label="登陆"
                                     primary={true}
                                     className="btn_login"
                                     onClick={this.check.bind(this)}
-                                />
+                            />
+                            <Link to={'/Forget'} className = "a_login">
+                                忘记密码...
                             </Link>
-                                <Link to={'/Forget'} className = "a_login">
-                                    忘记密码...
-                                </Link>
                         </MuiThemeProvider>
                     </form>
                 </div>

@@ -11,7 +11,7 @@ import './css/bottom_nav.css'
 import 'react-bootstrap'
 import UserPage from "../public/admin/userPage";
 import ManagePage from "../public/admin/managePage";
-import {Link} from "react-router-dom";
+import {Link} from "react-router";
 import './css/bottom_nav.css';
 
 class BottomNav extends React.Component {
