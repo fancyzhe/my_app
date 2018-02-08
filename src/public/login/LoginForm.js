@@ -25,7 +25,14 @@ class LoginForm extends React.Component {
 
     check() {
         const {id, pwd} = this.state;
-        browserHistory .push('/user')
+
+        if( id==='1'&&pwd==='1'){
+            browserHistory.push('/user')
+        }else if(id === '2' &&pwd === '2'){
+            browserHistory.push('/manage')
+        } else {
+            alert('密码错误');
+        }
 
     }
 

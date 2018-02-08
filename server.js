@@ -5,7 +5,7 @@
 
 //启动后端服务器node
 
-connet();//连接数据库
+start();//连接数据库
 
 function connet() {
 
@@ -23,6 +23,16 @@ function connet() {
         next();
     });
 
+    app.post('/login_post',function (req,res) {
+       let response = {
+           "id" : req.body.id,
+           "password":req.body.password,
+       };
+       login(req.body.id);
+       res.send('1');
+
+    });
+
     let connection = mysql.createConnection({
         host: 'localhost',
         user: 'root',
@@ -34,4 +44,16 @@ function connet() {
 
     return connection;
 
+}
+
+function start() {
+    connet();
+
+}
+
+function login(id) {
+    let sql = 'select * from user where id='+id;
+    connet().query(sql,function (err,rows,fields) {
+
+    })
 }
