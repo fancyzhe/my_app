@@ -23,11 +23,7 @@ function connet() {
         next();
     });
     app.post('/login_post',function (req,res) {
-        console.log(1);
-        let response = {
-           "id" : req.body.id,
-           "password":req.body.password,
-       };
+
         login();
        res.send('1');
 
@@ -42,6 +38,12 @@ function connet() {
 
     connection.connect(function () {
         console.log("服务器连接成功");
+    });
+    connection.query('select * from login',function (err,result,fields) {
+        if(err){
+            throw err
+        }
+        console.log(result);
     });
 
     return connection;

@@ -57,8 +57,7 @@ class User extends React.Component {
                         openSecondary={true}
                         onRequestChange={(open) => this.setState({open})}
                     >
-                        <MenuItem>修改个人信息</MenuItem>
-                        <MenuItem>发布公告</MenuItem>
+                        <MenuItem>查看个人信息</MenuItem>
                         <MenuItem onClick={this.reLogin.bind(this)}>重新登录</MenuItem>
                     </Drawer>
                 </MuiThemeProvider>
