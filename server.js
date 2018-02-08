@@ -22,13 +22,13 @@ function connet() {
         res.header("X-Powered-By",' 3.2.1');
         next();
     });
-
     app.post('/login_post',function (req,res) {
-       let response = {
+        console.log(1);
+        let response = {
            "id" : req.body.id,
            "password":req.body.password,
        };
-       login(req.body.id);
+        login();
        res.send('1');
 
     });
@@ -40,7 +40,9 @@ function connet() {
         database: 'test',
     });
 
-    connection.connect();
+    connection.connect(function () {
+        console.log("服务器连接成功");
+    });
 
     return connection;
 
@@ -51,9 +53,13 @@ function start() {
 
 }
 
-function login(id) {
-    let sql = 'select * from user where id='+id;
-    connet().query(sql,function (err,rows,fields) {
+function login() {
+    let sql = 'select * from user ';
+    connet().query(sql,function (err,results,fields) {
+        if (err) {
+            throw err;
+        }
 
+        console.log(results);
     })
 }

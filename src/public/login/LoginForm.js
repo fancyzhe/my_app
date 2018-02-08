@@ -1,9 +1,10 @@
 import React from "react";
-
+import R from 'request';
 import {Link,browserHistory} from "react-router";
 import {TextField, RaisedButton} from 'material-ui';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import "./login.css"
+import Sbar from "../../common/Snacbar";
 
 /**
  *
@@ -19,21 +20,36 @@ class LoginForm extends React.Component {
             pwd:'',
             errorIdText: '',
             errorPwdText: '',
-            status:false
+            status:false,
+            pageMsg:false,
         }
     }
 
     check() {
-        const {id, pwd} = this.state;
+        const {id, pwd,status} = this.state;
+        // const getLogin = ({id}) => R.post('/login_form',)
 
-        if( id==='1'&&pwd==='1'){
-            browserHistory.push('/user')
-        }else if(id === '2' &&pwd === '2'){
-            browserHistory.push('/manage')
-        } else {
-            alert('密码错误');
+        pwd.length === 0 ? this.setState({errorPwdText: "密码不能为空"}) : this.setState({errorPwdText: "",status:true});
+        id.length === 0 ? this.setState({errorIdText: "用户名不能为空"}) : this.setState({errorIdText: "",status:true});
+
+        if(status){
+            if( id==='1'&&pwd==='1'){
+                browserHistory.push('/user')
+            }else if(id === '2' &&pwd === '2'){
+                browserHistory.push('/manage')
+            } else {
+                this.setState({
+                    pageMsg:true
+                })
+            }
         }
 
+    }
+
+    msg(){
+        if(this.state.pageMsg){
+            return(<Sbar text='密码错误！'/>)
+        }
     }
 
 
@@ -84,6 +100,9 @@ class LoginForm extends React.Component {
                             <Link to={'/Forget'} className = "a_login">
                                 忘记密码...
                             </Link>
+                            {
+                                this.msg()
+                            }
                         </MuiThemeProvider>
                     </form>
                 </div>
