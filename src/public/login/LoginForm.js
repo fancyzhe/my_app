@@ -5,6 +5,7 @@ import {TextField, RaisedButton, Paper} from 'material-ui';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import "./login.css"
 import Sbar from "../../common/Snacbar";
+import { Local} from "../../common/utils";
 
 /**
  *
@@ -27,7 +28,9 @@ class LoginForm extends React.Component {
 
     check() {
         const {id, pwd, status} = this.state;
-        // const getLogin = ({id}) => R.post('/login_form',)
+        R.post(Local+'/login_post',{id:this.state.id,password:this.state.pwd},function () {
+            console.log("suceess");
+        });
         if (id === '1' && pwd === '1') {
             browserHistory.push('/user')
         } else if (id === '2' && pwd === '2') {

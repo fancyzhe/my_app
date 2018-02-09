@@ -1,5 +1,3 @@
-import {_cleanParams} from "../../../../../web_myproject/p_datav/src/common/utils";
-
 /**
  *
  * @fanz
@@ -24,6 +22,20 @@ const setStateP = function(state) {
 
 const ALL_VALUE = 'ALL_VALUE';
 
+const Local = 'http://127.0.0.1:3001';
+
+const _cleanParams = (params, keys) => {
+
+    for (const key of Object.keys(params)) {
+        if (keys.filter(k => params[key] === k).length) {
+            delete params[key];
+        }
+    }
+
+    return params;
+
+};
+
 const cleanParams = params => _cleanParams(params, [ALL_VALUE, '', null, undefined]);
 
 export {
@@ -31,5 +43,6 @@ export {
     onEnter,
     setStateP,
     ALL_VALUE,
+    Local,
     cleanParams,
 }
