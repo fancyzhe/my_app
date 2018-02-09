@@ -1,5 +1,5 @@
 import React from "react";
-import R from 'request';
+import $ from 'jquery';
 import {Link, browserHistory} from "react-router";
 import {TextField, RaisedButton, Paper} from 'material-ui';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -28,7 +28,7 @@ class LoginForm extends React.Component {
 
     check() {
         const {id, pwd, status} = this.state;
-        R.post(Local+'/login_post',{id:this.state.id,password:this.state.pwd},function () {
+        $.post(Local+'/login_post',{'id':this.state.id,'password':this.state.pwd},function () {
             console.log("suceess");
         });
         if (id === '1' && pwd === '1') {
