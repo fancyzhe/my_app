@@ -31,7 +31,6 @@ class LoginForm extends React.Component {
         const {id, pwd,  errorPwdText, errorIdText} = this.state;
         pwd.length === 0 ? this.setState({errorPwdText: "密码不能为空"}) : this.setState({errorPwdText: "", status: true});
         id.length === 0 ? this.setState({errorIdText: "用户名不能为空"}) : this.setState({errorIdText: "", status: true});
-        console.log(this.state);
         let thiz =this;
         if (errorPwdText === '' && errorIdText === '') {
             $.post(Local + '/login_post', {'id': this.state.id, 'password': this.state.pwd}, function (res, req) {

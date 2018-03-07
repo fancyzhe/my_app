@@ -19,11 +19,11 @@ function connet() {
 
     let app = express();
 
-    app.all('*', function(req, res, next) {
+    app.all('*', function (req, res, next) {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Headers", "X-Requested-With");
-        res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
-        res.header("X-Powered-By",' 3.2.1');
+        res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+        res.header("X-Powered-By", ' 3.2.1');
         res.header("Content-Type", "application/json;charset=utf-8");
         next();
     });
@@ -35,10 +35,10 @@ function connet() {
         database: 'test',
     });
 
-    app.get('/123',(req,res)=>{
-        let sql ='select * from login';
-        connection.query(sql,function (err,results,fields) {
-            if(err)throw err;
+    app.get('/123', (req, res) => {
+        let sql = 'select * from login';
+        connection.query(sql, function (err, results, fields) {
+            if (err) throw err;
             res.json(results);
         });
     });
