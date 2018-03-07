@@ -19,11 +19,12 @@ function connet() {
 
     let app = express();
 
-    app.all('*', function (req, res, next) {
+    app.all('*', function(req, res, next) {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Headers", "X-Requested-With");
-        res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
-        res.header("X-Powered-By", ' 3.2.1');
+        res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+        res.header("X-Powered-By",' 3.2.1');
+        res.header("Content-Type", "application/json;charset=utf-8");
         next();
     });
 
@@ -34,28 +35,33 @@ function connet() {
         database: 'test',
     });
 
-    app.post('/login_post', urlencodedParser, function (req, res) {
-        let response = {
-            "id": req.body.id,
-            "password": req.body.password
-        };
-        let sql = 'select * from user where=' + response.id;
-        let data = [];
-        connection.query(sql, function (err, result, fields) {
-
-            for (let i = 0; i < result.length; i++) {
-                console.log(1);
-                let firstResult = result[i];
-                data.push({
-                    'id': firstResult['id'],
-                    'name': firstResult['name'],
-                    'pwd': firstResult['pwd'],
-                    'admin': firstResult['admin'],
-                });
-            }
-            console.log('data', data);
+    app.get('/123',(req,res)=>{
+        let sql ='select * from login';
+        connection.query(sql,function (err,results,fields) {
+            if(err)throw err;
+            res.json(results);
         });
-        res.send('1');
+    });
+
+    app.post('/login_post', urlencodedParser, function (req, res) {
+        let sql = 'select * from login where id=' + req.body.id;
+        let data = {};
+        connection.query(sql, function (err, result, fields) {
+            if(err)throw err;
+            for (let i = 0; i < result.length; i++) {
+                if(req.body.password === result[0]['pwd']){
+                    data.data={
+                        'admin':result[0]['admin'],
+                    }
+                }else {
+                    data.data=({
+                        'admin':false,
+                    })
+                }
+                res.send(data);
+            }
+        });
+
     });
     app.listen(3001);
 
@@ -89,5 +95,6 @@ function login(id) {
                 'admin': firstResult['admin'],
             });
         }
+        console.log(data);
     });
 }

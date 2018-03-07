@@ -5,7 +5,7 @@ import {TextField, RaisedButton, Paper} from 'material-ui';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import "./login.css"
 import Sbar from "../../common/Snacbar";
-import { Local} from "../../common/utils";
+import {Local} from "../../common/utils";
 
 /**
  *
@@ -19,6 +19,7 @@ class LoginForm extends React.Component {
         this.state = {
             id: '',
             pwd: '',
+            admin: '',
             errorIdText: '',
             errorPwdText: '',
             status: false,
@@ -27,22 +28,27 @@ class LoginForm extends React.Component {
     }
 
     check() {
-        const {id, pwd, status} = this.state;
-        $.post(Local+'/login_post',{'id':this.state.id,'password':this.state.pwd},function () {
-            console.log("suceess");
-        });
-        if (id === '1' && pwd === '1') {
-            browserHistory.push('/user')
-        } else if (id === '2' && pwd === '2') {
-            browserHistory.push('/manage')
-        } else {
-            pwd.length === 0 ? this.setState({errorPwdText: "密码不能为空"}) : this.setState({errorPwdText: "", status: true});
-            id.length === 0 ? this.setState({errorIdText: "用户名不能为空"}) : this.setState({errorIdText: "", status: true});
-            status && this.setState({
-                pageMsg: true
-            })
-        }
+        const {id, pwd,  errorPwdText, errorIdText} = this.state;
+        pwd.length === 0 ? this.setState({errorPwdText: "密码不能为空"}) : this.setState({errorPwdText: "", status: true});
+        id.length === 0 ? this.setState({errorIdText: "用户名不能为空"}) : this.setState({errorIdText: "", status: true});
+        console.log(this.state);
+        let thiz =this;
+        if (errorPwdText === '' && errorIdText === '') {
+            $.post(Local + '/login_post', {'id': this.state.id, 'password': this.state.pwd}, function (res, req) {
+                thiz.setState({admin:res.data.admin})
+            }).then(() => {
+                const{admin}=this.state;
+                if (admin) {
+                    admin === 1 && browserHistory.push('/manage');
+                    admin === 2 && browserHistory.push('/user');
+                } else {
+                    this.setState({
+                        pageMsg: true
+                    });
+                }
+            });
 
+        }
     }
 
     msg() {
@@ -63,6 +69,7 @@ class LoginForm extends React.Component {
     }
 
     componentDidMount() {
+
     }
 
     render() {
@@ -94,7 +101,7 @@ class LoginForm extends React.Component {
                                 label="登陆"
                                 primary={true}
                                 className="btn_login"
-                                onClick={this.check.bind(this)}
+                                onClick={() => this.check()}
                             />
                             <Link to={'/Forget'} className="a_login">
                                 忘记密码...
