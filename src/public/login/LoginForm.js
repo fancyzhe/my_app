@@ -28,15 +28,15 @@ class LoginForm extends React.Component {
     }
 
     check() {
-        const {id, pwd,  errorPwdText, errorIdText} = this.state;
+        const {id, pwd, errorPwdText, errorIdText} = this.state;
         pwd.length === 0 ? this.setState({errorPwdText: "密码不能为空"}) : this.setState({errorPwdText: "", status: true});
         id.length === 0 ? this.setState({errorIdText: "用户名不能为空"}) : this.setState({errorIdText: "", status: true});
-        let thiz =this;
+        let thiz = this;
         if (errorPwdText === '' && errorIdText === '') {
             $.post(Local + '/login_post', {'id': this.state.id, 'password': this.state.pwd}, function (res, req) {
-                thiz.setState({admin:res.data.admin})
+                thiz.setState({admin: res.data.admin})
             }).then(() => {
-                const{admin}=this.state;
+                const {admin} = this.state;
                 if (admin) {
                     admin === 1 && browserHistory.push('/manage');
                     admin === 2 && browserHistory.push('/user');
@@ -80,7 +80,8 @@ class LoginForm extends React.Component {
                 <div className="login">
                     <MuiThemeProvider>
                         <Paper className="form" zDepth={3}>
-                            <div className="img_login"><img/></div>
+                            <div className="img_login"><img src={require('../../img/logo.png')}
+                                                            width="100px" height="100px"/></div>
                             <TextField
                                 hintText="输入你的用户名"
                                 floatingLabelText="用户名"
