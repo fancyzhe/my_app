@@ -21,7 +21,7 @@ class myTable extends React.Component {
         const {
             tableHeader, tableData, selectable, height,
             fixedHeader, fixedFooter, multiSelectable,
-            showRowHover, displayRowCheckbox, className, displaySelectAll
+            showRowHover, displayRowCheckbox, displaySelectAll
         } = this.props;
 
         return (
@@ -58,18 +58,18 @@ class myTable extends React.Component {
                     {
                         _.map(tableData, (x, index) => {
                             return (
-                                <TableRow className="tab_item">
+                                <TableRow>
                                     {
                                         <TableRowColumn className="tab_item">
                                             {index + 1}
                                         </TableRowColumn>
                                     }
                                     {
-                                        _.map(x, item => <TableHeaderColumn>
+                                        _.map(x, item => <TableRowColumn>
                                             {
                                                 item
                                             }
-                                        </TableHeaderColumn>)
+                                        </TableRowColumn>)
                                     }
                                 </TableRow>
                             )
