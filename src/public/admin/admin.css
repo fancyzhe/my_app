@@ -8,11 +8,15 @@
 }
 
 .paper_header {
+    margin-top: 5px;
 }
-
-.paper_header .p_select {
+.paper_header p{
     display: inline-block;
-    margin: 0 100px;
+    margin-left: 20px;
+}
+.paper_header .p_select {
+    margin-left: 5px;
+    display: inline-block;
 }
 
 .paper_header .search_text {
@@ -27,4 +31,13 @@
 
 .table {
     margin: 20px;
+}
+.ml10{
+    margin-left: 10px;
+}
+.mt5{
+    margin-top: 5px;
+}
+.pt10{
+    padding-top: 10px;
 }

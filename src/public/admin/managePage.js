@@ -4,7 +4,8 @@
  */
 
 import * as React from "react";
-import {Paper, TextField} from "material-ui";
+import {Checkbox, IconButton, IconMenu, MenuItem, Paper, TextField, Toggle} from "material-ui";
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import MyTable from "../../common/table";
 import RaisedButton from 'material-ui/RaisedButton';
 import './admin.css'
@@ -65,13 +66,18 @@ class ManagePage extends React.Component{
 
     render(){
         return(
-            <div style={{'textAlign':'center'}}>
-                <Paper className="paper" zDepth={5} >
+            <div style={{textAlign:'center'}}>
+                <Paper className="paper" zDepth={5} style={{textAlign:'left'}}>
                     <div className="paper_header">
-
+                        <p>小区名:</p>
                         <Select
                             className="p_select"
                             data={selectData}
+                        />
+                        <Checkbox
+                            label="是否欠费"
+                            className="p_checkbox"
+                            style={{width:'130px',display:'inline-block',position:'relative',top:'10px'}}
                         />
 
                         <TextField
@@ -79,12 +85,17 @@ class ManagePage extends React.Component{
                             className="search_text"
                         />
 
-                        <RaisedButton label="搜索"/>
+                        <RaisedButton label="搜索" primary={true}/>
 
-                        <RaisedButton
-                            label="导出Excel"
-                            className="p_btn"
-                        />
+                        <IconMenu
+                            iconButtonElement={<IconButton style={{position:'relative',top:'5px'}}><MoreVertIcon /></IconButton>}
+                            anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+                            targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                            className="ml10"
+                        >
+                            <MenuItem primaryText="增加小区"/>
+                            <MenuItem primaryText="导出Excel"/>
+                        </IconMenu>
 
                     </div>
                     <MyTable
