@@ -5,6 +5,7 @@
 
 //启动后端服务器node
 
+const _ = require('lodash');
 start();//连接数据库
 
 function connet() {
@@ -35,14 +36,6 @@ function connet() {
         database: 'test',
     });
 
-    app.get('/123', (req, res) => {
-        let sql = 'select * from login';
-        connection.query(sql, function (err, results, fields) {
-            if (err) throw err;
-            res.json(results);
-        });
-    });
-
     app.post('/login_post', urlencodedParser, function (req, res) {
         let sql = 'select * from login where id=' + req.body.id;
         let data = {};
@@ -61,8 +54,32 @@ function connet() {
                 res.send(data);
             }
         });
-
     });
+
+    app.get('/getCost',(req,res)=>{
+        let sql = 'select * from cost';
+        let data ={data:[]};
+        connection.query(sql,function (err,result,fields) {
+            if(err)throw err;
+            _.map(result,item=>{
+                data.data.push(item)
+            });
+            res.send(data);
+        })
+    });
+
+    app.get('/getTown',(req,res)=>{
+        let sql = 'select * from town';
+        let data = {data:[]};
+        connection.query(sql,(err,result,fields)=>{
+            if(err)throw err;
+            _.map(result,item=>{
+                data.data.push(item.townName)
+            });
+            res.send(data);
+        })
+    })
+
     app.listen(3001);
 
 
