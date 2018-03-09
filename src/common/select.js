@@ -22,13 +22,13 @@ class Select extends React.Component {
 
     render() {
 
-        const {data, className} = this.props;
+        const {data, className,onChange} = this.props;
 
         const {value} = this.state;
 
         return (
             <div className={className}>
-                <DropDownMenu value={value} onChange={this.handleChange} labelStyle={{'overflow':'visible'}}>
+                <DropDownMenu value={value} onChange={()=>this.handleChange().then(onChange)} labelStyle={{'overflow':'visible'}}>
                     {
                         _.map(data, (x, index) => {
                             return (

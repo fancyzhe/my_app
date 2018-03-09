@@ -18,8 +18,6 @@ import {Local} from "../../common/utils";
 
 const tableHead = ['序号','Id','姓名', '小区','所剩水费','所剩电费'];
 
-const selectData = ['万科','富力','恒大'];
-
 class ManagePage extends React.Component{
 
     constructor(props){
@@ -28,6 +26,10 @@ class ManagePage extends React.Component{
             data:[],
             town:[],
         }
+    }
+
+    changeSelect(){
+        console.log(1);
     }
 
     componentDidMount(){
@@ -40,6 +42,7 @@ class ManagePage extends React.Component{
         $.get(Local+'/getTown')
             .then(
                 res=>{
+                    res.data.push('全部');
                     this.setState({
                        town:res.data,
                     })
@@ -56,6 +59,8 @@ class ManagePage extends React.Component{
                         <Select
                             className="p_select"
                             data={this.state.town}
+                            onChange={this.changeSelect()}
+
                         />
                         <Checkbox
                             label="是否欠费"
