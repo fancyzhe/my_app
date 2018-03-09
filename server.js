@@ -78,7 +78,7 @@ function connet() {
             });
             res.send(data);
         })
-    })
+    });
 
     app.listen(3001);
 
