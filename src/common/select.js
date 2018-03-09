@@ -18,17 +18,20 @@ class Select extends React.Component {
         };
     }
 
-    handleChange = (event, index, value) => this.setState({value});
-
     render() {
 
-        const {data, className,onChange} = this.props;
+        const {data, className,value,onChange} = this.props;
 
-        const {value} = this.state;
+        const maxHeight = 200;
 
         return (
             <div className={className}>
-                <DropDownMenu value={value} onChange={()=>this.handleChange().then(onChange)} labelStyle={{'overflow':'visible'}}>
+                <DropDownMenu
+                    value={value}
+                    onChange={onChange}
+                    labelStyle={{'overflow':'visible'}}
+                    maxHeight={{maxHeight}}
+                >
                     {
                         _.map(data, (x, index) => {
                             return (

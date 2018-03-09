@@ -56,7 +56,8 @@ function connet() {
         });
     });
 
-    app.get('/getCost',(req,res)=>{
+    app.get('/getCost',urlencodedParser,(req,res)=>{
+        console.log(req.query);
         let sql = 'select * from cost';
         let data ={data:[]};
         connection.query(sql,function (err,result,fields) {

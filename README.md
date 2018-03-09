@@ -5,10 +5,6 @@ MySQL + node + react + material-ui项目文件。下载项目文件后，初始�
 xmind文件是整个项目的思维导图
 
 命令行中 create-react-app 初始化项目文件
-
-安装修改文档title插件 react-document-title
-
-     npm install --save react-document-title   
      
      
 前端部分：
@@ -37,6 +33,8 @@ xmind文件是整个项目的思维导图
        f-admin 开发管理员界面分支
        
 后端部分：
+      nodeJS写接口，用supervisor搭建了node的热更新。
+      命令 npm run server 启动后端服务器
       
       开发分支f-dao
       
