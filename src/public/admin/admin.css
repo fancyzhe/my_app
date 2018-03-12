@@ -32,11 +32,19 @@
 .table {
     margin: 20px;
 }
+
+.inline{
+    display: inline-block;
+}
+
 .ml10{
     margin-left: 10px;
 }
 .mt5{
     margin-top: 5px;
+}
+.ml30{
+    margin-left: 30px;
 }
 .pt10{
     padding-top: 10px;

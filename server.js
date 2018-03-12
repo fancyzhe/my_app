@@ -59,10 +59,11 @@ function connet() {
 
     //管理员
     app.get('/getCost',urlencodedParser,(req,res)=>{
-        let townName = req.query.townName ? `town = ${req.query.townName}`  : true;
+        let townName = req.query.townName  ? `town = '${req.query.townName}'`  : true;
+        if(req.query.townName === '全部')townName = true;
         let isOwe = req.query.isOwe==='true' ? 'water < 0 or manage<0': 'water > 0 and manage > 0';
-        let findName = req.query.findName ? `name LIKE %${req.query.findName}%` : true;
-        let sql = `select * from cost where ${townName.toString()} and ${isOwe} and ${findName.toString()}`;
+        let findName = req.query.findName ? `name LIKE '%${req.query.findName}%'` : true;
+        let sql = `select * from cost where ${townName.toString()} and (${isOwe}) and ${findName.toString()}`;
         let data ={data:[]};
         connection.query(sql,function (err,result,fields) {
             if(err)throw err;
@@ -95,7 +96,19 @@ function connet() {
             });
             res.send(data);
         })
-    })
+    });
+
+    app.get('/getPro',(req,res)=>{
+        let sql = 'SELECT NAME FROM city WHERE `keys`=0'
+        let data = {data:[]}
+        connection.query(sql,(err,result,field)=>{
+            if(err) throw err;
+            _.map(result,item=>{
+                data.data.push(item)
+            });
+            res.send(data)
+        })
+    });
 
     app.listen(3001);
 

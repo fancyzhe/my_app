@@ -7,7 +7,7 @@ import * as React from "react";
 import $ from 'jquery'
 import _ from 'lodash'
 import {Checkbox, Dialog, IconButton, IconMenu, MenuItem, Paper, TextField, Toggle} from "material-ui";
-import PersonAdd from 'material-ui/svg-icons/social/person-add';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 import Download from 'material-ui/svg-icons/file/file-download';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import MyTable from "../../common/table";
@@ -15,13 +15,12 @@ import RaisedButton from 'material-ui/RaisedButton';
 import './admin.css'
 import Select from "../../common/select";
 import {Local, setStateP} from "../../common/utils";
-import myDialog from "../../common/dialog";
+import {AddTown} from "./addTown";
 
 //管理员水电费管理页面
 
 const tableHead = ['序号', 'Id', '姓名', '小区', '所剩水费', '所剩电费'];
 
-const content = <div>111</div>
 
 class ManagePage extends React.Component {
 
@@ -90,7 +89,7 @@ class ManagePage extends React.Component {
     };
 
     addTown() {
-        this.setState({dialogOpen:true})
+        this.setState({dialogOpen: true})
     }
 
     componentDidMount() {
@@ -102,14 +101,14 @@ class ManagePage extends React.Component {
         return (
             <div style={{textAlign: 'center'}}>
                 <Paper className="paper" zDepth={5} style={{textAlign: 'left'}}>
-                    <Dialog
-                        title="添加小区"
-                        open={this.state.dialogOpen}
-                        onRequestClose={this.handleClose}
-                    >
-                        {content}
-                    </Dialog>
                     <div className="paper_header">
+                        <Dialog
+                            title="添加小区"
+                            open={this.state.dialogOpen}
+                            onRequestClose={this.handleClose}
+                        >
+                            <AddTown />
+                        </Dialog>
                         <p>小区名:</p>
                         <Select
                             className="p_select"
@@ -144,7 +143,7 @@ class ManagePage extends React.Component {
                             targetOrigin={{horizontal: 'left', vertical: 'top'}}
                             className="ml10"
                         >
-                            <MenuItem primaryText="增加小区" onClick={() => this.addTown()} leftIcon={<PersonAdd/>}/>
+                            <MenuItem primaryText="增加小区" onClick={() => this.addTown()} leftIcon={<ContentAdd/>}/>
                             <MenuItem primaryText="导出Excel" leftIcon={<Download/>}/>
                         </IconMenu>
 
