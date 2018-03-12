@@ -11,7 +11,6 @@ import {Link} from "react-router";
 import Cost from "./user/cost";
 import History from "./user/history";
 import './user/user.css'
-import myDialog from "../common/dialog";
 
 class User extends React.Component {
 
@@ -30,13 +29,6 @@ class User extends React.Component {
     } //删除登陆信息
 
     reLogin() {
-
-        return (
-            <myDialog
-                sure={this.delCookie()}
-                text="确定退出？"
-            />
-        )
 
     }
 

@@ -19,37 +19,20 @@ export default class myDialog extends React.Component {
         }
     }
 
-    handleClose=() => {this.setState({open:false})};
+    handleClose = ()=>{this.setState({dialogOpen:false})};
 
     render() {
-
-        const {text,sure} = this.props;
-        console.log(1);
-
-        const actions= [
-            <FlatButton
-                label="取消"
-                primary={true}
-                onClick={this.handleClose}
-            />,
-            <FlatButton
-                label="确定"
-                primary={true}
-                onClick={sure}
-            />
-        ];
-
+        const {label, content, open,actions} = this.props;
         return (
-            <div>
-                <Dialog
-                    actions={actions}
-                    modal={false}
-                    open={this.state.open}
-                    onRequestClose={this.handleClose}
-                >
-                    {text}
-                </Dialog>
-            </div>
+            <Dialog
+                title={label}
+                actions={actions}
+                open={open}
+                modal={false}
+                onRequestClose={this.handleClose}
+            >
+                {{content}}
+            </Dialog>
         )
     }
 }

@@ -41,7 +41,7 @@ class myTable extends React.Component {
                         {
                             _.map(tableHeader, item => {
                                 return (
-                                    <TableHeaderColumn tooltip={item}>
+                                    <TableHeaderColumn key={item}>
                                         {
                                             item
                                         }
@@ -65,7 +65,7 @@ class myTable extends React.Component {
                                         </TableRowColumn>
                                     }
                                     {
-                                        _.map(x, item => <TableRowColumn>
+                                        _.map(x, item => <TableRowColumn tooltip={item}>
                                             {
                                                 item
                                             }

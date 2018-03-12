@@ -36,6 +36,7 @@ function connet() {
         database: 'test',
     });
 
+    //登陆
     app.post('/login_post', urlencodedParser, function (req, res) {
         let sql = 'select * from login where id=' + req.body.id;
         let data = {};
@@ -56,9 +57,12 @@ function connet() {
         });
     });
 
+    //管理员
     app.get('/getCost',urlencodedParser,(req,res)=>{
-        console.log(req.query);
-        let sql = 'select * from cost';
+        let townName = req.query.townName ? `town = ${req.query.townName}`  : true;
+        let isOwe = req.query.isOwe==='true' ? 'water < 0 or manage<0': 'water > 0 and manage > 0';
+        let findName = req.query.findName ? `name LIKE %${req.query.findName}%` : true;
+        let sql = `select * from cost where ${townName.toString()} and ${isOwe} and ${findName.toString()}`;
         let data ={data:[]};
         connection.query(sql,function (err,result,fields) {
             if(err)throw err;
@@ -81,6 +85,18 @@ function connet() {
         })
     });
 
+    app.get('/getUser',(req,res)=>{
+        let sql = 'select * from user';
+        let data = {data:[]};
+        connection.query(sql,(err,result,field)=>{
+            if(err) throw err;
+            _.map(result,item=>{
+                data.data.push(item)
+            });
+            res.send(data);
+        })
+    })
+
     app.listen(3001);
 
 
@@ -95,24 +111,4 @@ function connet() {
 function start() {
     connet();
 
-}
-
-function login(id) {
-    let sql = 'select * from user where=' + id;
-    let data = [];
-    connet().query(sql, function (err, result, fields) {
-        if (err) {
-            throw err;
-        }
-        for (let i = 0; i < result.length; i++) {
-            let firstResult = result[i];
-            data.push({
-                'id': firstResult['id'],
-                'name': firstResult['name'],
-                'pwd': firstResult['pwd'],
-                'admin': firstResult['admin'],
-            });
-        }
-        console.log(data);
-    });
 }
