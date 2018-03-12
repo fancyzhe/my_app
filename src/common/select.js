@@ -30,14 +30,14 @@ class Select extends React.Component {
                     value={value}
                     onChange={onChange}
                     labelStyle={{'overflow':'visible'}}
-                    maxHeight={{maxHeight}}
+                    maxHeight={maxHeight}
                 >
                     {
-                        _.map(data, (x, index) => {
+                        _.map(data, x => {
                             return (
                                 <MenuItem
-                                    primaryText={x}
-                                    value={index + 1}
+                                    primaryText={x.name}
+                                    value={x.id}
                                 />
                             )
                         })

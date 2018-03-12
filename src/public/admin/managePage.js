@@ -14,7 +14,7 @@ import MyTable from "../../common/table";
 import RaisedButton from 'material-ui/RaisedButton';
 import './admin.css'
 import Select from "../../common/select";
-import {Local, setStateP} from "../../common/utils";
+import {ALL_VALUE, Local, setStateP} from "../../common/utils";
 import {AddTown} from "./addTown";
 
 //管理员水电费管理页面
@@ -28,11 +28,10 @@ class ManagePage extends React.Component {
         super(props);
         this.state = {
             data: [],
-            town: [],
-            currentTown: 1,
+            town: '',
+            currentTown: ALL_VALUE,
             dialogOpen: false,
             //query
-            townName: '',
             isOwe: true,
             findName: ''
         }
@@ -40,18 +39,15 @@ class ManagePage extends React.Component {
 
     changeSelect = (event, index, value) => {
         this.setState({
-                currentTown: value,
-                townName: this.state.town[value - 1]
-            }, (() => {
-                this.getCost()
-            })
-        )
-
+            currentTown: value,
+        }, () => {
+            this.getCost()
+        });
     };
 
     getCost() {
-        const {townName, isOwe, findName} = this.state;
-        let query = {townName, isOwe, findName};
+        const {currentTown, isOwe, findName} = this.state;
+        let query = {currentTown, isOwe, findName};
         $.get(Local + '/getCost', query)
             .then(res => {
                 this.setState({
@@ -64,7 +60,10 @@ class ManagePage extends React.Component {
         $.get(Local + '/getTown')
             .then(
                 res => {
-                    res.data.unshift('全部');
+                    res.data.unshift({
+                        id: ALL_VALUE,
+                        name: '全部'
+                    });
                     this.setState({
                         town: res.data,
                     })
@@ -107,7 +106,7 @@ class ManagePage extends React.Component {
                             open={this.state.dialogOpen}
                             onRequestClose={this.handleClose}
                         >
-                            <AddTown />
+                            <AddTown/>
                         </Dialog>
                         <p>小区名:</p>
                         <Select

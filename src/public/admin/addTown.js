@@ -8,6 +8,7 @@ import {Step, Stepper, StepLabel} from 'material-ui/Stepper'
 import {FlatButton, RaisedButton, TextField} from "material-ui";
 import Select from "../../common/select";
 import $ from 'jquery'
+import _ from 'lodash'
 import {Local} from "../../common/utils";
 
 export class AddTown extends React.Component {
@@ -17,8 +18,13 @@ export class AddTown extends React.Component {
         this.state = {
             finished: false,
             stepIndex: 0,
-            pro:[],
-            city:[]
+            pro: [],
+            city: [],
+            proName: [],
+            proId: [],
+            currentPro: 1,
+            currentCity: '',
+            townId: ''
         }
     }
 
@@ -27,7 +33,12 @@ export class AddTown extends React.Component {
         this.setState({
             stepIndex: stepIndex + 1,
             finished: stepIndex >= 2,
+        }, () => {
+            if (this.state.finished) {
+                this.addTown()
+            }
         });
+        this.getTownId();
     };
 
     handlePrev = () => {
@@ -37,44 +48,100 @@ export class AddTown extends React.Component {
         }
     };
 
-    getPro(){
-        $.get(Local+'/getPro',res=>{
-            this.setState({pro:res.data})
-        })
+    getTownId() {
+        $.get(Local + '/getTownId')
+            .then(res => {
+                this.setState({townId: parseInt(res.id) + 1})
+            })
     }
+
+    getPro() {
+        $.get(Local + '/getPro', res => {
+            this.setState({pro: res.data})
+        });
+    }
+
+    getCity() {
+        $.get(Local + '/getCity', {pro: this.state.currentPro})
+            .then(res => {
+                this.setState({
+                    city: res.data,
+                    currentCity: res.data[0].id
+                })
+            })
+    }
+
+    addTown() {
+        const town = {
+            name: $("#townName").val(),
+            id: this.state.townId,
+            pro: this.state.currentPro,
+            city: this.state.currentCity,
+            address: $("#address").val()
+        };
+        $.post(Local + '/addTown', town)
+    }
+
+    changePro = (event, index, value) => {
+        this.setState({currentPro: value}, this.getCity);
+    };
+
+    changeCity = (event, index, value) => {
+        this.setState({currentCity: value})
+    };
 
     getStepContent(stepIndex) {
         switch (stepIndex) {
             case 0:
                 return (
-                    <div style={{textAlign: 'center'}}>
-                        <TextField hintText="例：万科小区"/>
+                    <div style={{marginLeft: '50px'}}>
+                        <TextField hintText="例：万科小区" id="townName"/>
                     </div>
                 );
             case 1:
                 return (
-                    <div style={{textAlign: 'center'}}>
-                        <p className="inline">省份：</p>
-                        <Select
-                            className="inline"
-                            data={this.state.pro}
-                        />
-                        <p className="inline ml30">城市：</p>
-                        <Select
-                            className="inline"
-                            data={this.state.city}
-                        />
+                    <div style={{marginLeft: '50px'}}>
+                        <div>
+                            <p className="inline">省份：</p>
+                            <Select
+                                className="inline"
+                                data={this.state.pro}
+                                value={this.state.currentPro}
+                                onChange={this.changePro}
+                            />
+                            <p className="inline ml30">城市：</p>
+                            <Select
+                                className="inline"
+                                data={this.state.city}
+                                value={this.state.currentCity}
+                                onChange={this.changeCity}
+                            />
+                        </div>
+                        <div>
+                            <p className="inline">具体地址：</p>
+                            <TextField id="address"/>
+                        </div>
                     </div>
                 );
             case 2:
-                return 'This is the bit I really care about!';
+                return (
+                    <div style={{marginLeft: '50px'}}>
+                        <p className="inline">ID号：</p>
+                        <TextField disabled={true} hintText={this.state.townId}/>
+                    </div>
+                );
             default:
-                return 'You\'re a long way from home sonny jim!';
+                return (
+                    <div style={{marginLeft: '50px'}}>
+                        <p>添加成功！</p>
+                    </div>
+                );
         }
     }
 
-    componentDidMount(){
-        this.getPro()
+    componentDidMount() {
+        this.getPro();
+        this.getCity();
     }
 
     render() {
@@ -97,13 +164,13 @@ export class AddTown extends React.Component {
                         <p>{this.getStepContent(stepIndex)}</p>
                         <div style={{marginTop: 12}}>
                             <FlatButton
-                                label="Back"
+                                label="上一步"
                                 disabled={stepIndex === 0}
                                 onClick={this.handlePrev}
                                 style={{marginRight: 12}}
                             />
                             <RaisedButton
-                                label={stepIndex === 2 ? 'Finish' : 'Next'}
+                                label={stepIndex === 2 ? '完成' : '下一步'}
                                 primary={true}
                                 onClick={this.handleNext}
                             />
