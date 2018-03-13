@@ -2,7 +2,7 @@
 
 MySQL + node + react + material-ui项目文件。下载项目文件后，初始化文件（yarn或者npm i）再启动文件（yarn start或npm start）
 
-xmind文件是整个项目的思维导图
+xmind文件是整个项目的思维导图和表结构
 
 命令行中 create-react-app 初始化项目文件
      
@@ -42,6 +42,11 @@ xmind文件是整个项目的思维导图
             -| '/login_post'登陆接口
             -| '/getCost'获取水电费列表 
             -| '/getTown'获取小区列表
+            -| '/getUser'获取用户信息列表
+            -| '/getPro'获取省份列表
+            -| '/getCity'获取市列表
+            -| '/getTownId'获取小区ID
+            -| '/addTown'添加小区
      
       
       
