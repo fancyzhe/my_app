@@ -33,7 +33,8 @@ class ManagePage extends React.Component {
             dialogOpen: false,
             //query
             isOwe: true,
-            findName: ''
+            findName: '',
+            edit:true
         }
     }
 
@@ -135,6 +136,11 @@ class ManagePage extends React.Component {
                                       onClick={() => this.searchByName()}
                         />
 
+                        <RaisedButton label="编辑"
+                                      className="ml100"
+                                      disabled={this.state.edit}
+                        />
+
                         <IconMenu
                             iconButtonElement={<IconButton
                                 style={{position: 'relative', top: '5px'}}><MoreVertIcon/></IconButton>}
@@ -151,8 +157,6 @@ class ManagePage extends React.Component {
                         height="600px"
                         tableHeader={tableHead}
                         tableData={this.state.data}
-                        displayRowCheckbox={true}
-                        multiSelectable={true}
                         className="table"
                     />
                 </Paper>

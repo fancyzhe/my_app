@@ -92,7 +92,7 @@ function connet() {
     });
 
     app.get('/getUser', (req, res) => {
-        let sql = 'select * from user';
+        let sql = 'select id,name,IDcard,Provice,city,town,loudong,room from user';
         let data = {data: []};
         connection.query(sql, (err, result, field) => {
             if (err) throw err;
