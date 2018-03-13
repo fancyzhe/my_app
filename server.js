@@ -153,6 +153,30 @@ function connet() {
         res.send('success')
     });
 
+    //通过选择小区确定省市区和具体地址
+    app.get('/getAddressByTown',(req,res)=>{
+        let sql = `SELECT townPro,townCity,townAddress FROM town  WHERE town.id = ${req.query.id}`;
+        let data = {data: []};
+        connection.query(sql, (err, result) => {
+            if (err) throw err;
+            _.map(result, item => {
+                data.data.push(item)
+            });
+            res.send(data)
+        })
+    });
+
+    //添加用户
+    app.post('/addUser',urlencodedParser,(req,res) => {
+        const{id,name,IDcard,Provice,city,town,loudong,room,water,manager} = req.add;
+        let sql = `INSERT INTO user (id,name,IDcard,Provice,city,town,loudong,room)
+        values ('${id}','${name}','${IDcard}','${Provice}','${city}','${town}','${loudong}','${room}')`;
+        connection.query(sql,(err,result)=>{
+            if(err) throw  err;
+        });
+        res.send('success')
+    });
+
     app.listen(3001);
 
 

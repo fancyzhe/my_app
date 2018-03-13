@@ -14,6 +14,7 @@ import FlatButton from 'material-ui/FlatButton';
 import {TextField} from "material-ui";
 import Select from "../../common/select";
 import $ from "jquery";
+import _ from 'lodash';
 import {ALL_VALUE, Local} from "../../common/utils";
 
 export class AddUser extends React.Component {
@@ -21,14 +22,23 @@ export class AddUser extends React.Component {
         finished: false,
         stepIndex: 0,
         label:'下一步',
-        currentPro:1,
-        currentCity:'',
+        currentProCity:'',
         currentTown:ALL_VALUE,
         pro:[],
         city:[],
         town:[],
-
-
+        add:{
+            id:'',
+            name:'',
+            IDcard:'',
+            Provice:'',
+            city:'',
+            town:'',
+            loudong:'',
+            room:'',
+            water:'',
+            manager:'',
+        }
     };
 
     handleNext = () => {
@@ -40,8 +50,6 @@ export class AddUser extends React.Component {
         switch (stepIndex){
             case 0:
                 this.setState({label:"下一步"});
-                this.getCity();
-                this.getPro();
                 this.getTown();
                 break;
             case 1:
@@ -64,32 +72,28 @@ export class AddUser extends React.Component {
     };
 
     changeSelect = (event, index, value) => {
-        this.setState({currentTown: value,});
-    };
 
-    changePro = (event, index, value) => {
-        this.setState({currentPro: value}, this.getCity);
-    };
-
-    changeCity = (event, index, value) => {
-        this.setState({currentCity: value})
-    };
-
-    getPro() {
-        $.get(Local + '/getPro', res => {
-            this.setState({pro: res.data})
+        this.setState({
+            currentTown: value
+        },()=>{
+            this.getAddressByTown();
         });
+    };
+
+    getAddressByTown(){
+        $.get(Local+'/getAddressByTown',{id:this.state.currentTown})
+            .then(
+                res => {
+                    console.log(res.data);
+                    const {townPro,townCity,townAddress} = res.data[0];
+                    let currentProCity = townPro+townCity+townAddress;
+                    this.setState({
+                        currentProCity
+                    })
+                }
+            )
     }
 
-    getCity() {
-        $.get(Local + '/getCity', {pro: this.state.currentPro})
-            .then(res => {
-                this.setState({
-                    city: res.data,
-                    currentCity: res.data[0].id
-                })
-            })
-    }
 
     getTown() {
         $.get(Local + '/getTown')
@@ -104,6 +108,10 @@ export class AddUser extends React.Component {
                     })
                 }
             )
+    }
+
+    addUser(){
+
     }
 
     componentDidMount(){
@@ -125,7 +133,7 @@ export class AddUser extends React.Component {
                 {step > 0 && (
                     <FlatButton
                         label="上一步"
-                        disabled={stepIndex === 0 || stepIndex ===2}
+                        disabled={stepIndex === 0 }
                         disableTouchRipple={true}
                         disableFocusRipple={true}
                         onClick={this.handlePrev}
@@ -136,7 +144,7 @@ export class AddUser extends React.Component {
     }
 
     render() {
-        const {finished, stepIndex} = this.state;
+        const {stepIndex} = this.state;
 
         return (
             <div style={{maxWidth: 380, maxHeight: 400, margin: 'auto'}}>
@@ -158,26 +166,27 @@ export class AddUser extends React.Component {
                     <Step>
                         <StepLabel>住址</StepLabel>
                         <StepContent>
-                            <p className="inline ">省</p>
-                            <Select
-                                className="inline"
-                                data={this.state.pro}
-                                value={this.state.currentPro}
-                                onChange={this.changePro}
-                            />
-                            <p className="inline">市</p>
-                            <Select
-                                className="inline"
-                                data={this.state.city}
-                                value={this.state.currentCity}
-                                onChange={this.changeCity}
-                            />
                             <p className="inline">小区</p>
                             <Select
                                 className="inline"
                                 data={this.state.town}
                                 value={this.state.currentTown}
                                 onChange={this.changeSelect}
+                            />
+                            <TextField
+                                disabled={true}
+                                value={this.state.currentProCity}
+                            />
+                            <TextField
+                                floatingLabelText="楼栋"
+                                hintText="例：9栋"
+                                style={{width:'100px'}}
+                            />
+                            <TextField
+                                floatingLabelText="房间号"
+                                hintText="例：408"
+                                className="inline ml30"
+                                style={{width:'100px'}}
                             />
                             {this.renderStepActions(1)}
                         </StepContent>
@@ -189,23 +198,21 @@ export class AddUser extends React.Component {
                             <TextField
                                 disabled={true}
                             />
+                            <TextField
+                                floatingLabelText="水费"
+                                hintText="例：100"
+                                style={{width:'100px'}}
+                            />
+                            <TextField
+                                floatingLabelText="电费"
+                                hintText="例：100"
+                                className="inline ml30"
+                                style={{width:'100px'}}
+                            />
                             {this.renderStepActions(2)}
                         </StepContent>
                     </Step>
                 </Stepper>
-                {finished && (
-                    <p style={{margin: '20px 0', textAlign: 'center'}}>
-                        <a
-                            href="#"
-                            onClick={(event) => {
-                                event.preventDefault();
-                                this.setState({stepIndex: 0, finished: false});
-                            }}
-                        >
-                            Click here
-                        </a> to reset the example.
-                    </p>
-                )}
             </div>
         );
     }
