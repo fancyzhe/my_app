@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0c548932-d313-4e02-8557-91baa9bd8f71" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/server.js" afterPath="$PROJECT_DIR$/server.js" />
-      <change beforePath="$PROJECT_DIR$/src/public/admin/admin.css" afterPath="$PROJECT_DIR$/src/public/admin/admin.css" />
-      <change beforePath="$PROJECT_DIR$/src/public/admin/managePage.js" afterPath="$PROJECT_DIR$/src/public/admin/managePage.js" />
-      <change beforePath="$PROJECT_DIR$/src/public/admin/userPage.js" afterPath="$PROJECT_DIR$/src/public/admin/userPage.js" />
+      <change beforePath="$PROJECT_DIR$/src/public/admin/addUser.js" afterPath="$PROJECT_DIR$/src/public/admin/addUser.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -22,7 +19,7 @@
       <file leaf-file-name="managePage.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/public/admin/managePage.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="206">
+            <state relative-caret-position="947">
               <caret line="86" column="4" lean-forward="false" selection-start-line="86" selection-start-column="4" selection-end-line="88" selection-end-column="6" />
               <folding>
                 <element signature="e#21#52#0" expanded="true" />
@@ -31,24 +28,26 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="userPage.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/public/admin/userPage.js">
+      <file leaf-file-name="addUser.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/public/admin/addUser.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="320">
-              <caret line="78" column="29" lean-forward="false" selection-start-line="78" selection-start-column="29" selection-end-line="78" selection-end-column="29" />
+            <state relative-caret-position="418">
+              <caret line="25" column="29" lean-forward="false" selection-start-line="25" selection-start-column="29" selection-end-line="25" selection-end-column="29" />
               <folding>
-                <element signature="e#21#47#0" expanded="true" />
+                <element signature="e#20#45#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="addUser.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/public/admin/addUser.js">
+      <file leaf-file-name="addTown.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/public/admin/addTown.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="114">
-              <caret line="9" column="20" lean-forward="false" selection-start-line="9" selection-start-column="20" selection-end-line="9" selection-end-column="20" />
-              <folding />
+            <state relative-caret-position="361">
+              <caret line="22" column="24" lean-forward="true" selection-start-line="22" selection-start-column="24" selection-end-line="22" selection-end-column="24" />
+              <folding>
+                <element signature="e#21#46#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -60,18 +59,6 @@
               <caret line="67" column="0" lean-forward="true" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
               <folding>
                 <element signature="e#0#26#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="addTown.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/public/admin/addTown.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="13" column="44" lean-forward="false" selection-start-line="13" selection-start-column="35" selection-end-line="13" selection-end-column="44" />
-              <folding>
-                <element signature="e#21#46#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -113,8 +100,8 @@
       <file leaf-file-name="server.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="389">
-              <caret line="101" column="27" lean-forward="true" selection-start-line="101" selection-start-column="27" selection-end-line="101" selection-end-column="27" />
+            <state relative-caret-position="237">
+              <caret line="105" column="35" lean-forward="false" selection-start-line="105" selection-start-column="35" selection-end-line="105" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -129,6 +116,18 @@
                 <folding />
               </first_editor>
               <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="userPage.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/public/admin/userPage.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="372">
+              <caret line="58" column="4" lean-forward="true" selection-start-line="58" selection-start-column="4" selection-end-line="64" selection-end-column="6" />
+              <folding>
+                <element signature="e#21#47#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -183,14 +182,14 @@
         <option value="$PROJECT_DIR$/src/common/dialog.js" />
         <option value="$PROJECT_DIR$/src/common/select.js" />
         <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/src/public/admin/addTown.js" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/public/login/LoginForm.js" />
         <option value="$PROJECT_DIR$/server.js" />
         <option value="$PROJECT_DIR$/src/public/admin/admin.css" />
         <option value="$PROJECT_DIR$/src/public/admin/managePage.js" />
-        <option value="$PROJECT_DIR$/src/public/admin/addUser.js" />
         <option value="$PROJECT_DIR$/src/public/admin/userPage.js" />
+        <option value="$PROJECT_DIR$/src/public/admin/addTown.js" />
+        <option value="$PROJECT_DIR$/src/public/admin/addUser.js" />
       </list>
     </option>
   </component>
@@ -336,7 +335,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="81762000" />
+    <option name="totallyTimeSpent" value="85456000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -736,22 +735,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="389">
-          <caret line="101" column="27" lean-forward="true" selection-start-line="101" selection-start-column="27" selection-end-line="101" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/common/select.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="29" column="33" lean-forward="true" selection-start-line="29" selection-start-column="33" selection-end-line="29" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/public/login/LoginForm.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="351">
@@ -770,10 +753,46 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/public/admin/addTown.js">
+    <entry file="file://$PROJECT_DIR$/src/public/admin/userPage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="372">
+          <caret line="58" column="4" lean-forward="true" selection-start-line="58" selection-start-column="4" selection-end-line="64" selection-end-column="6" />
+          <folding>
+            <element signature="e#21#47#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/public/admin/managePage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="947">
+          <caret line="86" column="4" lean-forward="false" selection-start-line="86" selection-start-column="4" selection-end-line="88" selection-end-column="6" />
+          <folding>
+            <element signature="e#21#52#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/common/select.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="190">
-          <caret line="13" column="44" lean-forward="false" selection-start-line="13" selection-start-column="35" selection-end-line="13" selection-end-column="44" />
+          <caret line="29" column="33" lean-forward="true" selection-start-line="29" selection-start-column="33" selection-end-line="29" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="237">
+          <caret line="105" column="35" lean-forward="false" selection-start-line="105" selection-start-column="35" selection-end-line="105" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/public/admin/addTown.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="361">
+          <caret line="22" column="24" lean-forward="true" selection-start-line="22" selection-start-column="24" selection-end-line="22" selection-end-column="24" />
           <folding>
             <element signature="e#21#46#0" expanded="true" />
           </folding>
@@ -782,28 +801,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/public/admin/addUser.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="9" column="20" lean-forward="false" selection-start-line="9" selection-start-column="20" selection-end-line="9" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/public/admin/managePage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="86" column="4" lean-forward="false" selection-start-line="86" selection-start-column="4" selection-end-line="88" selection-end-column="6" />
+        <state relative-caret-position="418">
+          <caret line="25" column="29" lean-forward="false" selection-start-line="25" selection-start-column="29" selection-end-line="25" selection-end-column="29" />
           <folding>
-            <element signature="e#21#52#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/public/admin/userPage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="78" column="29" lean-forward="false" selection-start-line="78" selection-start-column="29" selection-end-line="78" selection-end-column="29" />
-          <folding>
-            <element signature="e#21#47#0" expanded="true" />
+            <element signature="e#20#45#0" expanded="true" />
           </folding>
         </state>
       </provider>
