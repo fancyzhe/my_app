@@ -41,15 +41,15 @@ function connet() {
         let sql = 'select * from login where id=' + req.body.id;
         let data = {};
         connection.query(sql, function (err, result, fields) {
-            if(err)throw err;
+            if (err) throw err;
             for (let i = 0; i < result.length; i++) {
-                if(req.body.password === result[0]['pwd']){
-                    data.data={
-                        'admin':result[0]['admin'],
+                if (req.body.password === result[0]['pwd']) {
+                    data.data = {
+                        'admin': result[0]['admin'],
                     }
-                }else {
-                    data.data=({
-                        'admin':false,
+                } else {
+                    data.data = ({
+                        'admin': false,
                     })
                 }
                 res.send(data);
@@ -58,52 +58,52 @@ function connet() {
     });
 
     //管理员
-    app.get('/getCost',urlencodedParser,(req,res)=>{
-        let townName = req.query.currentTown!='ALL_VALUE'  ? `town = (select name from town where id = '${req.query.currentTown}')`  : true;
-        if(req.query.currentTown === '全部')townName = true;
-        let isOwe = req.query.isOwe==='true' ? 'water < 0 or manage<0': 'water > 0 and manage > 0';
+    app.get('/getCost', urlencodedParser, (req, res) => {
+        let townName = req.query.currentTown != 'ALL_VALUE' ? `town = (select name from town where id = '${req.query.currentTown}')` : true;
+        if (req.query.currentTown === '全部') townName = true;
+        let isOwe = req.query.isOwe === 'true' ? 'water < 0 or manage<0' : 'water > 0 and manage > 0';
         let findName = req.query.findName ? `name LIKE '%${req.query.findName}%'` : true;
         let sql = `select distinct * from cost where ${townName} and (${isOwe}) and ${findName}`;
-        let data ={data:[]};
-        connection.query(sql,function (err,result,fields) {
-            if(err)throw err;
-            _.map(result,item=>{
+        let data = {data: []};
+        connection.query(sql, function (err, result, fields) {
+            if (err) throw err;
+            _.map(result, item => {
                 data.data.push(item)
             });
             res.send(data);
         })
     });
 
-    app.get('/getTown',(req,res)=>{
+    app.get('/getTown', (req, res) => {
         let sql = 'select id,name from town';
-        let data = {data:[]};
-        connection.query(sql,(err,result,fields)=>{
-            if(err)throw err;
-            _.map(result,item=>{
+        let data = {data: []};
+        connection.query(sql, (err, result, fields) => {
+            if (err) throw err;
+            _.map(result, item => {
                 data.data.push(item)
             });
             res.send(data);
         })
     });
 
-    app.get('/getUser',(req,res)=>{
+    app.get('/getUser', (req, res) => {
         let sql = 'select * from user';
-        let data = {data:[]};
-        connection.query(sql,(err,result,field)=>{
-            if(err) throw err;
-            _.map(result,item=>{
+        let data = {data: []};
+        connection.query(sql, (err, result, field) => {
+            if (err) throw err;
+            _.map(result, item => {
                 data.data.push(item)
             });
             res.send(data);
         })
     });
     //获取省
-    app.get('/getPro',(req,res)=>{
+    app.get('/getPro', (req, res) => {
         let sql = 'SELECT city.`name`,city.id FROM city WHERE `keys`=0';
-        let data = {data:[]};
-        connection.query(sql,(err,result,field)=>{
-            if(err) throw err;
-            _.map(result,item=>{
+        let data = {data: []};
+        connection.query(sql, (err, result, field) => {
+            if (err) throw err;
+            _.map(result, item => {
                 data.data.push(item)
             });
             res.send(data)
@@ -111,12 +111,12 @@ function connet() {
     });
 
     //获取市
-    app.get('/getCity',(req,res)=>{
-        let sql = 'SELECT city.`name`,city.id FROM city WHERE `keys`='+req.query.pro;
-        let data = {data:[]};
-        connection.query(sql,(err,result)=>{
-            if(err) throw err;
-            _.map(result,item=>{
+    app.get('/getCity', (req, res) => {
+        let sql = 'SELECT city.`name`,city.id FROM city WHERE `keys`=' + req.query.pro;
+        let data = {data: []};
+        connection.query(sql, (err, result) => {
+            if (err) throw err;
+            _.map(result, item => {
                 data.data.push(item)
             });
             res.send(data)
@@ -124,22 +124,29 @@ function connet() {
     });
 
     //获取小区ID
-    app.get('/getTownId',(req,res)=>{
+    app.get('/getTownId', (req, res) => {
         let sql = 'SELECT id FROM town ORDER BY id DESC LIMIT 1';
-        let data ;
-        connection.query(sql,(err,result)=>{
-            if(err) throw err;
-            _.map(result,item=>{
-                data=item
+        let data;
+        connection.query(sql, (err, result) => {
+            if (err) throw err;
+            _.map(result, item => {
+                data = item
             });
             res.send(data)
         })
     });
 
     //添加小区
-    app.post('/addTown',(req,res)=>{
-
-    })
+    app.post('/addTown',urlencodedParser, (req, res) => {
+        const {id, name, pro, city, address} = req.body;
+        let sql = `INSERT INTO TOWN (id,name,townPro,townCity,townAddress) 
+       values ('${id}','${name}',(SELECT city.name FROM city WHERE city.id = '${pro}'),
+       (SELECT city.name FROM city WHERE city.id = '${city}'),'${address}')`;
+        connection.query(sql,(err,result)=>{
+            if(err) throw  err;
+        });
+        res.send('success')
+    });
 
     app.listen(3001);
 
