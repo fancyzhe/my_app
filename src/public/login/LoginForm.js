@@ -1,10 +1,9 @@
 import React from "react";
 import $ from 'jquery';
 import {Link, browserHistory} from "react-router";
-import {TextField, RaisedButton, Paper} from 'material-ui';
+import {TextField, RaisedButton, Paper, Snackbar} from 'material-ui';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import "./login.css"
-import Sbar from "../../common/Snacbar";
 import {Local} from "../../common/utils";
 
 /**
@@ -22,8 +21,8 @@ class LoginForm extends React.Component {
             admin: '',
             errorIdText: '',
             errorPwdText: '',
+            err:false,
             status: false,
-            pageMsg: false,
         }
     }
 
@@ -42,7 +41,7 @@ class LoginForm extends React.Component {
                     admin === 2 && browserHistory.push('/user');
                 } else {
                     this.setState({
-                        pageMsg: true
+                        err: true
                     });
                 }
             });
@@ -50,11 +49,11 @@ class LoginForm extends React.Component {
         }
     }
 
-    msg() {
-        if (this.state.pageMsg) {
-            return (<Sbar text='密码错误！'/>)
-        }
-    }
+    handleRequestClose = () => {
+        this.setState({
+            err: false,
+        });
+    };
 
 
     setPwd(e, pwd) {
@@ -106,9 +105,12 @@ class LoginForm extends React.Component {
                             <Link to={'/Forget'} className="a_login">
                                 忘记密码...
                             </Link>
-                            {
-                                this.msg()
-                            }
+                            <Snackbar
+                                open={this.state.err}
+                                message="密码错误!"
+                                autoHideDuration={4000}
+                                onRequestClose={this.handleRequestClose}
+                            />
                         </Paper>
                     </MuiThemeProvider>
                 </div>

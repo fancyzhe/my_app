@@ -42,6 +42,11 @@ function connet() {
         let data = {};
         connection.query(sql, function (err, result, fields) {
             if (err) throw err;
+            if(!result[0]){
+                data.data={
+                    'admin':false,
+                }
+            }
             for (let i = 0; i < result.length; i++) {
                 if (req.body.password === result[0]['pwd']) {
                     data.data = {
@@ -52,8 +57,8 @@ function connet() {
                         'admin': false,
                     })
                 }
-                res.send(data);
             }
+            res.send(data);
         });
     });
 
