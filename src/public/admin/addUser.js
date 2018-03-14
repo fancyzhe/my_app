@@ -14,30 +14,30 @@ import FlatButton from 'material-ui/FlatButton';
 import {TextField} from "material-ui";
 import Select from "../../common/select";
 import $ from "jquery";
-import _ from 'lodash';
+import _ from "lodash"
 import {ALL_VALUE, Local} from "../../common/utils";
 
 export class AddUser extends React.Component {
     state = {
         finished: false,
         stepIndex: 0,
-        label:'下一步',
-        currentProCity:'',
-        currentTown:ALL_VALUE,
-        pro:[],
-        city:[],
-        town:[],
-        add:{
-            id:'',
-            name:'',
-            IDcard:'',
-            Provice:'',
-            city:'',
-            town:'',
-            loudong:'',
-            room:'',
-            water:'',
-            manager:'',
+        label: '下一步',
+        currentProCity: '',
+        currentTown: ALL_VALUE,
+        pro: [],
+        city: [],
+        town: [],
+        add: {
+            id: '',
+            name: '',
+            IDcard: '',
+            Provice: '',
+            city: '',
+            town: '',
+            loudong: '',
+            room: '',
+            water: '',
+            manage: '',
         }
     };
 
@@ -46,21 +46,21 @@ export class AddUser extends React.Component {
         this.setState({
             stepIndex: stepIndex + 1,
             finished: stepIndex >= 2,
+        }, () => {
+            switch (stepIndex) {
+                case 1:
+                    this.setState({label: "下一步"});
+                    break;
+                case 2:
+                    this.setState({label: "完成"});
+                    break;
+                case 3:
+                    this.setState({label: "继续添加"});
+                    break;
+            }
         });
-        switch (stepIndex){
-            case 0:
-                this.setState({label:"下一步"});
-                this.getTown();
-                break;
-            case 1:
-                this.setState({label:"完成"});
-                break;
-            case 2:
-                this.setState({label:"继续添加"});
-                break;
-            case 3:
-                this.setState({stepIndex:0,finished:false});
-                break;
+        if (stepIndex === 2) {
+            this.addUser();
         }
     };
 
@@ -69,26 +69,33 @@ export class AddUser extends React.Component {
         if (stepIndex > 0) {
             this.setState({stepIndex: stepIndex - 1});
         }
+
     };
 
     changeSelect = (event, index, value) => {
-
+        console.log(event, index, value);
         this.setState({
-            currentTown: value
-        },()=>{
+            currentTown: value,
+            add: _.merge(this.state.add,{
+                town: value
+            })
+        }, () => {
             this.getAddressByTown();
         });
     };
 
-    getAddressByTown(){
-        $.get(Local+'/getAddressByTown',{id:this.state.currentTown})
+    getAddressByTown() {
+        $.get(Local + '/getAddressByTown', {id: this.state.currentTown})
             .then(
                 res => {
-                    console.log(res.data);
-                    const {townPro,townCity,townAddress} = res.data[0];
-                    let currentProCity = townPro+townCity+townAddress;
+                    const {townPro, townCity, townAddress} = res.data[0];
+                    let currentProCity = townPro + townCity + townAddress;
                     this.setState({
-                        currentProCity
+                        currentProCity,
+                        add: _.merge(this.state.add, {
+                            Provice: townPro,
+                            city: townCity
+                        })
                     })
                 }
             )
@@ -110,11 +117,71 @@ export class AddUser extends React.Component {
             )
     }
 
-    addUser(){
-
+    getUserId() {
+        $.get(Local + '/getUserId')
+            .then(res => {
+                this.setState({
+                    add: _.merge(this.state.add, {id: parseInt(res.id) + 1})
+                })
+            })
     }
 
-    componentDidMount(){
+    addUser() {
+        $.post(Local + '/addUser', this.state.add)
+    }
+
+    setName = (e, v) => {
+        this.setState({
+            add: _.merge(this.state.add, {
+                name: v
+            })
+        })
+    };
+
+    setIDcard = (e, v) => {
+        this.setState({
+            add: _.merge(this.state.add, {
+                IDcard: v
+            })
+        })
+    };
+
+    setLoudong = (e, v) => {
+        this.setState({
+            add: _.merge(this.state.add, {
+                loudong: v
+            })
+        })
+    };
+
+    setRoom = (e, v) => {
+        this.setState({
+            add: _.merge(this.state.add, {
+                room: v
+            })
+        })
+    };
+
+    setWater = (e, v) => {
+        this.setState({
+            add: _.merge(this.state.add, {
+                water: v
+            })
+
+        })
+    };
+
+    setManage = (e, v) => {
+        this.setState({
+            add: _.merge(this.state.add, {
+                manage: v
+            })
+        })
+    };
+
+    componentDidMount() {
+        this.getUserId();
+        this.getTown();
     }
 
     renderStepActions(step) {
@@ -133,7 +200,7 @@ export class AddUser extends React.Component {
                 {step > 0 && (
                     <FlatButton
                         label="上一步"
-                        disabled={stepIndex === 0 }
+                        disabled={stepIndex === 0}
                         disableTouchRipple={true}
                         disableFocusRipple={true}
                         onClick={this.handlePrev}
@@ -155,10 +222,12 @@ export class AddUser extends React.Component {
                             <p>姓名</p>
                             <TextField
                                 hintText="例：张三"
+                                onChange={this.setName}
                             />
                             <p>身份证号</p>
                             <TextField
                                 hintText="例：421182XXXXXX"
+                                onChange={this.setIDcard}
                             />
                             {this.renderStepActions(0)}
                         </StepContent>
@@ -180,13 +249,15 @@ export class AddUser extends React.Component {
                             <TextField
                                 floatingLabelText="楼栋"
                                 hintText="例：9栋"
-                                style={{width:'100px'}}
+                                style={{width: '100px'}}
+                                onChange={this.setLoudong}
                             />
                             <TextField
                                 floatingLabelText="房间号"
                                 hintText="例：408"
                                 className="inline ml30"
-                                style={{width:'100px'}}
+                                style={{width: '100px'}}
+                                onChange={this.setRoom}
                             />
                             {this.renderStepActions(1)}
                         </StepContent>
@@ -197,17 +268,20 @@ export class AddUser extends React.Component {
                             <p className="inline">生成的ID号</p>
                             <TextField
                                 disabled={true}
+                                value={this.state.add.id}
                             />
                             <TextField
                                 floatingLabelText="水费"
                                 hintText="例：100"
-                                style={{width:'100px'}}
+                                style={{width: '100px'}}
+                                onChange={this.setWater}
                             />
                             <TextField
                                 floatingLabelText="电费"
                                 hintText="例：100"
                                 className="inline ml30"
-                                style={{width:'100px'}}
+                                style={{width: '100px'}}
+                                onChange={this.setManage}
                             />
                             {this.renderStepActions(2)}
                         </StepContent>

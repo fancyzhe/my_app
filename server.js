@@ -166,15 +166,31 @@ function connet() {
         })
     });
 
+    //获取用户ID
+    app.get('/getUserId',(req,res)=>{
+        let sql = 'SELECT id FROM user ORDER BY id DESC LIMIT 1';
+        let data;
+        connection.query(sql,(err,result)=>{
+            if(err) throw err;
+            _.map(result,item=>{
+                data = item;
+            });
+            res.send(data)
+        })
+    });
+
     //添加用户
     app.post('/addUser',urlencodedParser,(req,res) => {
-        const{id,name,IDcard,Provice,city,town,loudong,room,water,manager} = req.add;
+        console.log(req.body);
+        const{id,name,IDcard,Provice,city,town,loudong,room,water,manage} = req.body;
         let sql = `INSERT INTO user (id,name,IDcard,Provice,city,town,loudong,room)
-        values ('${id}','${name}','${IDcard}','${Provice}','${city}','${town}','${loudong}','${room}')`;
+        values ('${id}','${name}','${IDcard}','${Provice}','${city}','(SELECT name FROM town WHERE id = '${town}')','${loudong}','${room}');
+        INSERT INTO cost (id,name,town,water,manage) values ('${id}','${name}','(SELECT name FROM town WHERE id = '${town}')','${water}','${manage}')`;
+        console.log(sql);
         connection.query(sql,(err,result)=>{
             if(err) throw  err;
         });
-        res.send('success')
+        res.send('success');
     });
 
     app.listen(3001);
