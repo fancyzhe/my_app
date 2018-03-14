@@ -21,7 +21,8 @@ class myTable extends React.Component {
         const {
             tableHeader, tableData, selectable, height,
             fixedHeader, fixedFooter, multiSelectable,
-            showRowHover, displayRowCheckbox, displaySelectAll
+            showRowHover, displayRowCheckbox, displaySelectAll,
+            onClickCell,
         } = this.props;
 
         return (
@@ -32,6 +33,7 @@ class myTable extends React.Component {
                 fixedFooter={fixedFooter}
                 multiSelectable={multiSelectable}
                 className="table_df"
+                onRowSelection={onClickCell}
             >
 
                 <TableHeader
@@ -60,7 +62,7 @@ class myTable extends React.Component {
                             return (
                                 <TableRow>
                                     {
-                                        <TableRowColumn className="tab_item">
+                                        <TableRowColumn className="tab_item" >
                                             {index + 1}
                                         </TableRowColumn>
                                     }
@@ -76,7 +78,6 @@ class myTable extends React.Component {
                         })
                     }
                 </TableBody>
-
             </Table>
         )
     }

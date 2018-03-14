@@ -19,6 +19,9 @@ import {AddUser} from "./addUser";
 
 const tableHead = ['序号','ID','姓名','身份证号','省份','城市','小区','楼栋','房间号'];
 
+let cell;
+let edit=true;
+
 class UserPage extends React.Component{
 
     constructor(props){
@@ -28,7 +31,8 @@ class UserPage extends React.Component{
             town:[],
             currentTown: ALL_VALUE,
             edit:true,
-            dialog:false
+            dialog:false,
+            cell:'',
         }
     }
 
@@ -62,6 +66,14 @@ class UserPage extends React.Component{
         }, () => {
             this.getUser()
         });
+    };
+
+    getCell=(e)=>{
+        const data =this.state.data;
+        cell=data[e];
+        console.log(cell);
+        cell?edit=false:edit=true;
+        console.log(edit);
     };
 
     searchById(){}
@@ -107,12 +119,12 @@ class UserPage extends React.Component{
                     <RaisedButton
                         className="ml100"
                         label="删除"
-                        disabled={this.state.edit}
+                        disabled={edit}
                     />
                     <RaisedButton
                         className="ml10"
                         label="编辑"
-                        disabled={this.state.edit}
+                        disabled={edit}
                     />
                     <IconMenu
                         iconButtonElement={<IconButton
@@ -128,6 +140,7 @@ class UserPage extends React.Component{
                         height="600px"
                         tableHeader={tableHead}
                         tableData={this.state.data}
+                        onClickCell={this.getCell.bind(this)}
                     />
                 </Paper>
             </div>

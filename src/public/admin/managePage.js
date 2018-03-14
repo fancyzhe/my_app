@@ -92,6 +92,13 @@ class ManagePage extends React.Component {
         this.setState({dialogOpen: true})
     }
 
+    getCell=(e)=>{
+        const data = this.state.data;
+        this.setState({
+            cell:data[e]
+        })
+    };
+
     componentDidMount() {
         this.getCost();
         this.getTown();
@@ -158,6 +165,7 @@ class ManagePage extends React.Component {
                         tableHeader={tableHead}
                         tableData={this.state.data}
                         className="table"
+                        onClickCell={this.getCell.bind(this)}
                     />
                 </Paper>
             </div>
