@@ -184,6 +184,7 @@ function connet() {
     app.post('/addUser', urlencodedParser, (req, res) => {
         console.log(req.body);
         const {id, name, IDcard, Provice, city, town, loudong, room, water, manage} = req.body;
+
         let sql = `INSERT INTO user (id,name,IDcard,Provice,city,town,loudong,room)
                         values (
                                     '${id}',
@@ -191,28 +192,32 @@ function connet() {
                                     '${IDcard}',
                                     '${Provice}',
                                     '${city}',
-                                    (SELECT name FROM town WHERE id = '${town}'),
+                                    (SELECT town.name FROM town WHERE town.id = '${town}'),
                                     '${loudong}',
                                     '${room}'
-                                );
-        INSERT INTO cost (id,name,town,water,manage)
+                                );`;
+        let sql1 = ` INSERT INTO cost (id,name,town,water,manage)
                         values (
                                     '${id}',
                                     '${name}',
-                                    (SELECT name FROM town WHERE id = '${town}'),
+                                    (SELECT town.name FROM town WHERE town.id = '${town}'),
                                     '${water}',
                                     '${manage}'
-                               );
-        INSERT INTO login (id,name,admin,pwd)
+                               );`;
+        let sql2 = `INSERT INTO login (id,name,admin,pwd)
                         values (
                                     '${id}',
                                     '${name}',
                                     '2',
                                     '123456'
-                        );
-`;
-        console.log(sql);
+                        );`;
         connection.query(sql, (err, result) => {
+            if (err) throw  err;
+        });
+        connection.query(sql1, (err, result) => {
+            if (err) throw  err;
+        });
+        connection.query(sql2, (err, result) => {
             if (err) throw  err;
         });
         res.send('success');

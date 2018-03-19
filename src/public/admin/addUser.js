@@ -52,10 +52,9 @@ export class AddUser extends React.Component {
                     this.setState({label: "下一步"});
                     break;
                 case 2:
-                    this.setState({label: "完成"});
-                    break;
-                case 3:
-                    this.setState({label: "继续添加"});
+                    this.setState({
+                        label: "继续添加",
+                    });
                     break;
             }
         });
@@ -73,15 +72,21 @@ export class AddUser extends React.Component {
     };
 
     changeSelect = (event, index, value) => {
-        console.log(event, index, value);
-        this.setState({
-            currentTown: value,
-            add: _.merge(this.state.add,{
-                town: value
+        if(value !== ALL_VALUE){
+            this.setState({
+                currentTown: value,
+                add: _.merge(this.state.add,{
+                    town: value
+                })
+            }, () => {
+                this.getAddressByTown();
+            });
+        }else {
+            this.setState({
+                currentTown: value,
+                currentProCity:''
             })
-        }, () => {
-            this.getAddressByTown();
-        });
+        }
     };
 
     getAddressByTown() {
@@ -135,7 +140,7 @@ export class AddUser extends React.Component {
             add: _.merge(this.state.add, {
                 name: v
             })
-        })
+        });
     };
 
     setIDcard = (e, v) => {
@@ -197,7 +202,7 @@ export class AddUser extends React.Component {
                     onClick={this.handleNext}
                     style={{marginRight: 12}}
                 />
-                {step > 0 && (
+                {step > 0 && step<2 && (
                     <FlatButton
                         label="上一步"
                         disabled={stepIndex === 0}
@@ -212,6 +217,7 @@ export class AddUser extends React.Component {
 
     render() {
         const {stepIndex} = this.state;
+        const {name,IDcard,loudong,room,water,manage} =this.state.add;
 
         return (
             <div style={{maxWidth: 380, maxHeight: 400, margin: 'auto'}}>
@@ -223,11 +229,13 @@ export class AddUser extends React.Component {
                             <TextField
                                 hintText="例：张三"
                                 onChange={this.setName}
+                                value={name}
                             />
                             <p>身份证号</p>
                             <TextField
                                 hintText="例：421182XXXXXX"
                                 onChange={this.setIDcard}
+                                value={IDcard}
                             />
                             {this.renderStepActions(0)}
                         </StepContent>
@@ -251,6 +259,7 @@ export class AddUser extends React.Component {
                                 hintText="例：9栋"
                                 style={{width: '100px'}}
                                 onChange={this.setLoudong}
+                                value={loudong}
                             />
                             <TextField
                                 floatingLabelText="房间号"
@@ -258,6 +267,7 @@ export class AddUser extends React.Component {
                                 className="inline ml30"
                                 style={{width: '100px'}}
                                 onChange={this.setRoom}
+                                value={room}
                             />
                             {this.renderStepActions(1)}
                         </StepContent>
@@ -275,6 +285,7 @@ export class AddUser extends React.Component {
                                 hintText="例：100"
                                 style={{width: '100px'}}
                                 onChange={this.setWater}
+                                value={water}
                             />
                             <TextField
                                 floatingLabelText="电费"
@@ -282,11 +293,13 @@ export class AddUser extends React.Component {
                                 className="inline ml30"
                                 style={{width: '100px'}}
                                 onChange={this.setManage}
+                                value={manage}
                             />
                             {this.renderStepActions(2)}
                         </StepContent>
                     </Step>
                 </Stepper>
+                {this.state.stepIndex>2 && this.renderStepActions(3)}
             </div>
         );
     }
