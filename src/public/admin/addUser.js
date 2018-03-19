@@ -265,7 +265,7 @@ export class AddUser extends React.Component {
                     <Step>
                         <StepLabel>生成ID号和开户充值</StepLabel>
                         <StepContent>
-                            <p className="inline">生成的ID号</p>
+                            <p className="inline">生成的ID号（初始密码为123456）</p>
                             <TextField
                                 disabled={true}
                                 value={this.state.add.id}

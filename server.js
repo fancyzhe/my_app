@@ -36,15 +36,16 @@ function connet() {
         database: 'test',
     });
 
+
     //登陆
     app.post('/login_post', urlencodedParser, function (req, res) {
         let sql = 'select * from login where id=' + req.body.id;
         let data = {};
         connection.query(sql, function (err, result, fields) {
             if (err) throw err;
-            if(!result[0]){
-                data.data={
-                    'admin':false,
+            if (!result[0]) {
+                data.data = {
+                    'admin': false,
                 }
             }
             for (let i = 0; i < result.length; i++) {
@@ -142,19 +143,19 @@ function connet() {
     });
 
     //添加小区
-    app.post('/addTown',urlencodedParser, (req, res) => {
+    app.post('/addTown', urlencodedParser, (req, res) => {
         const {id, name, pro, city, address} = req.body;
         let sql = `INSERT INTO TOWN (id,name,townPro,townCity,townAddress) 
        values ('${id}','${name}',(SELECT city.name FROM city WHERE city.id = '${pro}'),
        (SELECT city.name FROM city WHERE city.id = '${city}'),'${address}')`;
-        connection.query(sql,(err,result)=>{
-            if(err) throw  err;
+        connection.query(sql, (err, result) => {
+            if (err) throw  err;
         });
         res.send('success')
     });
 
     //通过选择小区确定省市区和具体地址
-    app.get('/getAddressByTown',(req,res)=>{
+    app.get('/getAddressByTown', (req, res) => {
         let sql = `SELECT townPro,townCity,townAddress FROM town  WHERE town.id = ${req.query.id}`;
         let data = {data: []};
         connection.query(sql, (err, result) => {
@@ -167,12 +168,12 @@ function connet() {
     });
 
     //获取用户ID
-    app.get('/getUserId',(req,res)=>{
+    app.get('/getUserId', (req, res) => {
         let sql = 'SELECT id FROM user ORDER BY id DESC LIMIT 1';
         let data;
-        connection.query(sql,(err,result)=>{
-            if(err) throw err;
-            _.map(result,item=>{
+        connection.query(sql, (err, result) => {
+            if (err) throw err;
+            _.map(result, item => {
                 data = item;
             });
             res.send(data)
@@ -180,9 +181,9 @@ function connet() {
     });
 
     //添加用户
-    app.post('/addUser',urlencodedParser,(req,res) => {
+    app.post('/addUser', urlencodedParser, (req, res) => {
         console.log(req.body);
-        const{id,name,IDcard,Provice,city,town,loudong,room,water,manage} = req.body;
+        const {id, name, IDcard, Provice, city, town, loudong, room, water, manage} = req.body;
         let sql = `INSERT INTO user (id,name,IDcard,Provice,city,town,loudong,room)
                         values (
                                     '${id}',
@@ -201,10 +202,18 @@ function connet() {
                                     (SELECT name FROM town WHERE id = '${town}'),
                                     '${water}',
                                     '${manage}'
-                               )`;
+                               );
+        INSERT INTO login (id,name,admin,pwd)
+                        values (
+                                    '${id}',
+                                    '${name}',
+                                    '2',
+                                    '123456'
+                        );
+`;
         console.log(sql);
-        connection.query(sql,(err,result)=>{
-            if(err) throw  err;
+        connection.query(sql, (err, result) => {
+            if (err) throw  err;
         });
         res.send('success');
     });
@@ -221,6 +230,18 @@ function connet() {
 }
 
 function start() {
-    connet();
 
+    connet().on('error',handleError);
+
+}
+
+function handleError (err) {
+    if (err) {
+        // 如果是连接断开，自动重新连接
+        if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+            connect();
+        } else {
+            console.error(err.stack || err);
+        }
+    }
 }

@@ -19,9 +19,6 @@ import {AddUser} from "./addUser";
 
 const tableHead = ['序号','ID','姓名','身份证号','省份','城市','小区','楼栋','房间号'];
 
-let cell;
-let edit=true;
-
 class UserPage extends React.Component{
 
     constructor(props){
@@ -69,11 +66,7 @@ class UserPage extends React.Component{
     };
 
     getCell=(e)=>{
-        const data =this.state.data;
-        cell=data[e];
-        console.log(cell);
-        cell?edit=false:edit=true;
-        console.log(edit);
+        return e;
     };
 
     searchById(){}
@@ -119,12 +112,10 @@ class UserPage extends React.Component{
                     <RaisedButton
                         className="ml100"
                         label="删除"
-                        disabled={edit}
                     />
                     <RaisedButton
                         className="ml10"
                         label="编辑"
-                        disabled={edit}
                     />
                     <IconMenu
                         iconButtonElement={<IconButton
@@ -133,7 +124,7 @@ class UserPage extends React.Component{
                         targetOrigin={{horizontal: 'left', vertical: 'top'}}
                         className="ml10"
                     >
-                        <MenuItem primaryText="增加小区" onClick={() => this.addUser()} leftIcon={<ContentAdd/>}/>
+                        <MenuItem primaryText="增加用户" onClick={() => this.addUser()} leftIcon={<ContentAdd/>}/>
                         <MenuItem primaryText="导出Excel" leftIcon={<Download/>}/>
                     </IconMenu>
                     <MyTable
