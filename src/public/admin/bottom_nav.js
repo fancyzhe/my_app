@@ -7,19 +7,19 @@ import React from "react";
 import {Badge, Drawer, FontIcon, IconButton, MenuItem, Paper} from 'material-ui';
 import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation';
 import {MuiThemeProvider} from "material-ui/styles/index";
-import './css/bottom_nav.css'
 import 'react-bootstrap'
-import UserPage from "../public/admin/userPage";
-import ManagePage from "../public/admin/managePage";
+import UserPage from "./userPage";
+import ManagePage from "./managePage";
 import {Link} from "react-router";
-import './css/bottom_nav.css';
+import './bottom_nav.css';
 
 class BottomNav extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             selectedIndex: 0,
-            open: false
+            open: false,
+            name: ''
         }
     }
 
@@ -46,10 +46,18 @@ class BottomNav extends React.Component {
                         openSecondary={true}
                         onRequestChange={(open) => this.setState({open})}
                     >
+                        <MenuItem>
+                            <FontIcon>
+                                {sessionStorage.name}
+                            </FontIcon>
+                        </MenuItem>
                         <MenuItem>修改个人信息</MenuItem>
                         <MenuItem>发布公告</MenuItem>
-                        <Link to={'/'} style={{'textDecoration': 'none'}}><MenuItem
-                            onClick={this.reLogin()}>重新登录</MenuItem></Link>
+                        <Link to={'/'} style={{'textDecoration': 'none'}}>
+                            <MenuItem
+                                onClick={this.reLogin}>重新登录
+                            </MenuItem>
+                        </Link>
                     </Drawer>
                 </MuiThemeProvider>
             </div>
@@ -61,26 +69,17 @@ class BottomNav extends React.Component {
         return (
             <div>
                 {
-                    select === 0 ? this.userPage()
-                        : select === 1 ? this.managementPage()
+                    select === 0 ? <UserPage/>
+                        : select === 1 ? <ManagePage/>
                         : this.adminBtn()
                 }
             </div>
         )
     }
 
-    userPage() {
-        return (
-            <UserPage/>
-        )
+    componentDidMount() {
+        console.log(sessionStorage);
     }
-
-    managementPage() {
-        return (
-            <ManagePage/>
-        )
-    }
-
 
     render() {
 

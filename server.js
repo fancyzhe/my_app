@@ -168,7 +168,7 @@ function connet() {
         })
     });
 
-    //获取用户ID
+    //添加用户市获取用户最新ID
     app.get('/getUserId', (req, res) => {
         let sql = 'SELECT id FROM user ORDER BY id DESC LIMIT 1';
         let data;
@@ -223,6 +223,11 @@ function connet() {
         });
         res.send('success');
     });
+
+    app.get('/getId',(req,res)=>{
+       let sql ;
+    });
+
 
     app.listen(3001);
 

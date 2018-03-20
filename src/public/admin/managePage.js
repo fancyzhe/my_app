@@ -16,6 +16,7 @@ import './admin.css'
 import Select from "../../common/select";
 import {ALL_VALUE, Local, setStateP} from "../../common/utils";
 import {AddTown} from "./addTown";
+import AddCost from "./addCost";
 
 //管理员水电费管理页面
 
@@ -31,10 +32,10 @@ class ManagePage extends React.Component {
             town: '',
             currentTown: ALL_VALUE,
             dialogOpen: false,
+            addCostLog:false,
             //query
             isOwe: true,
             findName: '',
-            edit:true
         }
     }
 
@@ -92,6 +93,16 @@ class ManagePage extends React.Component {
         this.setState({dialogOpen: true})
     }
 
+    costClose = () => {
+        this.setState({addCostLog: false})
+    };
+
+    addCost(){
+        this.setState({
+            addCostLog:true
+        })
+    }
+
     getCell=(e)=>{
         const data = this.state.data;
         this.setState({
@@ -115,6 +126,13 @@ class ManagePage extends React.Component {
                             onRequestClose={this.handleClose}
                         >
                             <AddTown/>
+                        </Dialog>
+                        <Dialog
+                            title="添加水电费"
+                            open={this.state.addCostLog}
+                            onRequestClose={this.costClose}
+                        >
+                            <AddCost />
                         </Dialog>
                         <p>小区名:</p>
                         <Select
@@ -143,9 +161,9 @@ class ManagePage extends React.Component {
                                       onClick={() => this.searchByName()}
                         />
 
-                        <RaisedButton label="编辑"
+                        <RaisedButton label="添加水电费"
                                       className="ml100"
-                                      disabled={this.state.edit}
+                                      onClick={()=>this.addCost()}
                         />
 
                         <IconMenu
@@ -165,6 +183,7 @@ class ManagePage extends React.Component {
                         tableHeader={tableHead}
                         tableData={this.state.data}
                         className="table"
+                        selectable={false}
                         onClickCell={this.getCell.bind(this)}
                     />
                 </Paper>

@@ -4,20 +4,22 @@
  */
 
 import React from 'react'
-import BottomNav from "../common/bottom_nav";
+import BottomNav from "./admin/bottom_nav";
 import {browserHistory} from "react-router";
+
 
 class Manage extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            isLoading: true
+        };
     }
 
 
-
     render() {
-        if(sessionStorage.admin!==1){
+        if (sessionStorage.admin != 1) {
             browserHistory.push('/');
         }
         return (
@@ -27,5 +29,6 @@ class Manage extends React.Component {
         )
     }
 }
+
 
 export default Manage

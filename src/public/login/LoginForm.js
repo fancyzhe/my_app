@@ -1,7 +1,7 @@
 import React from "react";
 import $ from 'jquery';
 import {Link, browserHistory} from "react-router";
-import {TextField, RaisedButton, Paper, Snackbar} from 'material-ui';
+import {TextField, RaisedButton, Paper, Snackbar, CircularProgress} from 'material-ui';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import "./login.css"
 import {Local} from "../../common/utils";
@@ -66,10 +66,6 @@ class LoginForm extends React.Component {
     setId(e, id) {
         this.setState({id});
         id.length > 8 ? this.setState({errorIdText: "用户名不能超过八位~"}) : this.setState({errorIdText: ""});
-    }
-
-    componentDidMount() {
-
     }
 
     render() {

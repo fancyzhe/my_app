@@ -44,6 +44,11 @@ class User extends React.Component {
                         openSecondary={true}
                         onRequestChange={(open) => this.setState({open})}
                     >
+                        <MenuItem>
+                            <FontIcon>
+                                {sessionStorage.name}
+                            </FontIcon>
+                        </MenuItem>
                         <MenuItem>查看个人信息</MenuItem>
                         <Link to={'/'} style={{'textDecoration': 'none'}}><MenuItem
                             onClick={this.reLogin()}>重新登录</MenuItem></Link>
@@ -58,26 +63,13 @@ class User extends React.Component {
         return (
             <div>
                 {
-                    select === 0 ? this.costPage()
-                        : select === 1 ? this.historyPage()
+                    select === 0 ? <Cost/>
+                        : select === 1 ? <History/>
                         : this.adminBtn()
                 }
             </div>
         )
     }
-
-    costPage() {
-        return (
-            <Cost/>
-        )
-    }
-
-    historyPage() {
-        return (
-            <History/>
-        )
-    }
-
 
     render() {
 

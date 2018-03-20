@@ -8,7 +8,7 @@ import {setTitle} from "./common/utils";
 
 
 class App extends React.Component {
-
+    
     render() {
         if (!sessionStorage.name) {
             browserHistory.push('/');

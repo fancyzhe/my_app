@@ -31,6 +31,8 @@ xmind文件是整个项目的思维导图和表结构
        f-login 开发登陆界面分支
        f-user 开发用户界面分支
        f-admin 开发管理员界面分支
+        
+    将用户名和密码权限保存在sessionStorage中
        
 后端部分：
       nodeJS写接口，用supervisor搭建了node的热更新。
