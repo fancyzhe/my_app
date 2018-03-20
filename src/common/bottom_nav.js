@@ -25,6 +25,7 @@ class BottomNav extends React.Component {
 
     reLogin() {
         //清楚登陆信息的缓存
+        sessionStorage.clear()
 
     }
 

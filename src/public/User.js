@@ -23,13 +23,8 @@ class User extends React.Component {
         }
     }
 
-    delCookie() {
-
-        console.log(1);
-    } //删除登陆信息
-
     reLogin() {
-
+        sessionStorage.clear()
     }
 
 
@@ -50,7 +45,8 @@ class User extends React.Component {
                         onRequestChange={(open) => this.setState({open})}
                     >
                         <MenuItem>查看个人信息</MenuItem>
-                        <MenuItem onClick={this.reLogin.bind(this)}>重新登录</MenuItem>
+                        <Link to={'/'} style={{'textDecoration': 'none'}}><MenuItem
+                            onClick={this.reLogin()}>重新登录</MenuItem></Link>
                     </Drawer>
                 </MuiThemeProvider>
             </div>

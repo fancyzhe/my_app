@@ -52,6 +52,7 @@ function connet() {
                 if (req.body.password === result[0]['pwd']) {
                     data.data = {
                         'admin': result[0]['admin'],
+                        'name':result[0].name
                     }
                 } else {
                     data.data = ({
