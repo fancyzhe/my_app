@@ -19,7 +19,7 @@ class Manage extends React.Component {
 
 
     render() {
-        if (sessionStorage.admin != 1) {
+        if (sessionStorage.admin == 2) {
             browserHistory.push('/');
         }
         return (

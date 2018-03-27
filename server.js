@@ -64,6 +64,18 @@ function connet() {
         });
     });
 
+    app.get('/getMax',urlencodedParser,(req,res)=>{
+        let sql = `SELECT max FROM admin where id = '${req.query.id}'`;
+        let data;
+        connection.query(sql,(err,result,fields)=>{
+            if(err) throw err;
+            _.map(result,item=>{
+                data = item
+            });
+            res.send(data)
+        })
+    });
+
     //管理员
     app.get('/getCost', urlencodedParser, (req, res) => {
         let townName = req.query.currentTown != 'ALL_VALUE' ? `town = (select name from town where id = '${req.query.currentTown}')` : true;

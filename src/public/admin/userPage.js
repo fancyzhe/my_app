@@ -15,30 +15,33 @@ import $ from 'jquery';
 import Select from "../../common/select";
 import {AddUser} from "./addUser";
 
-    //管理员居民信息管理界面
+//管理员居民信息管理界面
 
-const tableHead = ['序号','ID','姓名','身份证号','省份','城市','小区','楼栋','房间号'];
+const tableHead = ['序号', 'ID', '姓名', '身份证号', '省份', '城市', '小区', '楼栋', '房间号'];
 
-class UserPage extends React.Component{
+class UserPage extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state={
-            data:[],
-            town:[],
+        this.state = {
+            data: [],
+            town: [],
             currentTown: ALL_VALUE,
-            edit:true,
-            dialog:false,
-            cell:'',
-            e:''
+            edit: true,
+            dialog: false,
+            cell: '',
+            e: '',
+            adminTown: {
+                display: 'none'
+            }
         }
     }
 
-    getUser(){
-        $.get(Local+'/getUser')
-            .then(res=>{
+    getUser() {
+        $.get(Local + '/getUser')
+            .then(res => {
                 this.setState({
-                    data:res.data
+                    data: res.data
                 })
             })
     }
@@ -58,6 +61,25 @@ class UserPage extends React.Component{
             )
     }
 
+    getMax() {
+        console.log(sessionStorage);
+        $.get(Local + '/getMax', {id: sessionStorage.id})
+            .then(
+                res => {
+                    this.setState({max: res.max})
+                }
+            )
+            .then(()=>{
+                if (this.state.max == 0) {
+                    this.setState({
+                        adminTown: {
+                            display:'inline-block'
+                        }
+                    })
+                }
+            })
+    }
+
     changeSelect = (event, index, value) => {
         this.setState({
             currentTown: value,
@@ -66,55 +88,59 @@ class UserPage extends React.Component{
         });
     };
 
-    getCell=(e)=>{
+    getCell = (e) => {
         console.log(e[0]);
-        if(e[0]+1){
+        if (e[0] + 1) {
             this.setState({
-                edit:false
+                edit: false
             })
-        }else this.setState({
-            edit:true
+        } else this.setState({
+            edit: true
         })
     };
 
-    searchById(){}
-
-    componentDidMount(){
-        this.getUser();
-        this.getTown();
+    searchById() {
     }
 
-    addUser(){
-        this.setState({dialog:true})
+    componentDidMount() {
+        this.getUser();
+        this.getTown();
+        this.getMax();
+    }
+
+    addUser() {
+        this.setState({dialog: true})
     }
 
     handleClose = () => {
         this.setState({dialog: false})
     };
 
-    render(){
-        return(
-            <div style={{'textAlign':'center'}}>
-                <Paper className="paper mt5" zDepth={5} style={{textAlign:'left'}}>
+    render() {
+        return (
+            <div style={{'textAlign': 'center'}}>
+                <Paper className="paper mt5" zDepth={5} style={{textAlign: 'left'}}>
                     <Dialog
                         open={this.state.dialog}
                         title="添加用户"
                         onRequestClose={this.handleClose}
                     >
-                        <AddUser />
+                        <AddUser/>
                     </Dialog>
-                    <p className="inline ml30">小区名</p>
-                    <Select
-                        className="inline"
-                        data={this.state.town}
-                        value={this.state.currentTown}
-                        onChange={this.changeSelect}
-                    />
-                    <TextField hintText="输入身份证号或者ID号"/>
+                    <div style={this.state.adminTown}>
+                        <p className="inline ml30">小区名</p>
+                        <Select
+                            className="inline"
+                            data={this.state.town}
+                            value={this.state.currentTown}
+                            onChange={this.changeSelect}
+                        />
+                    </div>
+                    <TextField hintText="输入身份证号或者ID号" className="ml30"/>
                     <RaisedButton
                         label="搜索"
                         primary={true}
-                        onClick={()=>this.searchById()}
+                        onClick={() => this.searchById()}
                         className="ml10"
                     />
                     <RaisedButton
@@ -149,4 +175,4 @@ class UserPage extends React.Component{
     }
 }
 
-export  default UserPage
+export default UserPage

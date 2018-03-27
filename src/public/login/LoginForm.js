@@ -36,10 +36,11 @@ class LoginForm extends React.Component {
             $.post(Local + '/login_post', {'id': this.state.id, 'password': this.state.pwd}, function (res, req) {
                 thiz.setState({admin: res.data.admin,name:res.data.name})
             }).then(() => {
-                const {admin,name} = this.state;
+                const {admin,name,id} = this.state;
                 if (admin) {
                     sessionStorage.name = name;
                     sessionStorage.admin = admin;
+                    sessionStorage.id = id;
                     admin === 1 && browserHistory.push('/manage');
                     admin === 2 && browserHistory.push('/user');
                 } else {
