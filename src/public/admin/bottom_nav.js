@@ -4,7 +4,7 @@
  */
 
 import React from "react";
-import {Badge, Drawer, FontIcon, IconButton, MenuItem, Paper} from 'material-ui';
+import {Badge, Dialog, Drawer, FontIcon, IconButton, MenuItem, Paper} from 'material-ui';
 import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation';
 import {MuiThemeProvider} from "material-ui/styles/index";
 import 'react-bootstrap'
@@ -12,6 +12,8 @@ import UserPage from "./userPage";
 import ManagePage from "./managePage";
 import {Link} from "react-router";
 import './bottom_nav.css';
+import '../../index.css'
+import ChangeInfo from "./changeInfo";
 
 class BottomNav extends React.Component {
     constructor(props) {
@@ -19,7 +21,8 @@ class BottomNav extends React.Component {
         this.state = {
             selectedIndex: 0,
             open: false,
-            name: ''
+            name: '',
+            changeInfoDialog: false
         }
     }
 
@@ -28,6 +31,16 @@ class BottomNav extends React.Component {
         sessionStorage.clear()
 
     }
+
+    changeInfo() {
+        this.setState({
+            changeInfoDialog: true
+        });
+    }
+
+    handleClose = () => {
+        this.setState({changeInfoDialog: false})
+    };
 
 
     select = (index) => this.setState({selectedIndex: index});
@@ -51,7 +64,7 @@ class BottomNav extends React.Component {
                                 {sessionStorage.name}
                             </FontIcon>
                         </MenuItem>
-                        <MenuItem>修改个人信息</MenuItem>
+                        <MenuItem onClick={this.changeInfo.bind(this)}>修改个人信息</MenuItem>
                         <MenuItem>发布公告</MenuItem>
                         <Link to={'/'} style={{'textDecoration': 'none'}}>
                             <MenuItem
@@ -75,10 +88,6 @@ class BottomNav extends React.Component {
                 }
             </div>
         )
-    }
-
-    componentDidMount() {
-        console.log(sessionStorage);
     }
 
     render() {
@@ -115,6 +124,13 @@ class BottomNav extends React.Component {
                         />
                     </BottomNavigation>
                 </Paper>
+                <Dialog
+                    title="修改个人信息"
+                    open={this.state.changeInfoDialog}
+                    onRequestClose={this.handleClose}
+                >
+                    <ChangeInfo />
+                </Dialog>
                 {
                     this.adminPage()
                 }

@@ -33,9 +33,10 @@ class Select extends React.Component {
                     maxHeight={maxHeight}
                 >
                     {
-                        _.map(data, x => {
+                        _.map(data, (x,index) => {
                             return (
                                 <MenuItem
+                                    key={index}
                                     primaryText={x.name}
                                     value={x.id}
                                 />

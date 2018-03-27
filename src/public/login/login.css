@@ -9,7 +9,7 @@
     right: 0;
     padding: 20px;
     position: absolute;
-    margin: auto;
+    margin: auto 60%;
 }
 
 .btn_login{
@@ -28,4 +28,13 @@
     margin-left: 50px;
     text-decoration: none;
     color: #888888;
+}
+
+.login{
+    background-color: #4BB8D0;
+}
+
+.loginImg{
+    margin-left: 20%;
+    margin-top: 17%;
 }

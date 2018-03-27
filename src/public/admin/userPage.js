@@ -30,6 +30,7 @@ class UserPage extends React.Component{
             edit:true,
             dialog:false,
             cell:'',
+            e:''
         }
     }
 
@@ -66,7 +67,14 @@ class UserPage extends React.Component{
     };
 
     getCell=(e)=>{
-        return e;
+        console.log(e[0]);
+        if(e[0]+1){
+            this.setState({
+                edit:false
+            })
+        }else this.setState({
+            edit:true
+        })
     };
 
     searchById(){}
@@ -112,10 +120,12 @@ class UserPage extends React.Component{
                     <RaisedButton
                         className="ml100"
                         label="删除"
+                        disabled={this.state.edit}
                     />
                     <RaisedButton
                         className="ml10"
                         label="编辑"
+                        disabled={this.state.edit}
                     />
                     <IconMenu
                         iconButtonElement={<IconButton

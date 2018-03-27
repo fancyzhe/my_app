@@ -14,7 +14,18 @@ class myTable extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state={
+            selected:false
+        }
     }
+
+    onRowSelection(e){
+        this.props.onClickCell(e);
+        this.setState({
+            selected:e[0]
+        })
+    }
+
 
     render() {
 
@@ -22,7 +33,6 @@ class myTable extends React.Component {
             tableHeader, tableData, selectable, height,
             fixedHeader, fixedFooter, multiSelectable,
             showRowHover, displayRowCheckbox, displaySelectAll,
-            onClickCell,
         } = this.props;
 
         return (
@@ -33,7 +43,7 @@ class myTable extends React.Component {
                 fixedFooter={fixedFooter}
                 multiSelectable={multiSelectable}
                 className="table_df"
-                onRowSelection={onClickCell}
+                onRowSelection={this.onRowSelection.bind(this)}
             >
 
                 <TableHeader
@@ -60,14 +70,14 @@ class myTable extends React.Component {
                     {
                         _.map(tableData, (x, index) => {
                             return (
-                                <TableRow>
+                                <TableRow key={index} selected={index===this.state.selected}>
                                     {
-                                        <TableRowColumn className="tab_item" >
+                                        <TableRowColumn className="tab_item" key={index}>
                                             {index + 1}
                                         </TableRowColumn>
                                     }
                                     {
-                                        _.map(x, item => <TableRowColumn tooltip={item}>
+                                        _.map(x, item => <TableRowColumn tooltip={item} key={index}>
                                             {
                                                 item
                                             }

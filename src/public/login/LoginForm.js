@@ -5,6 +5,7 @@ import {TextField, RaisedButton, Paper, Snackbar, CircularProgress} from 'materi
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import "./login.css"
 import {Local} from "../../common/utils";
+import login from '../../img/login.png'
 
 /**
  *
@@ -74,6 +75,7 @@ class LoginForm extends React.Component {
 
         return (
             <div>
+                <img  src={login} className="loginImg"/>
                 <div className="login">
                     <MuiThemeProvider>
                         <Paper className="form" zDepth={3}>
