@@ -75,7 +75,7 @@ class LoginForm extends React.Component {
         const {errorIdText, errorPwdText} = this.state;
 
         return (
-            <div>
+            <div className="blue hidden h800">
                 <img  src={login} className="loginImg"/>
                 <div className="login">
                     <MuiThemeProvider>

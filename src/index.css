@@ -2,17 +2,25 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  background-color: #4BB8D0;
+  height: 100%;
 }
 .inline{
   display: inline-block !important;
 }
-
+.relative{
+  position: relative !important;
+}
+.left{
+  float: left;
+}
 .ml10{
   margin-left: 10px !important;
 }
 .mt5{
   margin-top: 5px !important;
+}
+.mt10{
+  margin-top: 10px !important;
 }
 .ml30{
   margin-left: 30px !important;
@@ -26,7 +34,26 @@ body {
 .w100{
   width: 100px !important;
 }
+.w100s{
+  width: 100% !important;
+}
+
+.h800{
+  height: 800px !important;
+}
 
 .mt30{
   margin-top: 30px !important;
+}
+
+.blue{
+  background-color: #4BB8D0 !important;
+}
+
+.grey{
+  background-color: #EAE9E9 !important;
+}
+
+.hidden{
+  overflow: hidden;
 }

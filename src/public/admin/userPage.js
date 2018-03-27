@@ -12,8 +12,10 @@ import './admin.css'
 import MyTable from "../../common/table";
 import {ALL_VALUE, Local} from "../../common/utils";
 import $ from 'jquery';
+import _ from 'lodash';
 import Select from "../../common/select";
 import {AddUser} from "./addUser";
+import Pagination from "../../common/pagination";
 
 //管理员居民信息管理界面
 
@@ -29,16 +31,22 @@ class UserPage extends React.Component {
             currentTown: ALL_VALUE,
             edit: true,
             dialog: false,
-            cell: '',
+            total:100,
             e: '',
             adminTown: {
                 display: 'none'
+            },
+            dir:'',
+            query:{
+                search:'',
+                page:1,
+                town:''
             }
         }
     }
 
     getUser() {
-        $.get(Local + '/getUser')
+        $.get(Local + '/getUser',{})
             .then(res => {
                 this.setState({
                     data: res.data
@@ -62,19 +70,24 @@ class UserPage extends React.Component {
     }
 
     getMax() {
-        console.log(sessionStorage);
         $.get(Local + '/getMax', {id: sessionStorage.id})
             .then(
                 res => {
-                    this.setState({max: res.max})
+                    this.setState({
+                        max: res.data.max,
+                        dir:res.data
+                    })
                 }
             )
-            .then(()=>{
+            .then(() => {
                 if (this.state.max == 0) {
                     this.setState({
                         adminTown: {
-                            display:'inline-block'
-                        }
+                            display: 'inline-block'
+                        },
+                        query:_.merge(this.state.query,{
+                            town:this.state.dir.townName
+                        })
                     })
                 }
             })
@@ -99,14 +112,19 @@ class UserPage extends React.Component {
         })
     };
 
+    changePage(page){
+        console.log(page);
+    }
+
     searchById() {
     }
 
     componentDidMount() {
-        this.getUser();
-        this.getTown();
+        sessionStorage.admin===0 && this.getTown();
         this.getMax();
+        this.getUser();
     }
+
 
     addUser() {
         this.setState({dialog: true})
@@ -118,58 +136,59 @@ class UserPage extends React.Component {
 
     render() {
         return (
-            <div style={{'textAlign': 'center'}}>
-                <Paper className="paper mt5" zDepth={5} style={{textAlign: 'left'}}>
-                    <Dialog
-                        open={this.state.dialog}
-                        title="添加用户"
-                        onRequestClose={this.handleClose}
-                    >
-                        <AddUser/>
-                    </Dialog>
-                    <div style={this.state.adminTown}>
-                        <p className="inline ml30">小区名</p>
-                        <Select
-                            className="inline"
-                            data={this.state.town}
-                            value={this.state.currentTown}
-                            onChange={this.changeSelect}
-                        />
-                    </div>
-                    <TextField hintText="输入身份证号或者ID号" className="ml30"/>
-                    <RaisedButton
-                        label="搜索"
-                        primary={true}
-                        onClick={() => this.searchById()}
-                        className="ml10"
+            <div>
+                <Dialog
+                    open={this.state.dialog}
+                    title="添加用户"
+                    onRequestClose={this.handleClose}
+                >
+                    <AddUser/>
+                </Dialog>
+                <div style={this.state.adminTown}>
+                    <p className="inline ml30">小区名</p>
+                    <Select
+                        className="inline"
+                        data={this.state.town}
+                        value={this.state.currentTown}
+                        onChange={this.changeSelect}
                     />
-                    <RaisedButton
-                        className="ml100"
-                        label="删除"
-                        disabled={this.state.edit}
-                    />
-                    <RaisedButton
-                        className="ml10"
-                        label="编辑"
-                        disabled={this.state.edit}
-                    />
-                    <IconMenu
-                        iconButtonElement={<IconButton
-                            style={{position: 'relative', top: '5px'}}><MoreVertIcon/></IconButton>}
-                        anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-                        targetOrigin={{horizontal: 'left', vertical: 'top'}}
-                        className="ml10"
-                    >
-                        <MenuItem primaryText="增加用户" onClick={() => this.addUser()} leftIcon={<ContentAdd/>}/>
-                        <MenuItem primaryText="导出Excel" leftIcon={<Download/>}/>
-                    </IconMenu>
-                    <MyTable
-                        height="600px"
-                        tableHeader={tableHead}
-                        tableData={this.state.data}
-                        onClickCell={this.getCell.bind(this)}
-                    />
-                </Paper>
+                </div>
+                <TextField hintText="输入身份证号或者ID号" className="ml30"/>
+                <RaisedButton
+                    label="搜索"
+                    primary={true}
+                    onClick={() => this.searchById()}
+                    className="ml10"
+                />
+                <RaisedButton
+                    className="ml100"
+                    label="删除"
+                    disabled={this.state.edit}
+                />
+                <RaisedButton
+                    className="ml10"
+                    label="编辑"
+                    disabled={this.state.edit}
+                />
+                <IconMenu
+                    iconButtonElement={<IconButton
+                        style={{position: 'relative', top: '5px'}}><MoreVertIcon/></IconButton>}
+                    anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+                    targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                    className="ml10"
+                >
+                    <MenuItem primaryText="增加用户" onClick={() => this.addUser()} leftIcon={<ContentAdd/>}/>
+                    <MenuItem primaryText="导出Excel" leftIcon={<Download/>}/>
+                </IconMenu>
+                <MyTable
+                    tableHeader={tableHead}
+                    tableData={this.state.data}
+                    onClickCell={this.getCell.bind(this)}
+                />
+                <Pagination
+                    total={this.state.total}
+                    onChange={this.changePage}
+                />
             </div>
         )
     }

@@ -65,12 +65,14 @@ function connet() {
     });
 
     app.get('/getMax',urlencodedParser,(req,res)=>{
-        let sql = `SELECT max FROM admin where id = '${req.query.id}'`;
-        let data;
+        let sql = `SELECT * FROM admin where id = '${req.query.id}'`;
+        let data={
+            data:[]
+        };
         connection.query(sql,(err,result,fields)=>{
             if(err) throw err;
             _.map(result,item=>{
-                data = item
+                data.data.push(item)
             });
             res.send(data)
         })
