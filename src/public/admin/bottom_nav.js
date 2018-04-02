@@ -5,17 +5,17 @@
 
 import React from "react";
 import {AppBar, Badge, Dialog, Divider, Drawer, FontIcon, IconButton, Menu, MenuItem, Paper} from 'material-ui';
-import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation';
 import {MuiThemeProvider} from "material-ui/styles/index";
-import RemoveRedEye from 'material-ui/svg-icons/image/remove-red-eye';
-import ContentLink from 'material-ui/svg-icons/content/link';
 import 'react-bootstrap'
+import $ from 'jquery';
 import UserPage from "./userPage";
 import ManagePage from "./managePage";
 import {Link} from "react-router";
 import './bottom_nav.css';
 import '../../index.css'
 import ChangeInfo from "./changeInfo";
+import {Local} from "../../common/utils";
+import MoneyPage from "./moneyPage";
 
 const nav = [
     '居民信息',
@@ -79,6 +79,7 @@ class BottomNav extends React.Component {
                             primaryText="充值卡管理"
                             style={{width: '285px'}}
                             leftIcon={<i className="mdui-icon material-icons">attach_money</i>}
+                            onClick={()=>this.select(2)}
                         />
                         <MenuItem
                             primaryText="公告管理"
@@ -135,11 +136,14 @@ class BottomNav extends React.Component {
                 return (<UserPage/>);
             case 1 :
                 return (<ManagePage/>);
+            case 2 :
+                return(<MoneyPage />);
         }
     }
 
     componentDidMount() {
-
+        $.get(Local + '/getTownName',{id:sessionStorage.id})
+            .then()
     }
 
     render() {

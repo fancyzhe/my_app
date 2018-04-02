@@ -95,6 +95,29 @@ function connet() {
         })
     });
 
+    app.get('/getTownName',(req,res)=>{
+
+    });
+
+    app.get('/getMoney',(req,res)=>{
+        let sql = `SELECT * FROM money limit ${(req.query.pageIndex-1)* 10},10`;
+        let data = {data:[],total:0};
+        connection.query(sql,(err,result)=>{
+            if(err) throw err;
+            _.map(result,item=>{
+                data.data.push(item)
+            });
+        });
+        connection.query('SELECT COUNT(*) FROM money',(err,result)=>{
+            if(err) throw err;
+            _.map(result,item=>{
+                data.total = item['COUNT(*)']
+            });
+            res.send(data)
+        });
+
+    });
+
     app.get('/getTown', (req, res) => {
         let sql = 'select id,name from town';
         let data = {data: []};
