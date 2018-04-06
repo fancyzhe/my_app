@@ -10,9 +10,9 @@ import {Checkbox, Dialog, IconButton, IconMenu, MenuItem, Paper, TextField, Togg
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import Download from 'material-ui/svg-icons/file/file-download';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import MyTable from "../../common/table";
+import MyTable from "../../../common/table";
 import RaisedButton from 'material-ui/RaisedButton';
-import './admin.css'
+import '../admin.css'
 import Select from "../../common/select";
 import {ALL_VALUE, Local, setStateP} from "../../common/utils";
 import {AddTown} from "./addTown";

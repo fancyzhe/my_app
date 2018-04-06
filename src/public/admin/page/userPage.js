@@ -8,7 +8,7 @@ import {Dialog, IconButton, IconMenu, MenuItem, Paper, RaisedButton, TextField} 
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import Download from 'material-ui/svg-icons/file/file-download';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import './admin.css'
+import '../admin.css'
 import MyTable from "../../common/table";
 import {ALL_VALUE, Local} from "../../common/utils";
 import $ from 'jquery';

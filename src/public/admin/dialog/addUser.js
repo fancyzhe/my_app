@@ -12,10 +12,10 @@ import {
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import {TextField} from "material-ui";
-import Select from "../../common/select";
+import Select from "../../../common/select";
 import $ from "jquery";
 import _ from "lodash"
-import {ALL_VALUE, Local} from "../../common/utils";
+import {ALL_VALUE, Local} from "../../../common/utils";
 
 export class AddUser extends React.Component {
     state = {

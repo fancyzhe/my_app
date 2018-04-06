@@ -6,7 +6,7 @@
 import React from 'react';
 import {Divider, RaisedButton, TextField} from "material-ui";
 import $ from 'jquery'
-import {Local} from "../../common/utils";
+import {Local} from "../../../common/utils";
 
 class AddCost extends React.Component {
 

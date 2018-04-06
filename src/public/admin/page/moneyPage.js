@@ -4,12 +4,12 @@
  */
 
 import React from "react";
-import {Local} from "../../common/utils";
+import {Local} from "../../../common/utils";
 import $ from 'jquery';
-import MyTable from '../../common/table'
-import Pagination from "../../common/pagination";
+import MyTable from '../../../common/table'
+import Pagination from "../../../common/pagination";
 
-const tableHead = ['序号','编号','ID','密码','是否被使用']
+const tableHead = ['序号','编号','ID','密码','是否被使用'];
 
 class MoneyPage extends React.Component{
 
@@ -37,6 +37,10 @@ class MoneyPage extends React.Component{
         this.getList()
     }
 
+    changePage (e){
+        this.setState({pageIndex:e}, ()=>{this.getList()})
+    };
+
     render(){
         return(
             <div>
@@ -49,6 +53,7 @@ class MoneyPage extends React.Component{
                 />
                 <Pagination
                     total={this.state.total}
+                    onChange={this.changePage()}
                 />
             </div>
         )

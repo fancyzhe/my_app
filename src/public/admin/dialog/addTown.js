@@ -6,10 +6,10 @@
 import React from 'react'
 import {Step, Stepper, StepLabel} from 'material-ui/Stepper'
 import {FlatButton, RaisedButton, TextField} from "material-ui";
-import Select from "../../common/select";
+import Select from "../../../common/select";
 import $ from 'jquery'
 import _ from 'lodash'
-import {Local} from "../../common/utils";
+import {Local} from "../../../common/utils";
 
 export class AddTown extends React.Component {
 
