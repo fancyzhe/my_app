@@ -4,15 +4,8 @@
     <list default="true" id="0c548932-d313-4e02-8557-91baa9bd8f71" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/server.js" afterPath="$PROJECT_DIR$/server.js" />
-      <change beforePath="$PROJECT_DIR$/src/common/pagination.js" afterPath="$PROJECT_DIR$/src/common/pagination.js" />
-      <change beforePath="$PROJECT_DIR$/src/common/table.js" afterPath="$PROJECT_DIR$/src/common/table.js" />
-      <change beforePath="$PROJECT_DIR$/src/public/admin/bottom_nav.js" afterPath="$PROJECT_DIR$/src/public/admin/bottom_nav.js" />
-      <change beforePath="$PROJECT_DIR$/src/public/admin/page/managePage.js" afterPath="$PROJECT_DIR$/src/public/admin/page/managePage.js" />
-      <change beforePath="$PROJECT_DIR$/src/public/admin/page/moneyPage.js" afterPath="$PROJECT_DIR$/src/public/admin/page/moneyPage.js" />
+      <change beforePath="$PROJECT_DIR$/src/public/admin/dialog/addUser.js" afterPath="$PROJECT_DIR$/src/public/admin/dialog/addUser.js" />
       <change beforePath="$PROJECT_DIR$/src/public/admin/page/userPage.js" afterPath="$PROJECT_DIR$/src/public/admin/page/userPage.js" />
-      <change beforePath="$PROJECT_DIR$/src/public/login/LoginForm.js" afterPath="$PROJECT_DIR$/src/public/login/LoginForm.js" />
-      <change beforePath="$PROJECT_DIR$/src/public/login/login.css" afterPath="$PROJECT_DIR$/src/public/login/login.css" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" afterPath="$PROJECT_DIR$/yarn.lock" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -61,22 +54,9 @@
       <file leaf-file-name="server.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/server.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="131" column="47" lean-forward="true" selection-start-line="131" selection-start-column="47" selection-end-line="131" selection-end-column="47" />
+            <state relative-caret-position="285">
+              <caret line="268" column="26" lean-forward="false" selection-start-line="268" selection-start-column="26" selection-end-line="268" selection-end-column="26" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pagination.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/common/pagination.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="17" column="9" lean-forward="true" selection-start-line="17" selection-start-column="9" selection-end-line="17" selection-end-column="9" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-                <element signature="e#24#50#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -116,14 +96,26 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="userPage.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="userPage.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/public/admin/page/userPage.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="367">
-              <caret line="118" column="23" lean-forward="true" selection-start-line="117" selection-start-column="26" selection-end-line="118" selection-end-column="23" />
+            <state relative-caret-position="312">
+              <caret line="164" column="23" lean-forward="true" selection-start-line="164" selection-start-column="23" selection-end-line="164" selection-end-column="23" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <element signature="e#21#47#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="addUser.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/public/admin/dialog/addUser.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="177">
+              <caret line="197" column="17" lean-forward="true" selection-start-line="197" selection-start-column="17" selection-end-line="197" selection-end-column="17" />
+              <folding>
+                <element signature="e#20#45#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -154,8 +146,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>open</find>
-      <find>App</find>
       <find>nearbyIcon</find>
       <find>dialogOpen</find>
       <find>onClickCell</find>
@@ -184,10 +174,13 @@
       <find>getM</find>
       <find>max</find>
       <find>LIMIT</find>
+      <find>add</find>
+      <find>Provice</find>
     </findStrings>
     <replaceStrings>
       <replace>currentTown</replace>
       <replace>className</replace>
+      <replace>Provice</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -231,6 +224,7 @@
         <option value="$PROJECT_DIR$/src/common/table.js" />
         <option value="$PROJECT_DIR$/src/public/admin/page/userPage.js" />
         <option value="$PROJECT_DIR$/server.js" />
+        <option value="$PROJECT_DIR$/src/public/admin/dialog/addUser.js" />
       </list>
     </option>
   </component>
@@ -399,12 +393,12 @@
       <workItem from="1522054107543" duration="4763000" />
       <workItem from="1522113377820" duration="21570000" />
       <workItem from="1522632358210" duration="7373000" />
-      <workItem from="1522832229028" duration="7707000" />
+      <workItem from="1522832229028" duration="13531000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="174534000" />
+    <option name="totallyTimeSpent" value="180358000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -444,20 +438,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/node_modules/jquery/dist/jquery.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/material-ui/TextField/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dao/p_login.js" />
     <entry file="file://$PROJECT_DIR$/src/registerServiceWorker.js">
       <provider selected="true" editor-type-id="text-editor">
@@ -788,21 +768,39 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/server.js">
+    <entry file="file://$PROJECT_DIR$/node_modules/material-ui/Dialog/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="131" column="47" lean-forward="true" selection-start-line="131" selection-start-column="47" selection-end-line="131" selection-end-column="47" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/public/admin/page/userPage.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="367">
-          <caret line="118" column="23" lean-forward="true" selection-start-line="117" selection-start-column="26" selection-end-line="118" selection-end-column="23" />
+        <state relative-caret-position="312">
+          <caret line="164" column="23" lean-forward="true" selection-start-line="164" selection-start-column="23" selection-end-line="164" selection-end-column="23" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <element signature="e#21#47#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/server.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="268" column="26" lean-forward="false" selection-start-line="268" selection-start-column="26" selection-end-line="268" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/public/admin/dialog/addUser.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="177">
+          <caret line="197" column="17" lean-forward="true" selection-start-line="197" selection-start-column="17" selection-end-line="197" selection-end-column="17" />
+          <folding>
+            <element signature="e#20#45#0" expanded="true" />
           </folding>
         </state>
       </provider>

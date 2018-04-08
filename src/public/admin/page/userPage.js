@@ -99,7 +99,6 @@ class UserPage extends React.Component {
                         })
                     })
                 }
-                console.log(this.state.dir.townName);
                 sessionStorage.townName=this.state.dir.townName
             })
             .then(()=>{
@@ -107,8 +106,17 @@ class UserPage extends React.Component {
     }
 
     changeSelect = (event, index, value) => {
+        let town;
+        _.map(this.state.town,item=>{
+            if(item.id ===value){
+                town=item.name
+            }
+        });
         this.setState({
             currentTown: value,
+            query:_.merge(this.state.query,{
+                town
+            })
         }, () => {
             this.getUser()
         });
@@ -127,7 +135,6 @@ class UserPage extends React.Component {
 
     changePage(page){
         this.setState({pageIndex:page});
-        console.log(this.state);
     }
 
     searchById() {

@@ -28,8 +28,12 @@ export class AddUser extends React.Component {
         city: [],
         town: [],
         add: {
+            adminId:sessionStorage.id,
+            adminNam:sessionStorage.name,
             id: '',
             name: '',
+            sex:'',
+            phone:'',
             IDcard: '',
             Provice: '',
             city: '',
@@ -142,6 +146,13 @@ export class AddUser extends React.Component {
             })
         });
     };
+    setPhone=(e, v) => {
+        this.setState({
+            add: _.merge(this.state.add, {
+                phone: v
+            })
+        })
+    };
 
     setIDcard = (e, v) => {
         this.setState({
@@ -184,7 +195,10 @@ export class AddUser extends React.Component {
         })
     };
 
+    changeSex (){}
+
     componentDidMount() {
+        console.log(this.props);
         this.getUserId();
         this.getTown();
     }
@@ -217,13 +231,13 @@ export class AddUser extends React.Component {
 
     render() {
         const {stepIndex} = this.state;
-        const {name,IDcard,loudong,room,water,manage} =this.state.add;
+        const {name,IDcard,loudong,room,water,manage,phone} =this.state.add;
 
         return (
             <div style={{maxWidth: 380, maxHeight: 400, margin: 'auto'}}>
                 <Stepper activeStep={stepIndex} orientation="vertical">
                     <Step>
-                        <StepLabel>姓名和身份证号</StepLabel>
+                        <StepLabel>具体信息</StepLabel>
                         <StepContent>
                             <p>姓名</p>
                             <TextField
@@ -236,6 +250,17 @@ export class AddUser extends React.Component {
                                 hintText="例：421182XXXXXX"
                                 onChange={this.setIDcard}
                                 value={IDcard}
+                            />
+                            <p>电话号码</p>
+                            <TextField
+                                hintText="例：1834080XXXX"
+                                onChange={this.setPhone}
+                                value={phone}
+                            />
+                            <Select
+                                className='inline'
+                                data={this.state.sex}
+                                onChange={this.changeSex}
                             />
                             {this.renderStepActions(0)}
                         </StepContent>

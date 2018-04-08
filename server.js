@@ -7,6 +7,7 @@
 
 const _ = require('lodash');
 start();//连接数据库
+const curTime = new Date();
 
 function connet() {
 
@@ -127,9 +128,11 @@ function connet() {
     });
 
     app.get('/getUser', (req, res) => {
+        let town = _.get(req.query,'town')!=='ALL_VALUE'&&_.get(req.query,'town')?`town='${req.query.town}'`:true;
         let sql = `select id,name,sex,phone,IDcard,town,loudong,room from user 
-        WHERE ${_.get(req.query,'town')?town='${req.query.town}':true} 
+        WHERE ${town}
         limit ${(req.query.page - 1) * 10},10`;
+        console.log(sql);
         let sql2= `SELECT COUNT(town) AS COUNT FROM user WHERE town='${req.query.town}'`;
         let data = {data: []};
         connection.query(sql, (err, result, field) => {
@@ -225,7 +228,8 @@ function connet() {
 
     //添加用户
     app.post('/addUser', urlencodedParser, (req, res) => {
-        const {id, name, IDcard, Provice, city, town, loudong, room, water, manage} = req.body;
+        const {id, name, IDcard, Provice, city, town, loudong, room, water, manage,adminId,adminName} = req.body;
+        let count =1;
 
         let sql = `INSERT INTO user (id,name,IDcard,Provice,city,town,loudong,room)
                         values (
@@ -253,6 +257,16 @@ function connet() {
                                     '2',
                                     '123456'
                         );`;
+        let sql3 = `INSERT INTO adminlog (logid,time,id,name,content)
+                        values (
+                                    '${count}',
+                                    '${curTime}',
+                                    '${adminId}',
+                                    '${adminName}',
+                                    '增加用户'
+                                )
+                        `;
+        console.log(sql3);
         connection.query(sql, (err, result) => {
             if (err) throw  err;
         });
@@ -261,6 +275,10 @@ function connet() {
         });
         connection.query(sql2, (err, result) => {
             if (err) throw  err;
+        });
+        connection.query(sql3, (err, result) => {
+            if (err) throw  err;
+            count++;
         });
         res.send('success');
     });
