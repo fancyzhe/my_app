@@ -36,5 +36,10 @@
 
 .loginImg{
     margin-left: 20%;
-    margin-top: 17%;
+    margin-top: 16%;
+}
+.title{
+    color: #ffffff;
+    font-size: 35px;
+    font-family: 方正姚体;
 }

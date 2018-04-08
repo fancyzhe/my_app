@@ -4170,6 +4170,10 @@ md5.js@^1.3.4:
     hash-base "^3.0.0"
     inherits "^2.0.1"
 
+mdui@^0.4.0:
+  version "0.4.0"
+  resolved "http://registry.npm.taobao.org/mdui/download/mdui-0.4.0.tgz#0670d078aed0edc0ba564335ed8a7844df1b8546"
+
 media-typer@0.3.0:
   version "0.3.0"
   resolved "http://registry.npm.taobao.org/media-typer/download/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"

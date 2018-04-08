@@ -77,7 +77,7 @@ class myTable extends React.Component {
                                         </TableRowColumn>
                                     }
                                     {
-                                        _.map(x, item => <TableRowColumn tooltip={item} key={index}>
+                                        _.map(x, item => <TableRowColumn tooltip={item} key={index} style={{textOverflow:'auto'}}>
                                             {
                                                 item
                                             }

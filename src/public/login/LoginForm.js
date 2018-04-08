@@ -76,6 +76,11 @@ class LoginForm extends React.Component {
 
         return (
             <div className="blue hidden h800">
+                <div className="loginImg">
+                    <p className="title">居民水电收费系统</p>
+                    <img  src={login}/>
+                </div>
+                <p className="title loginImg">居民水电收费系统</p>
                 <img  src={login} className="loginImg"/>
                 <div className="login">
                     <MuiThemeProvider>

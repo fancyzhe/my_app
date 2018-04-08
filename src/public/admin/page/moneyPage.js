@@ -17,12 +17,13 @@ class MoneyPage extends React.Component{
         super(props);
         this.state={
             data:[],
-            total:0
+            total:0,
+            pageIndex:1
         }
     }
 
     getList(){
-        $.get(Local+'/getMoney',{pageIndex:1})
+        $.get(Local+'/getMoney',{pageIndex:this.state.pageIndex})
             .then(
                 res=>{
                     this.setState({
@@ -38,7 +39,7 @@ class MoneyPage extends React.Component{
     }
 
     changePage (e){
-        this.setState({pageIndex:e}, ()=>{this.getList()})
+        this.setState({pageIndex:e},()=>{this.getList()});
     };
 
     render(){
@@ -53,7 +54,7 @@ class MoneyPage extends React.Component{
                 />
                 <Pagination
                     total={this.state.total}
-                    onChange={this.changePage()}
+                    onChange={this.changePage.bind(this)}
                 />
             </div>
         )

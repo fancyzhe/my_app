@@ -9,17 +9,17 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import Download from 'material-ui/svg-icons/file/file-download';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import '../admin.css'
-import MyTable from "../../common/table";
-import {ALL_VALUE, Local} from "../../common/utils";
+import MyTable from "../../../common/table";
+import {ALL_VALUE, cleanParams, Local} from "../../../common/utils";
 import $ from 'jquery';
 import _ from 'lodash';
-import Select from "../../common/select";
-import {AddUser} from "./addUser";
-import Pagination from "../../common/pagination";
+import Select from "../../../common/select";
+import {AddUser} from "../dialog/addUser";
+import Pagination from "../../../common/pagination";
 
 //管理员居民信息管理界面
 
-const tableHead = ['序号', 'ID', '姓名', '身份证号', '省份', '城市', '小区', '楼栋', '房间号'];
+const tableHead =['序号', 'ID', '姓名', '性别', '电话', '身份证号', '小区', '楼栋', '房间号']
 
 class UserPage extends React.Component {
 
@@ -31,7 +31,7 @@ class UserPage extends React.Component {
             currentTown: ALL_VALUE,
             edit: true,
             dialog: false,
-            total:100,
+            total:0,
             e: '',
             adminTown: {
                 display: 'none'
@@ -46,7 +46,7 @@ class UserPage extends React.Component {
     }
 
     getUser() {
-        $.get(Local + '/getUser',{})
+        $.get(Local + '/getUser',cleanParams(this.state.query))
             .then(res => {
                 this.setState({
                     data: res.data
@@ -74,12 +74,14 @@ class UserPage extends React.Component {
             .then(
                 res => {
                     this.setState({
-                        max: res.data.max,
-                        dir:res.data
+                        max: res.data[0].max,
+                        dir:res.data[0],
+                        total:res.data
                     })
                 }
             )
             .then(() => {
+                this.state.max==0 && this.getTown();
                 if (this.state.max == 0) {
                     this.setState({
                         adminTown: {
@@ -89,8 +91,19 @@ class UserPage extends React.Component {
                             town:this.state.dir.townName
                         })
                     })
+                }else
+                {
+                    this.setState({
+                        query:_.merge(this.state.query,{
+                            town:this.state.dir.townName
+                        })
+                    })
                 }
+                console.log(this.state.dir.townName);
+                sessionStorage.townName=this.state.dir.townName
             })
+            .then(()=>{
+                console.log(this.state.query);this.getUser()})
     }
 
     changeSelect = (event, index, value) => {
@@ -113,16 +126,16 @@ class UserPage extends React.Component {
     };
 
     changePage(page){
-        console.log(page);
+        this.setState({pageIndex:page});
+        console.log(this.state);
     }
 
     searchById() {
+        this.setState({search:$('#search')})
     }
 
     componentDidMount() {
-        sessionStorage.admin===0 && this.getTown();
         this.getMax();
-        this.getUser();
     }
 
 
@@ -153,7 +166,7 @@ class UserPage extends React.Component {
                         onChange={this.changeSelect}
                     />
                 </div>
-                <TextField hintText="输入身份证号或者ID号" className="ml30"/>
+                <TextField hintText="输入身份证号或者ID号" className="ml30" id="search"/>
                 <RaisedButton
                     label="搜索"
                     primary={true}

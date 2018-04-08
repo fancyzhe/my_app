@@ -158,8 +158,7 @@ class BottomNav extends React.Component {
     }
 
     componentDidMount() {
-        $.get(Local + '/getTownName',{id:sessionStorage.id})
-            .then()
+
     }
 
     render() {

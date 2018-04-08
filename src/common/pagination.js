@@ -21,7 +21,8 @@ class Pagination extends React.Component {
     setPage(page) {
         this.setState({
             page
-        },()=>{this.props.onChange(page)})
+        });
+        this.props.onChange(page);
     }
 
     render() {

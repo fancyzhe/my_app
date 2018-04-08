@@ -5,7 +5,6 @@
 
 import * as React from "react";
 import $ from 'jquery'
-import _ from 'lodash'
 import {Checkbox, Dialog, IconButton, IconMenu, MenuItem, Paper, TextField, Toggle} from "material-ui";
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import Download from 'material-ui/svg-icons/file/file-download';
@@ -13,11 +12,11 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import MyTable from "../../../common/table";
 import RaisedButton from 'material-ui/RaisedButton';
 import '../admin.css'
-import Select from "../../common/select";
-import {ALL_VALUE, Local, setStateP} from "../../common/utils";
-import {AddTown} from "./addTown";
-import AddCost from "./addCost";
-import Pagination from "../../common/pagination";
+import Select from "../../../common/select";
+import {ALL_VALUE, Local} from "../../../common/utils";
+import {AddTown} from "../dialog/addTown";
+import AddCost from "../dialog/addCost";
+import Pagination from "../../../common/pagination";
 
 //管理员水电费管理页面
 

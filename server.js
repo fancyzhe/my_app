@@ -52,7 +52,7 @@ function connet() {
                 if (req.body.password === result[0]['pwd']) {
                     data.data = {
                         'admin': result[0]['admin'],
-                        'name':result[0].name
+                        'name': result[0].name
                     }
                 } else {
                     data.data = ({
@@ -64,14 +64,14 @@ function connet() {
         });
     });
 
-    app.get('/getMax',urlencodedParser,(req,res)=>{
+    app.get('/getMax', urlencodedParser, (req, res) => {
         let sql = `SELECT * FROM admin where id = '${req.query.id}'`;
-        let data={
-            data:[]
+        let data = {
+            data: []
         };
-        connection.query(sql,(err,result,fields)=>{
-            if(err) throw err;
-            _.map(result,item=>{
+        connection.query(sql, (err, result, fields) => {
+            if (err) throw err;
+            _.map(result, item => {
                 data.data.push(item)
             });
             res.send(data)
@@ -95,22 +95,18 @@ function connet() {
         })
     });
 
-    app.get('/getTownName',(req,res)=>{
-
-    });
-
-    app.get('/getMoney',(req,res)=>{
-        let sql = `SELECT * FROM money limit ${(req.query.pageIndex-1)* 10},10`;
-        let data = {data:[],total:0};
-        connection.query(sql,(err,result)=>{
-            if(err) throw err;
-            _.map(result,item=>{
+    app.get('/getMoney', (req, res) => {
+        let sql = `SELECT * FROM money limit ${(req.query.pageIndex - 1) * 10},10`;
+        let data = {data: [], total: 0};
+        connection.query(sql, (err, result) => {
+            if (err) throw err;
+            _.map(result, item => {
                 data.data.push(item)
             });
         });
-        connection.query('SELECT COUNT(*) FROM money',(err,result)=>{
-            if(err) throw err;
-            _.map(result,item=>{
+        connection.query('SELECT COUNT(*) FROM money', (err, result) => {
+            if (err) throw err;
+            _.map(result, item => {
                 data.total = item['COUNT(*)']
             });
             res.send(data)
@@ -131,15 +127,24 @@ function connet() {
     });
 
     app.get('/getUser', (req, res) => {
-        let sql = 'select id,name,IDcard,Provice,city,town,loudong,room from user';
+        let sql = `select id,name,sex,phone,IDcard,town,loudong,room from user 
+        WHERE ${_.get(req.query,'town')?town='${req.query.town}':true} 
+        limit ${(req.query.page - 1) * 10},10`;
+        let sql2= `SELECT COUNT(town) AS COUNT FROM user WHERE town='${req.query.town}'`;
         let data = {data: []};
         connection.query(sql, (err, result, field) => {
             if (err) throw err;
             _.map(result, item => {
                 data.data.push(item)
             });
+        });
+        connection.query(sql2,(err,result)=>{
+            if (err) throw err;
+            _.map(result,item=>{
+                _.merge(data,{total:item.COUNT})
+            });
             res.send(data);
-        })
+        });
     });
     //获取省
     app.get('/getPro', (req, res) => {
@@ -220,7 +225,6 @@ function connet() {
 
     //添加用户
     app.post('/addUser', urlencodedParser, (req, res) => {
-        console.log(req.body);
         const {id, name, IDcard, Provice, city, town, loudong, room, water, manage} = req.body;
 
         let sql = `INSERT INTO user (id,name,IDcard,Provice,city,town,loudong,room)
@@ -261,8 +265,8 @@ function connet() {
         res.send('success');
     });
 
-    app.get('/getId',(req,res)=>{
-       let sql ;
+    app.get('/getId', (req, res) => {
+        let sql;
     });
 
 
@@ -279,11 +283,11 @@ function connet() {
 
 function start() {
 
-    connet().on('error',handleError);
+    connet().on('error', handleError);
 
 }
 
-function handleError (err) {
+function handleError(err) {
     if (err) {
         // 如果是连接断开，自动重新连接
         if (err.code === 'PROTOCOL_CONNECTION_LOST') {
