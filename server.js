@@ -329,8 +329,44 @@ function connet() {
             });
             res.send(data)
         })
-    })
+    });
 
+    app.get('/getMsg',(req,res)=>{
+        let town = _.get(req.query, 'town') !== 'ALL_VALUE' && _.get(req.query, 'town') ? `townName='${req.query.town}'` : true;
+        let sql = `SELECT msg.id,msg.text,msg.townName,msg.adminName,msg.time FROM msg
+         WHERE ${town} LIMIT ${(req.query.page-1)*10},${req.query.page*10}`;
+        let sql1 = `SELECT COUNT(townName) AS COUNT FROM msg WHERE ${town}`;
+        let data={data:[],total:0};
+        connection.query(sql,(err,result)=>{
+            if(err)throw err;
+            _.map(result,item=>{
+                data.data.push(item)
+            })
+        });
+        connection.query(sql1,(err,result)=>{
+            if(err) throw err;
+            _.map(result,item=>{
+                data.total = item
+            });
+            console.log(data);
+            res.send(data)
+        })
+    });
+
+    app.post('/addMsg', urlencodedParser,(req,res)=>{
+        const {text,townName,id,name} = req.body;
+        let count = 1;
+        let sql = `INSERT INTO msg (id,text,townName,adminId,adminName,time) 
+        VALUES('${count}','${text}','${townName}','${id}','${name}','${dateChange(new Date())}')`;
+        connection.query(sql,(err,result)=>{
+            if(!err){
+                res.send(true)
+            }else {
+                res.send(false)
+            }
+            count ++;
+        })
+    });
 
     app.listen(3001);
 

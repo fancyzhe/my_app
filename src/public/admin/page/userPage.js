@@ -19,7 +19,7 @@ import Pagination from "../../../common/pagination";
 
 //管理员居民信息管理界面
 
-const tableHead =['序号', 'ID', '姓名', '性别', '电话', '身份证号', '小区', '楼栋', '房间号']
+const tableHead = ['序号', 'ID', '姓名', '性别', '电话', '身份证号', '小区', '楼栋', '房间号']
 
 class UserPage extends React.Component {
 
@@ -31,30 +31,28 @@ class UserPage extends React.Component {
             currentTown: ALL_VALUE,
             edit: true,
             dialog: false,
-            total:0,
+            total: 0,
             e: '',
             adminTown: {
                 display: 'none'
             },
-            dir:'',
-            query:{
-                search:'',
-                page:1,
-                town:''
+            dir: '',
+            query: {
+                search: '',
+                page: 1,
+                town: ''
             }
         }
     }
 
     getUser() {
-        $.get(Local + '/getUser',cleanParams(this.state.query))
+        $.get(Local + '/getUser', cleanParams(this.state.query))
             .then(res => {
                 this.setState({
                     data: res.data,
-                    total:res.total
+                    total: res.total
                 })
             })
-            .then(()=>{
-                console.log(this.state);})
     }
 
     getTown() {
@@ -78,45 +76,45 @@ class UserPage extends React.Component {
                 res => {
                     this.setState({
                         max: res.data[0].max,
-                        dir:res.data[0],
+                        dir: res.data[0],
                     })
                 }
             )
             .then(() => {
-                this.state.max==0 && this.getTown();
+                this.state.max == 0 && this.getTown();
                 if (this.state.max == 0) {
                     this.setState({
                         adminTown: {
                             display: 'inline-block'
                         },
-                        query:_.merge(this.state.query,{
-                            town:this.state.dir.townName
+                        query: _.merge(this.state.query, {
+                            town: this.state.dir.townName
                         })
                     })
-                }else
-                {
+                } else {
                     this.setState({
-                        query:_.merge(this.state.query,{
-                            town:this.state.dir.townName
+                        query: _.merge(this.state.query, {
+                            town: this.state.dir.townName
                         })
                     })
                 }
-                sessionStorage.townName=this.state.dir.townName
+                sessionStorage.townName = this.state.dir.townName
             })
-            .then(()=>{
-                this.getUser()})
+            .then(() => {
+                this.getUser()
+            })
     }
 
     changeSelect = (event, index, value) => {
         let town;
-        _.map(this.state.town,item=>{
-            if(item.id ===value){
-                town=item.name
+        _.map(this.state.town, item => {
+            if (item.id === value) {
+                town = item.name
             }
         });
         this.setState({
             currentTown: value,
-            query:_.merge(this.state.query,{
+            query: _.merge(this.state.query, {
                 town
             })
         }, () => {
@@ -135,12 +133,14 @@ class UserPage extends React.Component {
         })
     };
 
-    changePage(page){
-        this.setState(_.merge(this.state.query,{page}),()=>{this.getUser()});
+    changePage(page) {
+        this.setState(_.merge(this.state.query, {page}), () => {
+            this.getUser()
+        });
     }
 
     searchById() {
-        this.setState({search:$('#search')})
+        this.setState({search: $('#search')})
     }
 
     componentDidMount() {

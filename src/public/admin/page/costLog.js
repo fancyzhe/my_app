@@ -3,4 +3,18 @@
  * @fanz
  */
 import React from 'react'
-export default class CostLog extends React.Component{}
+import MyTable from '../../../common/table'
+import Pagination from "../../../common/pagination";
+export default class CostLog extends React.Component{
+    state={};
+    render(){
+        return(
+            <div>
+                <MyTable
+                    selectable={false}
+                />
+                <Pagination/>
+            </div>
+        )
+    }
+}
