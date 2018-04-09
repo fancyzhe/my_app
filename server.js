@@ -9,6 +9,11 @@ const _ = require('lodash');
 start();//连接数据库
 const curTime = new Date();
 
+
+const dateChange = (date) => {
+    return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
+};
+
 function connet() {
 
     let express = require('express');
@@ -20,6 +25,7 @@ function connet() {
     let urlencodedParser = bodyParser.urlencoded({extended: false});
 
     let app = express();
+
 
     app.all('*', function (req, res, next) {
         res.header("Access-Control-Allow-Origin", "*");
@@ -41,6 +47,7 @@ function connet() {
     //登陆
     app.post('/login_post', urlencodedParser, function (req, res) {
         let sql = 'select * from login where id=' + req.body.id;
+        let count = 1;
         let data = {};
         connection.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -54,7 +61,9 @@ function connet() {
                     data.data = {
                         'admin': result[0]['admin'],
                         'name': result[0].name
-                    }
+                    };
+                    let sql1 = `INSERT INTO loginlog (logid,id,name,time) values('${count}','${req.body.id}','${result[0].name}','${dateChange(curTime)}')`
+                    connection.query(sql1);
                 } else {
                     data.data = ({
                         'admin': false,
@@ -128,12 +137,11 @@ function connet() {
     });
 
     app.get('/getUser', (req, res) => {
-        let town = _.get(req.query,'town')!=='ALL_VALUE'&&_.get(req.query,'town')?`town='${req.query.town}'`:true;
+        let town = _.get(req.query, 'town') !== 'ALL_VALUE' && _.get(req.query, 'town') ? `town='${req.query.town}'` : true;
         let sql = `select id,name,sex,phone,IDcard,town,loudong,room from user 
         WHERE ${town}
         limit ${(req.query.page - 1) * 10},10`;
-        console.log(sql);
-        let sql2= `SELECT COUNT(town) AS COUNT FROM user WHERE town='${req.query.town}'`;
+        let sql2 = `SELECT COUNT(town) AS COUNT FROM user WHERE ${town}`;
         let data = {data: []};
         connection.query(sql, (err, result, field) => {
             if (err) throw err;
@@ -141,10 +149,10 @@ function connet() {
                 data.data.push(item)
             });
         });
-        connection.query(sql2,(err,result)=>{
+        connection.query(sql2, (err, result) => {
             if (err) throw err;
-            _.map(result,item=>{
-                _.merge(data,{total:item.COUNT})
+            _.map(result, item => {
+                _.merge(data, {total: item.COUNT})
             });
             res.send(data);
         });
@@ -228,13 +236,15 @@ function connet() {
 
     //添加用户
     app.post('/addUser', urlencodedParser, (req, res) => {
-        const {id, name, IDcard, Provice, city, town, loudong, room, water, manage,adminId,adminName} = req.body;
-        let count =1;
+        const {id, name, IDcard, sex, phone, Provice, city, town, loudong, room, water, manage, adminId, adminName} = req.body;
+        let count = 1;
 
-        let sql = `INSERT INTO user (id,name,IDcard,Provice,city,town,loudong,room)
+        let sql = `INSERT INTO user (id,name,sex,phone,IDcard,Provice,city,town,loudong,room)
                         values (
                                     '${id}',
                                     '${name}',
+                                    '${sex}',
+                                    '${phone}',
                                     '${IDcard}',
                                     '${Provice}',
                                     '${city}',
@@ -260,13 +270,13 @@ function connet() {
         let sql3 = `INSERT INTO adminlog (logid,time,id,name,content)
                         values (
                                     '${count}',
-                                    '${curTime}',
+                                    '${dateChange(curTime)}',
                                     '${adminId}',
                                     '${adminName}',
                                     '增加用户'
                                 )
                         `;
-        console.log(sql3);
+        console.log(sql, sql1, sql2, sql3);
         connection.query(sql, (err, result) => {
             if (err) throw  err;
         });
@@ -283,9 +293,43 @@ function connet() {
         res.send('success');
     });
 
-    app.get('/getId', (req, res) => {
-        let sql;
+    app.get('/getLoginLog', (req, res) => {
+        let sql = `SELECT * FROM loginlog LIMIT ${(req.query.page-1)*10},${req.query.page*10}`;
+        let sql1 = `SELECT COUNT(*) AS COUNT FROM loginlog`;
+        let data = {data:[],total:0};
+        connection.query(sql,(err,result)=>{
+            if(err) throw err;
+            _.map(result,item=>{
+                data.data.push(item);
+            });
+        });
+        connection.query(sql1,(err,result)=>{
+            if(err) throw err;
+            _.map(result,item=>{
+                data.total = item.COUNT
+            });
+            res.send(data)
+        })
     });
+
+    app.get('/getAdminLog',(req,res)=>{
+        let sql = `SELECT * FROM adminlog LIMIT ${(req.query.page-1)*10},${req.query.page*10}`;
+        let sql1 = `SELECT COUNT(*) AS COUNT FROM adminlog`;
+        let data = {data:[],total:0};
+        connection.query(sql,(err,result)=>{
+            if(err) throw err;
+            _.map(result,item=>{
+                data.data.push(item);
+            });
+        });
+        connection.query(sql1,(err,result)=>{
+            if(err) throw err;
+            _.map(result,item=>{
+                data.total = item.COUNT
+            });
+            res.send(data)
+        })
+    })
 
 
     app.listen(3001);

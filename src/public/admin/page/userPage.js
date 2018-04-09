@@ -49,9 +49,12 @@ class UserPage extends React.Component {
         $.get(Local + '/getUser',cleanParams(this.state.query))
             .then(res => {
                 this.setState({
-                    data: res.data
+                    data: res.data,
+                    total:res.total
                 })
             })
+            .then(()=>{
+                console.log(this.state);})
     }
 
     getTown() {
@@ -76,7 +79,6 @@ class UserPage extends React.Component {
                     this.setState({
                         max: res.data[0].max,
                         dir:res.data[0],
-                        total:res.data
                     })
                 }
             )
@@ -102,7 +104,7 @@ class UserPage extends React.Component {
                 sessionStorage.townName=this.state.dir.townName
             })
             .then(()=>{
-                console.log(this.state.query);this.getUser()})
+                this.getUser()})
     }
 
     changeSelect = (event, index, value) => {
@@ -134,7 +136,7 @@ class UserPage extends React.Component {
     };
 
     changePage(page){
-        this.setState({pageIndex:page});
+        this.setState(_.merge(this.state.query,{page}),()=>{this.getUser()});
     }
 
     searchById() {
@@ -207,7 +209,7 @@ class UserPage extends React.Component {
                 />
                 <Pagination
                     total={this.state.total}
-                    onChange={this.changePage}
+                    onChange={this.changePage.bind(this)}
                 />
             </div>
         )

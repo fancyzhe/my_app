@@ -20,6 +20,7 @@ import MsgPage from "./page/msgPage";
 import UserCostLog from "./page/usercostLog";
 import CostLog from "./page/costLog";
 import LoginLog from "./page/loginLog";
+import AdminLog from "./page/adminLog";
 
 const nav = [
     '居民信息',
@@ -28,7 +29,8 @@ const nav = [
     '公告管理',
     '居民缴费日志',
     '水电费登记日志',
-    '登陆日志'
+    '登陆日志',
+    '操作日志'
 ];
 
 class BottomNav extends React.Component {
@@ -110,6 +112,12 @@ class BottomNav extends React.Component {
                             leftIcon={<i className="mdui-icon material-icons">mouse</i>}
                             onClick={()=>this.select(6)}
                         />
+                        <MenuItem
+                            primaryText="操作日志"
+                            style={{width: '285px'}}
+                            leftIcon={<i class="mdui-icon material-icons">supervisor_account</i>}
+                            onClick={()=>this.select(7)}
+                        />
                         <Divider/>
                         <MenuItem
                             primaryText="修改个人信息"
@@ -154,6 +162,8 @@ class BottomNav extends React.Component {
                 return(<CostLog />);
             case 6:
                 return(<LoginLog />);
+            case 7:
+                return(<AdminLog />)
         }
     }
 

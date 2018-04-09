@@ -17,6 +17,16 @@ import $ from "jquery";
 import _ from "lodash"
 import {ALL_VALUE, Local} from "../../../common/utils";
 
+const sex = [
+    {
+        id:'男',
+        name:'男'
+    },{
+        id:'女',
+        name:'女'
+    }
+];
+
 export class AddUser extends React.Component {
     state = {
         finished: false,
@@ -29,10 +39,10 @@ export class AddUser extends React.Component {
         town: [],
         add: {
             adminId:sessionStorage.id,
-            adminNam:sessionStorage.name,
+            adminName:sessionStorage.name,
             id: '',
             name: '',
-            sex:'',
+            sex:'男',
             phone:'',
             IDcard: '',
             Provice: '',
@@ -91,6 +101,14 @@ export class AddUser extends React.Component {
                 currentProCity:''
             })
         }
+    };
+
+    changeSex = (e,i,v)=>{
+        this.setState({
+            add: _.merge(this.state.add,{
+                sex: v
+            })
+        })
     };
 
     getAddressByTown() {
@@ -195,8 +213,6 @@ export class AddUser extends React.Component {
         })
     };
 
-    changeSex (){}
-
     componentDidMount() {
         console.log(this.props);
         this.getUserId();
@@ -251,15 +267,19 @@ export class AddUser extends React.Component {
                                 onChange={this.setIDcard}
                                 value={IDcard}
                             />
-                            <p>电话号码</p>
+                            <p className="inline">电话号码</p>
+                            <p className="inline ml50">性别</p>
+                            <br/>
                             <TextField
                                 hintText="例：1834080XXXX"
                                 onChange={this.setPhone}
                                 value={phone}
+                                className="w100 block"
                             />
                             <Select
-                                className='inline'
-                                data={this.state.sex}
+                                className='inline ml10'
+                                data={sex}
+                                value={this.state.add.sex}
                                 onChange={this.changeSex}
                             />
                             {this.renderStepActions(0)}

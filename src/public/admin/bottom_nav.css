@@ -12,7 +12,16 @@
 .tip{
 
 }
+.ml50{
+    margin-left: 50px !important;
+}
 
 .w100{
     width: 100px !important;
+}
+.w150{
+    width:150px !important;
+}
+.block{
+    display: inline-block !important;
 }
