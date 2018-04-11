@@ -10,30 +10,49 @@ import {Local} from "../../../common/utils";
 
 class AddCost extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
-        this.state={
-            id:'',
-            name:''
+        this.state = {
+            id: '',
+            name: ''
         }
     }
 
-    addCost(){
+    addCost() {
 
+        const {id,water,manage,name}=this.state;
+        $.post(Local + '/addCost', {id,name,adminId:sessionStorage.id,adminName:sessionStorage.name,water,manage})
     }
 
-    setId = (e,v)=>{
+    setId = (e, v) => {
         this.setState({
-            id:v
-        })
-        if(v.length>=5){
+            id: v
+        });
+        if (v.length >= 5) {
             this.getName(v)
         }
     };
 
-    getName(v){
-        $.get(Local+'/getId',v)
-            .then(res=>this.setState({name:res.data}))
+    setWater = (e,v)=>{
+        this.setState({
+            water:v
+        })
+    };
+
+    setManage = (e,v)=>{
+        this.setState({
+            manage:v
+        })
+    };
+
+    getName(v) {
+        $.get(Local + '/getId', {id: v})
+            .then(res => {
+                this.setState({name: res.name})})
+    }
+
+    componentDidMount(){
+        console.log(sessionStorage);
     }
 
     render() {
@@ -55,18 +74,21 @@ class AddCost extends React.Component {
                     hintText="本月电费"
                     style={{width: '100px'}}
                     className="mt5"
+                    onChange={this.setWater}
                 />
                 <TextField
                     className="inline ml30 mt5"
                     hintText="本月水费"
+                    onChange={this.setManage}
                     style={{width: '100px'}}
                 />
                 <RaisedButton
-                    label="继续添加"
+                    label="添加"
                     className="mt30"
+                    disabled={this.state.name === '' ? true : false}
                     primary={true}
                     fullWidth={true}
-                    onClick={this.addCost}
+                    onClick={this.addCost.bind(this)}
                 />
             </div>
         )

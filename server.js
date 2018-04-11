@@ -62,7 +62,7 @@ function connet() {
                         'admin': result[0]['admin'],
                         'name': result[0].name
                     };
-                    let sql1 = `INSERT INTO loginlog (logid,id,name,time) values('${count}','${req.body.id}','${result[0].name}','${dateChange(curTime)}')`
+                    let sql1 = `INSERT INTO loginlog (logid,id,name,time) values('${count}','${req.body.id}','${result[0].name}','${dateChange(curTime)}')`;
                     connection.query(sql1);
                 } else {
                     data.data = ({
@@ -95,13 +95,20 @@ function connet() {
         let isOwe = req.query.isOwe === 'true' ? 'water < 0 or manage<0' : 'water > 0 and manage > 0';
         let findName = req.query.findName ? `name LIKE '%${req.query.findName}%'` : true;
         let sql = `select distinct * from cost where ${townName} and (${isOwe}) and ${findName}`;
-        let data = {data: []};
+        let sql1 = `SELECT COUNT(*) AS COUNT FROM cost WHERE ${townName} and (${isOwe}) and ${findName}`;
+        let data = {data: [], total: 0};
         connection.query(sql, function (err, result, fields) {
             if (err) throw err;
             _.map(result, item => {
                 data.data.push(item)
             });
-            res.send(data);
+        });
+        connection.query(sql1, (err, result) => {
+            if (err) throw err;
+            _.map(result, item => {
+                data.total = item.COUNT
+            });
+            res.send(data)
         })
     });
 
@@ -233,11 +240,49 @@ function connet() {
             res.send(data)
         })
     });
+    //添加水电费的时候，根据ID获取用户姓名
+    app.get('/getId',(req,res)=>{
+        let sql = `SELECT name FROM user WHERE id = '${req.query.id}'`;
+        let data;
+        connection.query(sql,(err,result)=>{
+            if(err) throw err;
+            _.map(result,item=>{
+                data = item;
+            });
+            res.send(data)
+        })
+    });
+
+    //添加水电费
+    app.post('/addCost',urlencodedParser,(req,res)=>{
+        const {id,name,adminId,adminName,water,manage} = req.body;
+        let count = Math.random().toString(36).substr(2);
+
+        let sql1 = `UPDATE cost set water = water - ${water},manage = manage - ${manage} WHERE id = '${id}'`;
+        connection.query(sql1,()=>{
+        });
+        let sql = `INSERT INTO waterlog (logid,time,adminId,adminName,userId,userName,water,manage)
+                        values(
+                            '${count}',
+                            '${dateChange(new Date())}',
+                            '${adminId}',
+                            '${adminName}',
+                            '${id}',
+                            '${name}',
+                            '${water}',
+                            '${manage}'
+                        )`;
+        connection.query(sql,(err,result)=>{
+            if(err) throw err;
+
+        });
+        res.send(true);
+    });
 
     //添加用户
     app.post('/addUser', urlencodedParser, (req, res) => {
         const {id, name, IDcard, sex, phone, Provice, city, town, loudong, room, water, manage, adminId, adminName} = req.body;
-        let count = 1;
+        let count = Math.random().toString(36).substr(2);
 
         let sql = `INSERT INTO user (id,name,sex,phone,IDcard,Provice,city,town,loudong,room)
                         values (
@@ -276,7 +321,6 @@ function connet() {
                                     '增加用户'
                                 )
                         `;
-        console.log(sql, sql1, sql2, sql3);
         connection.query(sql, (err, result) => {
             if (err) throw  err;
         });
@@ -288,84 +332,120 @@ function connet() {
         });
         connection.query(sql3, (err, result) => {
             if (err) throw  err;
-            count++;
         });
         res.send('success');
     });
 
     app.get('/getLoginLog', (req, res) => {
-        let sql = `SELECT * FROM loginlog LIMIT ${(req.query.page-1)*10},${req.query.page*10}`;
+        let sql = `SELECT * FROM loginlog LIMIT ${(req.query.page - 1) * 10},${req.query.page * 10}`;
         let sql1 = `SELECT COUNT(*) AS COUNT FROM loginlog`;
-        let data = {data:[],total:0};
-        connection.query(sql,(err,result)=>{
-            if(err) throw err;
-            _.map(result,item=>{
+        let data = {data: [], total: 0};
+        connection.query(sql, (err, result) => {
+            if (err) throw err;
+            _.map(result, item => {
                 data.data.push(item);
             });
         });
-        connection.query(sql1,(err,result)=>{
-            if(err) throw err;
-            _.map(result,item=>{
+        connection.query(sql1, (err, result) => {
+            if (err) throw err;
+            _.map(result, item => {
                 data.total = item.COUNT
             });
             res.send(data)
         })
     });
 
-    app.get('/getAdminLog',(req,res)=>{
-        let sql = `SELECT * FROM adminlog LIMIT ${(req.query.page-1)*10},${req.query.page*10}`;
+    app.get('/getAdminLog', (req, res) => {
+        let sql = `SELECT * FROM adminlog LIMIT ${(req.query.page - 1) * 10},${req.query.page * 10}`;
         let sql1 = `SELECT COUNT(*) AS COUNT FROM adminlog`;
-        let data = {data:[],total:0};
-        connection.query(sql,(err,result)=>{
-            if(err) throw err;
-            _.map(result,item=>{
+        let data = {data: [], total: 0};
+        connection.query(sql, (err, result) => {
+            if (err) throw err;
+            _.map(result, item => {
                 data.data.push(item);
             });
         });
-        connection.query(sql1,(err,result)=>{
-            if(err) throw err;
-            _.map(result,item=>{
+        connection.query(sql1, (err, result) => {
+            if (err) throw err;
+            _.map(result, item => {
                 data.total = item.COUNT
             });
             res.send(data)
         })
     });
 
-    app.get('/getMsg',(req,res)=>{
+    app.get('/getAdmin',(req,res)=>{
+        let sql = `SELECT admin.name,admin.phone,admin.weixinCode FROM admin WHERE id = '${req.query.id}'`;
+        let data={data:[]};
+        connection.query(sql,(err,result)=>{
+            if(err) throw err;
+            _.map(result,item=>{
+                data.data.push(item)
+            });
+            res.send(data)
+        })
+    });
+
+    app.post('/postAdmin',urlencodedParser,(req,res)=>{
+        const {id,name,phone,weixinCode} = req.body;
+        let sql= `UPDATE admin set name = '${name}',phone='${phone}',weixinCode='${weixinCode}' WHERE id = '${id}'`;
+        connection.query(sql,(err,result)=>{
+            if(err) {
+                res.send(false)
+            }
+            else {
+                res.send(true)
+            }
+        })
+    });
+
+    app.get('/getMsg', (req, res) => {
         let town = _.get(req.query, 'town') !== 'ALL_VALUE' && _.get(req.query, 'town') ? `townName='${req.query.town}'` : true;
         let sql = `SELECT msg.id,msg.text,msg.townName,msg.adminName,msg.time FROM msg
-         WHERE ${town} LIMIT ${(req.query.page-1)*10},${req.query.page*10}`;
+         WHERE ${town} LIMIT ${(req.query.page - 1) * 10},${req.query.page * 10}`;
         let sql1 = `SELECT COUNT(townName) AS COUNT FROM msg WHERE ${town}`;
-        let data={data:[],total:0};
+        let data = {data: [], total: 0};
+        connection.query(sql, (err, result) => {
+            if (err) throw err;
+            _.map(result, item => {
+                data.data.push(item)
+            })
+        });
+        connection.query(sql1, (err, result) => {
+            if (err) throw err;
+            _.map(result, item => {
+                data.total = item
+            });
+            res.send(data)
+        })
+    });
+
+    app.post('/addMsg', urlencodedParser, (req, res) => {
+        const {text, townName, id, name} = req.body;
+        let count = Math.random().toString(36).substr(2);
+        let sql = `INSERT INTO msg (id,text,townName,adminId,adminName,time) 
+        VALUES('${count}','${text}','${townName}','${id}','${name}','${dateChange(new Date())}')`;
+        connection.query(sql, (err, result) => {
+            if (!err) {
+                res.send(true)
+            } else {
+                res.send(false)
+            }
+        })
+    });
+
+    app.get('/getCostLog',(req,res)=>{
+        let sql=`SELECT waterlog.adminName,waterlog.userId,waterlog.userName,waterlog.water,waterlog.manage,waterlog.time 
+        FROM waterlog LIMIT ${(req.query.page - 1) * 10},10`;
+        let data = {data:[]};
         connection.query(sql,(err,result)=>{
             if(err)throw err;
             _.map(result,item=>{
                 data.data.push(item)
-            })
-        });
-        connection.query(sql1,(err,result)=>{
-            if(err) throw err;
-            _.map(result,item=>{
-                data.total = item
             });
-            console.log(data);
             res.send(data)
         })
-    });
 
-    app.post('/addMsg', urlencodedParser,(req,res)=>{
-        const {text,townName,id,name} = req.body;
-        let count = 1;
-        let sql = `INSERT INTO msg (id,text,townName,adminId,adminName,time) 
-        VALUES('${count}','${text}','${townName}','${id}','${name}','${dateChange(new Date())}')`;
-        connection.query(sql,(err,result)=>{
-            if(!err){
-                res.send(true)
-            }else {
-                res.send(false)
-            }
-            count ++;
-        })
     });
 
     app.listen(3001);

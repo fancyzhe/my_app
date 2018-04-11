@@ -7,7 +7,7 @@ import MyTable from '../../../common/table'
 import $ from 'jquery'
 import {Local} from "../../../common/utils";
 import Pagination from "../../../common/pagination";
-const tableHead=['序号','日志编号','操作ID','姓名','时间','内容']
+const tableHead=['序号','日志编号','操作ID','姓名','时间','内容'];
 
 export default class AdminLog extends React.Component {
     state={

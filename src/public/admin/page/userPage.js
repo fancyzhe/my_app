@@ -19,7 +19,7 @@ import Pagination from "../../../common/pagination";
 
 //管理员居民信息管理界面
 
-const tableHead = ['序号', 'ID', '姓名', '性别', '电话', '身份证号', '小区', '楼栋', '房间号']
+const tableHead = ['序号', 'ID', '姓名', '性别', '电话', '身份证号', '小区', '楼栋', '房间号'];
 
 class UserPage extends React.Component {
 

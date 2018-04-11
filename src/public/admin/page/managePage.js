@@ -37,6 +37,7 @@ class ManagePage extends React.Component {
             //query
             isOwe: true,
             findName: '',
+            page:1
         }
     }
 
@@ -54,7 +55,8 @@ class ManagePage extends React.Component {
         $.get(Local + '/getCost', query)
             .then(res => {
                 this.setState({
-                    data: res.data
+                    data: res.data,
+                    total:res.total
                 })
             });
     }
@@ -111,7 +113,14 @@ class ManagePage extends React.Component {
         })
     };
 
+    changePage(page){
+        this.setState({
+            page
+        },()=>{this.getCost()})
+    }
+
     componentDidMount() {
+        console.log(sessionStorage);
         this.getCost();
         this.getTown();
     }
@@ -134,17 +143,18 @@ class ManagePage extends React.Component {
                     >
                         <AddCost/>
                     </Dialog>
-                    <p>小区名:</p>
-                    <Select
-                        className="p_select"
-                        data={this.state.town}
-                        value={this.state.currentTown}
-                        onChange={this.changeSelect}
-
-                    />
+                    <div style={{display:sessionStorage.admin==1?'inline':'none'}}>
+                        <p>小区名:</p>
+                        <Select
+                            className="p_select"
+                            data={this.state.town}
+                            value={this.state.currentTown}
+                            onChange={this.changeSelect}
+                        />
+                    </div>
                     <Checkbox
                         label="是否欠费"
-                        className="p_checkbox"
+                        className="p_checkbox ml30"
                         checked={this.state.isOwe}
                         onClick={() => this.changeCheck()}
                         style={{width: '130px', display: 'inline-block', position: 'relative', top: '10px'}}
@@ -188,6 +198,7 @@ class ManagePage extends React.Component {
                 />
                 <Pagination
                     total={this.state.total}
+                    onChange={this.changePage.bind(this)}
                 />
             </div>
         )

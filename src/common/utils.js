@@ -3,8 +3,8 @@
  * @fanz
  */
 
-const setTitle = title => ()=> document.title = title;;
 
+const setTitle = title => () => document.title = title;
 const onEnter = (event, beforeEnter) => {
     if (typeof beforeEnter === 'function') {
         beforeEnter(event);

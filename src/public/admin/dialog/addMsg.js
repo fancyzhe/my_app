@@ -82,7 +82,7 @@ export default class AddMsg extends React.Component {
     };
 
     componentDidMount(){
-        !sessionStorage.townName && this.setState({adminTown:{display: 'inline-block'}});
+        sessionStorage.townName==='null' && this.setState({adminTown:{display: 'inline-block'}});
         this.getTown()
     }
 

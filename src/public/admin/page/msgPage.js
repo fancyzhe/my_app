@@ -19,11 +19,14 @@ export default class MsgPage extends React.Component{
         page:1,
         town:[],
         currentTown:ALL_VALUE,
-        dialog:false
+        dialog:false,
+        query:{
+            town:''
+        }
     };
 
     getMsg(){
-        $.get(Local+'/getMsg',{page:this.state.page})
+        $.get(Local+'/getMsg',{page:this.state.page,town:this.state.query.town})
             .then(res=>{
                 this.setState({data:res.data,total:res.total})
             })
@@ -61,7 +64,7 @@ export default class MsgPage extends React.Component{
             query:_.merge(this.state.query,{
                 town
             })
-        });
+        },()=>{this.getMsg()});
     };
 
     addMsg(){
@@ -91,7 +94,7 @@ export default class MsgPage extends React.Component{
                     className="inline"
                     data={this.state.town}
                     value={this.state.currentTown}
-                    onChange={this.changeSelect}
+                    onChange={this.changeSelect.bind(this)}
                 />
                 <RaisedButton
                     className="ml30"
