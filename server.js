@@ -448,6 +448,24 @@ function connet() {
 
     });
 
+    app.get('/getUserCostLog',(req,res)=>{
+        let sql = `SELECT * FROM costlog LIMIT ${(req.query.page - 1) * 10},10`;
+        let sql1 = `SELECT COUNT(*) AS COUNT FORM costlog`;
+        let data={data:[],total:0};
+        connection.query(sql,(err,result)=>{
+            if(err) throw err;
+            _.map(result,item=>{
+                data.data.push(item)
+            });
+        });
+        connection.query(sql1,(err,result)=>{
+            _.map(result,item=>{
+                data.total=item.COUNT;
+            });
+            res.send(data)
+        })
+    });
+
     app.listen(3001);
 
 

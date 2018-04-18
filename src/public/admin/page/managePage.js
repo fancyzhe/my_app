@@ -120,7 +120,7 @@ class ManagePage extends React.Component {
     }
 
     componentDidMount() {
-        console.log(sessionStorage);
+        this.state.currentTown =sessionStorage.townName==='null'?'':sessionStorage.townName
         this.getCost();
         this.getTown();
     }
@@ -143,7 +143,7 @@ class ManagePage extends React.Component {
                     >
                         <AddCost/>
                     </Dialog>
-                    <div style={{display:sessionStorage.admin==1?'inline':'none'}}>
+                    <div style={{display:sessionStorage.townName==='null'?'inline':'none'}}>
                         <p>小区名:</p>
                         <Select
                             className="p_select"
