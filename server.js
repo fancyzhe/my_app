@@ -466,6 +466,31 @@ function connet() {
         })
     });
 
+
+    //user
+
+    app.get('/getTownName',(req,res)=>{
+        let sql =`SELECT user.town FROM user WHERE id = '${req.query.id}'`;
+        let data = {data:''};
+        connection.query(sql,(err,result)=>{
+            _.map(result,item=>{
+                data.data = item;
+            });
+            res.send(data)
+        })
+    });
+
+    app.get('/getAdminMsg',(req,res)=>{
+        let sql = `SELECT * FROM admin WHERE townName = '${req.query.townName}'`;
+        let data = {data:[]};
+        connection.query(sql,(err,result)=>{
+            _.map(result,item=>{
+                data.data.push(item)
+            });
+            res.send(data);
+        })
+    });
+
     app.listen(3001);
 
 

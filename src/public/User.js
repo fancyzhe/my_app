@@ -11,6 +11,8 @@ import {Link} from "react-router";
 import Cost from "./user/cost";
 import History from "./user/history";
 import './user/user.css'
+import $ from 'jquery'
+import {Local} from "../common/utils";
 
 class User extends React.Component {
 
@@ -51,11 +53,24 @@ class User extends React.Component {
                         </MenuItem>
                         <MenuItem>查看个人信息</MenuItem>
                         <Link to={'/'} style={{'textDecoration': 'none'}}><MenuItem
-                            onClick={this.reLogin()}>重新登录</MenuItem></Link>
+                            onClick={this.reLogin.bind(this)}>重新登录</MenuItem></Link>
                     </Drawer>
                 </MuiThemeProvider>
             </div>
         )
+    }
+
+    getTown(){
+        $.get(Local + '/getTownName',{id:sessionStorage.id})
+            .then(
+                res=>{
+                    sessionStorage.townName = res.data.town
+                }
+            )
+    }
+
+    componentDidMount(){
+        this.getTown()
     }
 
     adminPage() {
