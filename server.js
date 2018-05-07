@@ -541,6 +541,15 @@ function connet() {
         })
     });
 
+    app.get('/getMsgByUser',(req,res)=>{
+       let sql =`select * from msg where townName = '${req.query.town}'`;
+        connection.query(sql,(err,result)=>{
+            _.map(result,item=>{
+               res.send(item.text)
+           })
+       })
+    });
+
     app.listen(3001);
 
 

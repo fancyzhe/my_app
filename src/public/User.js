@@ -5,7 +5,7 @@
 
 import React from "react";
 import {MuiThemeProvider} from "material-ui/styles/index";
-import {Drawer, FontIcon, MenuItem, Paper} from "material-ui";
+import {Dialog, Drawer, FontIcon, MenuItem, Paper} from "material-ui";
 import {BottomNavigation, BottomNavigationItem} from "material-ui/BottomNavigation/index";
 import {Link} from "react-router";
 import Cost from "./user/cost";
@@ -22,6 +22,8 @@ class User extends React.Component {
             selectedIndex: 0,
             open: false,
             url: '',
+            Msg: '',
+            dialog:false
         }
     }
 
@@ -29,6 +31,20 @@ class User extends React.Component {
         sessionStorage.clear()
     }
 
+    getMsg() {
+        $.get(Local + '/getMsgByUser', {town: sessionStorage.townName})
+            .then(res => {
+                this.setState({
+                    Msg: res
+                })
+            })
+    }
+
+    changePerson() {
+        this.setState({
+            dialog:true
+        })
+    }
 
     select = (index) => this.setState({selectedIndex: index});
 
@@ -37,6 +53,7 @@ class User extends React.Component {
             <div className="center">
                 <Paper className="paper" zDepth={5}>
                     <h1>公告</h1>
+                    <h2>{this.state.Msg}</h2>
                 </Paper>
                 <MuiThemeProvider>
                     <Drawer
@@ -51,7 +68,9 @@ class User extends React.Component {
                                 {sessionStorage.name}
                             </FontIcon>
                         </MenuItem>
-                        <MenuItem>查看个人信息</MenuItem>
+                        <MenuItem onClick={() => {
+                            this.changePerson()
+                        }}>修改个人信息</MenuItem>
                         <Link to={'/'} style={{'textDecoration': 'none'}}><MenuItem
                             onClick={this.reLogin.bind(this)}>重新登录</MenuItem></Link>
                     </Drawer>
@@ -60,16 +79,21 @@ class User extends React.Component {
         )
     }
 
-    getTown(){
-        $.get(Local + '/getTownName',{id:sessionStorage.id})
+    getTown() {
+        $.get(Local + '/getTownName', {id: sessionStorage.id})
             .then(
-                res=>{
+                res => {
                     sessionStorage.townName = res.data.town
                 }
             )
     }
 
-    componentDidMount(){
+    handleClose = () => {
+        this.setState({dialog: false})
+    };
+
+    componentDidMount() {
+        this.getMsg();
         this.getTown()
     }
 
@@ -115,6 +139,13 @@ class User extends React.Component {
                 {
                     this.adminPage()
                 }
+                <Dialog
+                    title="修改个人信息"
+                    open={this.state.dialog}
+                    onRequestClose={this.handleClose}
+                >
+
+                </Dialog>
             </MuiThemeProvider>
         )
     }
