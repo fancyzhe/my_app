@@ -8,7 +8,7 @@
 const _ = require('lodash');
 start();//连接数据库
 const curTime = new Date();
-
+let count = Math.random().toString(36).substr(2);
 
 const dateChange = (date) => {
     return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
@@ -47,7 +47,6 @@ function connet() {
     //登陆
     app.post('/login_post', urlencodedParser, function (req, res) {
         let sql = 'select * from login where id=' + req.body.id;
-        let count = 1;
         let data = {};
         connection.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -488,6 +487,57 @@ function connet() {
                 data.data.push(item)
             });
             res.send(data);
+        })
+    });
+
+    app.get('/getCostByUser',(req,res)=>{
+        let sql = `SELECT * FROM cost WHERE id = '${req.query.id}'`;
+        let data = {data:[]};
+        connection.query(sql,(err,result)=>{
+            _.map(result,item=>{
+                data.data.push(item)
+            });
+            res.send(data);
+        })
+    });
+
+    app.get('/payManage',(req,res)=>{
+        let sql = `SELECT * FROM money WHERE id = '${req.query.payId}'`;
+        let sql1= `update money set used = '是' where id = ${req.query.payId}`;
+        let sql2 = `update cost set manage = manage+100 where id = ${req.query.id}`;
+        let sql3 = `insert into costlog values('${count}','${dateChange(curTime)}','${req.query.id}','${req.query.name}','缴纳了100元电费')`
+        connection.query(sql,(err,result)=>{
+            if(!result.length){res.send(false)}
+            _.map(result,item=>{
+                if(item.pwd===req.query.payPwd){
+                    connection.query(sql1);
+                    connection.query(sql2);
+                    connection.query(sql3);
+                    res.send(true)
+                }else {
+                    res.send(false)
+                }
+            })
+        })
+    });
+
+    app.get('/payWater',(req,res)=>{
+        let sql = `SELECT * FROM money WHERE id = '${req.query.payId}'`;
+        let sql1= `update money set used = '是' where id = ${req.query.payId}`;
+        let sql2 = `update cost set water = water+100 where id = ${req.query.id}`;
+        let sql3 = `insert into costlog values('${count}','${dateChange(curTime)}','${req.query.id}','${req.query.name}','缴纳了100元水费')`;
+        connection.query(sql,(err,result)=>{
+            if(!result.length){res.send(false)}
+            _.map(result,item=>{
+                if(item.pwd===req.query.payPwd&&item.used==='否'){
+                    connection.query(sql1);
+                    connection.query(sql2);
+                    connection.query(sql3);
+                    res.send(true)
+                }else {
+                    res.send(false)
+                }
+            })
         })
     });
 

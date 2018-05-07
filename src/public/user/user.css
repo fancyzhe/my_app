@@ -33,3 +33,21 @@
 .table {
     margin: 20px;
 }
+.adminMsg{
+    margin-left: 270px;
+    text-align: right;
+    width: 300px;
+    height: 200px;
+}
+.costMsg{
+    font-size:18px;
+}
+.costMsg a{
+    font-size:20px;
+    text-decoration: none;
+    color:red;
+}
+
+.costMsg{
+    margin-top: 150px;
+}

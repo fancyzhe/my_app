@@ -89,7 +89,6 @@ class User extends React.Component {
     render() {
 
         const recentsIcon = <FontIcon className="material-icons">缴费</FontIcon>;
-        const favoritesIcon = <FontIcon className="material-icons">历史记录</FontIcon>;
         const nearbyIcon = <FontIcon className="material-icons">系统操作</FontIcon>;
 
         return (
@@ -101,13 +100,6 @@ class User extends React.Component {
                             icon={recentsIcon}
                             onClick={() => {
                                 this.select(0);
-                            }}
-                        />
-                        <BottomNavigationItem
-                            label="History"
-                            icon={favoritesIcon}
-                            onClick={() => {
-                                this.select(1)
                             }}
                         />
                         <BottomNavigationItem
