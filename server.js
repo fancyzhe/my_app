@@ -89,12 +89,13 @@ function connet() {
 
     //管理员
     app.get('/getCost', urlencodedParser, (req, res) => {
-        let townName = req.query.currentTown != 'ALL_VALUE' ? `town = (select name from town where id = '${req.query.currentTown}')` : true;
+        let townName = req.query.currentTown == 'ALL_VALUE' || !req.query.currentTown ? true : `town = (select name from town where id = '${req.query.currentTown}')`;
         if (req.query.currentTown === '全部') townName = true;
         let isOwe = req.query.isOwe === 'true' ? 'water < 0 or manage<0' : 'water > 0 and manage > 0';
         let findName = req.query.findName ? `name LIKE '%${req.query.findName}%'` : true;
         let sql = `select distinct * from cost where ${townName} and (${isOwe}) and ${findName}`;
         let sql1 = `SELECT COUNT(*) AS COUNT FROM cost WHERE ${townName} and (${isOwe}) and ${findName}`;
+        console.log(sql);
         let data = {data: [], total: 0};
         connection.query(sql, function (err, result, fields) {
             if (err) throw err;
@@ -240,12 +241,12 @@ function connet() {
         })
     });
     //添加水电费的时候，根据ID获取用户姓名
-    app.get('/getId',(req,res)=>{
+    app.get('/getId', (req, res) => {
         let sql = `SELECT name FROM user WHERE id = '${req.query.id}'`;
         let data;
-        connection.query(sql,(err,result)=>{
-            if(err) throw err;
-            _.map(result,item=>{
+        connection.query(sql, (err, result) => {
+            if (err) throw err;
+            _.map(result, item => {
                 data = item;
             });
             res.send(data)
@@ -253,12 +254,12 @@ function connet() {
     });
 
     //添加水电费
-    app.post('/addCost',urlencodedParser,(req,res)=>{
-        const {id,name,adminId,adminName,water,manage} = req.body;
+    app.post('/addCost', urlencodedParser, (req, res) => {
+        const {id, name, adminId, adminName, water, manage} = req.body;
         let count = Math.random().toString(36).substr(2);
 
         let sql1 = `UPDATE cost set water = water - ${water},manage = manage - ${manage} WHERE id = '${id}'`;
-        connection.query(sql1,()=>{
+        connection.query(sql1, () => {
         });
         let sql = `INSERT INTO waterlog (logid,time,adminId,adminName,userId,userName,water,manage)
                         values(
@@ -271,8 +272,8 @@ function connet() {
                             '${water}',
                             '${manage}'
                         )`;
-        connection.query(sql,(err,result)=>{
-            if(err) throw err;
+        connection.query(sql, (err, result) => {
+            if (err) throw err;
 
         });
         res.send(true);
@@ -336,7 +337,7 @@ function connet() {
     });
 
     app.get('/getLoginLog', (req, res) => {
-        let sql = `SELECT * FROM loginlog LIMIT ${(req.query.page - 1) * 10},${req.query.page * 10}`;
+        let sql = `SELECT * FROM loginlog LIMIT ${(req.query.page - 1) * 10},10`;
         let sql1 = `SELECT COUNT(*) AS COUNT FROM loginlog`;
         let data = {data: [], total: 0};
         connection.query(sql, (err, result) => {
@@ -355,7 +356,7 @@ function connet() {
     });
 
     app.get('/getAdminLog', (req, res) => {
-        let sql = `SELECT * FROM adminlog LIMIT ${(req.query.page - 1) * 10},${req.query.page * 10}`;
+        let sql = `SELECT * FROM adminlog LIMIT ${(req.query.page - 1) * 10},10`;
         let sql1 = `SELECT COUNT(*) AS COUNT FROM adminlog`;
         let data = {data: [], total: 0};
         connection.query(sql, (err, result) => {
@@ -373,23 +374,23 @@ function connet() {
         })
     });
 
-    app.get('/getAdmin',(req,res)=>{
+    app.get('/getAdmin', (req, res) => {
         let sql = `SELECT admin.name,admin.phone,admin.weixinCode FROM admin WHERE id = '${req.query.id}'`;
-        let data={data:[]};
-        connection.query(sql,(err,result)=>{
-            if(err) throw err;
-            _.map(result,item=>{
+        let data = {data: []};
+        connection.query(sql, (err, result) => {
+            if (err) throw err;
+            _.map(result, item => {
                 data.data.push(item)
             });
             res.send(data)
         })
     });
 
-    app.post('/postAdmin',urlencodedParser,(req,res)=>{
-        const {id,name,phone,weixinCode} = req.body;
-        let sql= `UPDATE admin set name = '${name}',phone='${phone}',weixinCode='${weixinCode}' WHERE id = '${id}'`;
-        connection.query(sql,(err,result)=>{
-            if(err) {
+    app.post('/postAdmin', urlencodedParser, (req, res) => {
+        const {id, name, phone, weixinCode} = req.body;
+        let sql = `UPDATE admin set name = '${name}',phone='${phone}',weixinCode='${weixinCode}' WHERE id = '${id}'`;
+        connection.query(sql, (err, result) => {
+            if (err) {
                 res.send(false)
             }
             else {
@@ -401,7 +402,7 @@ function connet() {
     app.get('/getMsg', (req, res) => {
         let town = _.get(req.query, 'town') !== 'ALL_VALUE' && _.get(req.query, 'town') ? `townName='${req.query.town}'` : true;
         let sql = `SELECT msg.id,msg.text,msg.townName,msg.adminName,msg.time FROM msg
-         WHERE ${town} LIMIT ${(req.query.page - 1) * 10},${req.query.page * 10}`;
+         WHERE ${town} LIMIT ${(req.query.page - 1) * 10},10`;
         let sql1 = `SELECT COUNT(townName) AS COUNT FROM msg WHERE ${town}`;
         let data = {data: [], total: 0};
         connection.query(sql, (err, result) => {
@@ -433,13 +434,13 @@ function connet() {
         })
     });
 
-    app.get('/getCostLog',(req,res)=>{
-        let sql=`SELECT waterlog.adminName,waterlog.userId,waterlog.userName,waterlog.water,waterlog.manage,waterlog.time 
+    app.get('/getCostLog', (req, res) => {
+        let sql = `SELECT waterlog.adminName,waterlog.userId,waterlog.userName,waterlog.water,waterlog.manage,waterlog.time 
         FROM waterlog LIMIT ${(req.query.page - 1) * 10},10`;
-        let data = {data:[]};
-        connection.query(sql,(err,result)=>{
-            if(err)throw err;
-            _.map(result,item=>{
+        let data = {data: []};
+        connection.query(sql, (err, result) => {
+            if (err) throw err;
+            _.map(result, item => {
                 data.data.push(item)
             });
             res.send(data)
@@ -447,19 +448,19 @@ function connet() {
 
     });
 
-    app.get('/getUserCostLog',(req,res)=>{
+    app.get('/getUserCostLog', (req, res) => {
         let sql = `SELECT * FROM costlog LIMIT ${(req.query.page - 1) * 10},10`;
         let sql1 = `SELECT COUNT(*) AS COUNT FORM costlog`;
-        let data={data:[],total:0};
-        connection.query(sql,(err,result)=>{
-            if(err) throw err;
-            _.map(result,item=>{
+        let data = {data: [], total: 0};
+        connection.query(sql, (err, result) => {
+            if (err) throw err;
+            _.map(result, item => {
                 data.data.push(item)
             });
         });
-        connection.query(sql1,(err,result)=>{
-            _.map(result,item=>{
-                data.total=item.COUNT;
+        connection.query(sql1, (err, result) => {
+            _.map(result, item => {
+                data.total = item.COUNT;
             });
             res.send(data)
         })
@@ -468,86 +469,91 @@ function connet() {
 
     //user
 
-    app.get('/getTownName',(req,res)=>{
-        let sql =`SELECT user.town FROM user WHERE id = '${req.query.id}'`;
-        let data = {data:''};
-        connection.query(sql,(err,result)=>{
-            _.map(result,item=>{
+    app.get('/getTownName', (req, res) => {
+        let sql = `SELECT user.town FROM user WHERE id = '${req.query.id}'`;
+        let data = {data: ''};
+        connection.query(sql, (err, result) => {
+            _.map(result, item => {
                 data.data = item;
             });
             res.send(data)
         })
     });
 
-    app.get('/getAdminMsg',(req,res)=>{
+    app.get('/getAdminMsg', (req, res) => {
         let sql = `SELECT * FROM admin WHERE townName = '${req.query.townName}'`;
-        let data = {data:[]};
-        connection.query(sql,(err,result)=>{
-            _.map(result,item=>{
+        let data = {data: []};
+        connection.query(sql, (err, result) => {
+            _.map(result, item => {
                 data.data.push(item)
             });
             res.send(data);
         })
     });
 
-    app.get('/getCostByUser',(req,res)=>{
+    app.get('/getCostByUser', (req, res) => {
         let sql = `SELECT * FROM cost WHERE id = '${req.query.id}'`;
-        let data = {data:[]};
-        connection.query(sql,(err,result)=>{
-            _.map(result,item=>{
+        let data = {data: []};
+        connection.query(sql, (err, result) => {
+            _.map(result, item => {
                 data.data.push(item)
             });
             res.send(data);
         })
     });
 
-    app.get('/payManage',(req,res)=>{
+    app.get('/payManage', (req, res) => {
         let sql = `SELECT * FROM money WHERE id = '${req.query.payId}'`;
-        let sql1= `update money set used = '是' where id = ${req.query.payId}`;
+        let sql1 = `update money set used = '是' where id = ${req.query.payId}`;
         let sql2 = `update cost set manage = manage+100 where id = ${req.query.id}`;
         let sql3 = `insert into costlog values('${count}','${dateChange(curTime)}','${req.query.id}','${req.query.name}','缴纳了100元电费')`
-        connection.query(sql,(err,result)=>{
-            if(!result.length){res.send(false)}
-            _.map(result,item=>{
-                if(item.pwd===req.query.payPwd){
+        connection.query(sql, (err, result) => {
+            if (!result.length) {
+                res.send(false)
+            }
+            _.map(result, item => {
+                if (item.pwd === req.query.payPwd) {
                     connection.query(sql1);
                     connection.query(sql2);
                     connection.query(sql3);
                     res.send(true)
-                }else {
+                } else {
                     res.send(false)
                 }
             })
         })
     });
 
-    app.get('/payWater',(req,res)=>{
+    app.get('/payWater', (req, res) => {
         let sql = `SELECT * FROM money WHERE id = '${req.query.payId}'`;
-        let sql1= `update money set used = '是' where id = ${req.query.payId}`;
+        let sql1 = `update money set used = '是' where id = ${req.query.payId}`;
         let sql2 = `update cost set water = water+100 where id = ${req.query.id}`;
         let sql3 = `insert into costlog values('${count}','${dateChange(curTime)}','${req.query.id}','${req.query.name}','缴纳了100元水费')`;
-        connection.query(sql,(err,result)=>{
-            if(!result.length){res.send(false)}
-            _.map(result,item=>{
-                if(item.pwd===req.query.payPwd&&item.used==='否'){
+        connection.query(sql, (err, result) => {
+            if (!result.length) {
+                res.send(false)
+            }
+            _.map(result, item => {
+                if (item.pwd === req.query.payPwd && item.used === '否') {
                     connection.query(sql1);
                     connection.query(sql2);
                     connection.query(sql3);
                     res.send(true)
-                }else {
+                } else {
                     res.send(false)
                 }
             })
         })
     });
 
-    app.get('/getMsgByUser',(req,res)=>{
-       let sql =`select * from msg where townName = '${req.query.town}'`;
-        connection.query(sql,(err,result)=>{
-            _.map(result,item=>{
-               res.send(item.text)
-           })
-       })
+    app.get('/getMsgByUser', (req, res) => {
+        let sql = `select * from msg where townName = '${req.query.town}'`;
+        console.log(sql);
+        req.query.town && connection.query(sql, (err, result) => {
+            _.map(result, item => {
+                res.send(item.text)
+            })
+        })
     });
 
     app.listen(3001);

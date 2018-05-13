@@ -8,7 +8,7 @@ import $ from 'jquery'
 import {Local} from "../../../common/utils";
 import Pagination from "../../../common/pagination";
 
-const tableHead = ['日志ID','时间','用户ID','名字','操作'];
+const tableHead = ['序号','日志ID','时间','用户ID','名字','操作'];
 export default class UserCostLog extends React.Component {
 
 

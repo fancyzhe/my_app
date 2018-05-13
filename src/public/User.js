@@ -23,7 +23,7 @@ class User extends React.Component {
             open: false,
             url: '',
             Msg: '',
-            dialog:false
+            dialog: false
         }
     }
 
@@ -42,7 +42,7 @@ class User extends React.Component {
 
     changePerson() {
         this.setState({
-            dialog:true
+            dialog: true
         })
     }
 
@@ -93,7 +93,8 @@ class User extends React.Component {
     };
 
     componentDidMount() {
-        this.getMsg();
+        sessionStorage
+            .townName && this.getMsg();
         this.getTown()
     }
 

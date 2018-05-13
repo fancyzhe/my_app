@@ -126,6 +126,7 @@ class ManagePage extends React.Component {
     }
 
     render() {
+        console.log(this.state.currentTown);
         return (
             <div>
                 <div className="paper_header">

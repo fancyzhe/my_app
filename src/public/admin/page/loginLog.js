@@ -37,7 +37,7 @@ export default class LoginLog extends React.Component {
                     selectable={false}
                 />
                 <Pagination
-                    total={this.state.page}
+                    total={this.state.total}
                     onChange={this.chagePage.bind(this)}
                 />
             </div>

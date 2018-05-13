@@ -65,6 +65,40 @@ class BottomNav extends React.Component {
 
 
     adminPage() {
+        const thiz = this;
+        function aDiv() {
+            if(sessionStorage.id ==='104'){
+                return(
+                    <div>
+                        <MenuItem
+                            primaryText="居民缴费日志"
+                            style={{width: '285px'}}
+                            leftIcon={<i className="mdui-icon material-icons">touch_app</i>}
+                            onClick={()=>thiz.select(4)}
+                        />
+                        <MenuItem
+                            primaryText="水电费登记日志"
+                            style={{width: '285px'}}
+                            leftIcon={<i className="mdui-icon material-icons">insert_chart</i>}
+                            onClick={()=>thiz.select(5)}
+                        />
+                        <MenuItem
+                            primaryText="登陆日志"
+                            style={{width: '285px'}}
+                            leftIcon={<i className="mdui-icon material-icons">mouse</i>}
+                            onClick={()=>thiz.select(6)}
+                        />
+                        <MenuItem
+                            primaryText="操作日志"
+                            style={{width: '285px'}}
+                            leftIcon={<i className="mdui-icon material-icons">supervisor_account</i>}
+                            onClick={()=>thiz.select(7)}
+                        />
+                        <Divider/>
+                    </div>
+                )
+            }
+        }
         return (
             <div>
                 <div className="left" style={{width: '20%'}}>
@@ -94,31 +128,9 @@ class BottomNav extends React.Component {
                             onClick={()=>this.select(3)}
                         />
                         <Divider/>
-                        <MenuItem
-                            primaryText="居民缴费日志"
-                            style={{width: '285px'}}
-                            leftIcon={<i className="mdui-icon material-icons">touch_app</i>}
-                            onClick={()=>this.select(4)}
-                        />
-                        <MenuItem
-                            primaryText="水电费登记日志"
-                            style={{width: '285px'}}
-                            leftIcon={<i className="mdui-icon material-icons">insert_chart</i>}
-                            onClick={()=>this.select(5)}
-                        />
-                        <MenuItem
-                            primaryText="登陆日志"
-                            style={{width: '285px'}}
-                            leftIcon={<i className="mdui-icon material-icons">mouse</i>}
-                            onClick={()=>this.select(6)}
-                        />
-                        <MenuItem
-                            primaryText="操作日志"
-                            style={{width: '285px'}}
-                            leftIcon={<i class="mdui-icon material-icons">supervisor_account</i>}
-                            onClick={()=>this.select(7)}
-                        />
-                        <Divider/>
+                        {
+                            aDiv()
+                        }
                         <MenuItem
                             primaryText="修改个人信息"
                             style={{width: '285px'}}
