@@ -557,26 +557,41 @@ function connet() {
 
   app.get('/getUserInfo', (req, res) => {
     let sql = `select * from user where id = '${req.query.id}'`;
-    let data={};
+    let data = {};
     connection.query(sql, (err, result) => {
       _.map(result, item => {
-        data={data:item}
+        data = {data: item}
       });
       res.send(data)
     })
   });
 
-  app.post('/updateUserInfo',urlencodedParser,(req,res)=>{
-    const {name,phone,IDcard,id} = req.body;
-    let sql =`UPDATE user set name='${name}',phone='${phone}',IDcard='${IDcard}' where id='${id}'`;
-    connection.query(sql,(err)=>{
-      if(err) throw err;
+  app.post('/updateUserInfo', urlencodedParser, (req, res) => {
+    const {name, phone, IDcard, id} = req.body;
+    let sql = `UPDATE user set name='${name}',phone='${phone}',IDcard='${IDcard}' where id='${id}'`;
+    connection.query(sql, (err) => {
+      if (err) throw err;
       res.send(true);
     })
   });
 
-  app.post('/changePwd',urlencodedParser,(req,res)=>{
-    const {curPwd,newPwd,rePwd} = req.body;
+  app.post('/changePwd', urlencodedParser, (req, res) => {
+    const {curPwd, newPwd, id} = req.body;
+    let sql = `select pwd from login where id = '${id}'`;
+    connection.query(sql, (err, result) => {
+      if (err) throw err;
+      _.map(result, item => {
+        if (item.pwd == curPwd) {
+          let sql1 = `update login set pwd = '${newPwd}' where id='${id}'`;
+          connection.query(sql1, err => {
+            if (err) throw err;
+            res.send(true)
+          })
+        } else {
+          res.send(false)
+        }
+      })
+    })
   });
 
   app.listen(3001);
