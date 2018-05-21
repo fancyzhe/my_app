@@ -14,6 +14,7 @@ import './user/user.css'
 import $ from 'jquery'
 import {Local} from "../common/utils";
 import ChangeUserInfo from "./user/changeInfo";
+import ChangeUserPwd from "./user/changePwd";
 
 class User extends React.Component {
 
@@ -24,7 +25,8 @@ class User extends React.Component {
       open: false,
       url: '',
       Msg: '',
-      dialog: false
+      dialog: false,
+      pwdDialog: false
     }
   }
 
@@ -44,6 +46,12 @@ class User extends React.Component {
   changePerson() {
     this.setState({
       dialog: true
+    })
+  }
+
+  changePsw() {
+    this.setState({
+      pwdDialog: true
     })
   }
 
@@ -72,6 +80,9 @@ class User extends React.Component {
           <MenuItem onClick={() => {
             this.changePerson()
           }}>修改个人信息</MenuItem>
+          <MenuItem onClick={() => {
+            this.changePsw()
+          }}>修改密码</MenuItem>
           <Link to={'/'} style={{'textDecoration': 'none'}}><MenuItem
           onClick={this.reLogin.bind(this)}>重新登录</MenuItem></Link>
         </Drawer>
@@ -91,6 +102,9 @@ class User extends React.Component {
 
   handleClose = () => {
     this.setState({dialog: false})
+  };
+  pHandleClose = () => {
+    this.setState({pwdDialog: false})
   };
 
   componentDidMount() {
@@ -147,6 +161,13 @@ class User extends React.Component {
       onRequestClose={this.handleClose}
       >
         <ChangeUserInfo/>
+      </Dialog>
+      <Dialog
+      title="修改个人信息"
+      open={this.state.pwdDialog}
+      onRequestClose={this.pHandleClose}
+      >
+        <ChangeUserPwd/>
       </Dialog>
 
     </MuiThemeProvider>

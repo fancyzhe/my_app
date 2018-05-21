@@ -9,7 +9,6 @@ import {Divider, RaisedButton, Snackbar, TextField} from "material-ui";
 import _ from "lodash";
 import $ from 'jquery';
 import {Local} from "../../common/utils";
-import Select from "../../common/select";
 
 
 export default class ChangeUserInfo extends React.Component {
@@ -59,6 +58,12 @@ export default class ChangeUserInfo extends React.Component {
     })
   };
 
+  setIDcard = (e, v) => {
+    this.setState({
+      data: _.merge(this.state.data, {IDcard: v})
+    })
+  };
+
   handleRequestClose = () => {
     this.setState({
       open: false,
@@ -68,7 +73,7 @@ export default class ChangeUserInfo extends React.Component {
   render() {
     const {phone, name, town, sex, IDcard} = this.state.data;
     return (
-    <div>
+    <div style={{height:"250px"}}>
       <Snackbar
       open={this.state.open}
       className="fixed"
@@ -110,6 +115,8 @@ export default class ChangeUserInfo extends React.Component {
       name="phone"
       className="w150 mr10"
       value={phone}
+      multiLine={true}
+      rowsMax={11}
       onChange={this.setPhone.bind(this)}
       />
       <br/>
@@ -118,7 +125,7 @@ export default class ChangeUserInfo extends React.Component {
       name="idCaed"
       className=" mr10"
       value={IDcard}
-      onChange={this.setPhone.bind(this)}
+      onChange={this.setIDcard.bind(this)}
       />
       <RaisedButton
       className="ml100"

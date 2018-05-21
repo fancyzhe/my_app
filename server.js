@@ -567,8 +567,16 @@ function connet() {
   });
 
   app.post('/updateUserInfo',urlencodedParser,(req,res)=>{
-    const {name,phone,idCard,id} = req.body;
-    let sql =`UPDATE user set `
+    const {name,phone,IDcard,id} = req.body;
+    let sql =`UPDATE user set name='${name}',phone='${phone}',IDcard='${IDcard}' where id='${id}'`;
+    connection.query(sql,(err)=>{
+      if(err) throw err;
+      res.send(true);
+    })
+  });
+
+  app.post('/changePwd',urlencodedParser,(req,res)=>{
+    const {curPwd,newPwd,rePwd} = req.body;
   });
 
   app.listen(3001);
