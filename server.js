@@ -337,7 +337,7 @@ function connet() {
   });
 
   app.get('/getLoginLog', (req, res) => {
-    let sql = `SELECT * FROM loginlog LIMIT ${(req.query.page - 1) * 10},10`;
+    let sql = `SELECT * FROM loginlog ORDER BY time DESC LIMIT ${(req.query.page - 1) * 10},10`;
     let sql1 = `SELECT COUNT(*) AS COUNT FROM loginlog`;
     let data = {data: [], total: 0};
     connection.query(sql, (err, result) => {
@@ -356,7 +356,7 @@ function connet() {
   });
 
   app.get('/getAdminLog', (req, res) => {
-    let sql = `SELECT * FROM adminlog LIMIT ${(req.query.page - 1) * 10},10`;
+    let sql = `SELECT * FROM adminlog ORDER BY time DESC LIMIT ${(req.query.page - 1) * 10},10`;
     let sql1 = `SELECT COUNT(*) AS COUNT FROM adminlog`;
     let data = {data: [], total: 0};
     connection.query(sql, (err, result) => {
@@ -400,9 +400,9 @@ function connet() {
   });
 
   app.get('/getMsg', (req, res) => {
-    let town = _.get(req.query, 'town') !== 'ALL_VALUE' && _.get(req.query, 'town') ? `townName='${req.query.town}'` : true;
+    let town = _.get(req.query, 'town') !== '全部' && _.get(req.query, 'town') ? `townName='${req.query.town}'` : true;
     let sql = `SELECT msg.id,msg.text,msg.townName,msg.adminName,msg.time FROM msg
-         WHERE ${town} LIMIT ${(req.query.page - 1) * 10},10`;
+         WHERE ${town} ORDER BY time DESC LIMIT ${(req.query.page - 1) * 10},10`;
     let sql1 = `SELECT COUNT(townName) AS COUNT FROM msg WHERE ${town}`;
     let data = {data: [], total: 0};
     connection.query(sql, (err, result) => {
@@ -425,7 +425,9 @@ function connet() {
     let count = Math.random().toString(36).substr(2);
     let sql = `INSERT INTO msg (id,text,townName,adminId,adminName,time) 
         VALUES('${count}','${text}','${townName}','${id}','${name}','${dateChange(new Date())}')`;
+    console.log(sql);
     connection.query(sql, (err, result) => {
+      console.log(err);
       if (!err) {
         res.send(true)
       } else {
@@ -436,7 +438,7 @@ function connet() {
 
   app.get('/getCostLog', (req, res) => {
     let sql = `SELECT waterlog.adminName,waterlog.userId,waterlog.userName,waterlog.water,waterlog.manage,waterlog.time 
-        FROM waterlog LIMIT ${(req.query.page - 1) * 10},10`;
+        FROM waterlog ORDER BY time DESC LIMIT ${(req.query.page - 1) * 10},10`;
     let data = {data: []};
     connection.query(sql, (err, result) => {
       if (err) throw err;
@@ -449,7 +451,7 @@ function connet() {
   });
 
   app.get('/getUserCostLog', (req, res) => {
-    let sql = `SELECT * FROM costlog LIMIT ${(req.query.page - 1) * 10},10`;
+    let sql = `SELECT * FROM costlog ORDER BY time DESC LIMIT ${(req.query.page - 1) * 10},10`;
     let sql1 = `SELECT COUNT(*) AS COUNT FORM costlog`;
     let data = {data: [], total: 0};
     connection.query(sql, (err, result) => {

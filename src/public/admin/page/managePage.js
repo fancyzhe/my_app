@@ -50,8 +50,9 @@ class ManagePage extends React.Component {
     };
 
     getCost() {
-        const {currentTown, isOwe, findName} = this.state;
-        let query = {currentTown, isOwe, findName};
+      console.log(sessionStorage);
+      const { isOwe, findName} = this.state;
+        let query = {currentTown:sessionStorage.townId, isOwe, findName};
         $.get(Local + '/getCost', query)
             .then(res => {
                 this.setState({
@@ -126,7 +127,6 @@ class ManagePage extends React.Component {
     }
 
     render() {
-        console.log(this.state.currentTown);
         return (
             <div>
                 <div className="paper_header">

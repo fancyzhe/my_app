@@ -73,6 +73,7 @@ export default class MsgPage extends React.Component{
 
     handleClose = () => {
         this.setState({dialog: false})
+        this.getMsg();
     };
 
     changePage(page){
