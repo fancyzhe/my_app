@@ -47,6 +47,7 @@ function connet() {
   //登陆
   app.post('/login_post', urlencodedParser, function (req, res) {
     let sql = 'select * from login where id=' + req.body.id;
+    console.log(sql);
     let data = {};
     connection.query(sql, function (err, result, fields) {
       if (err) throw err;
