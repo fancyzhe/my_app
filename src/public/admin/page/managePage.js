@@ -51,8 +51,8 @@ class ManagePage extends React.Component {
 
     getCost() {
       console.log(sessionStorage);
-      const { isOwe, findName} = this.state;
-        let query = {currentTown:sessionStorage.townId, isOwe, findName};
+      const { isOwe, findName ,page} = this.state;
+        let query = {currentTown:sessionStorage.townName, isOwe, findName,page};
         $.get(Local + '/getCost', query)
             .then(res => {
                 this.setState({
@@ -177,16 +177,16 @@ class ManagePage extends React.Component {
                                   onClick={() => this.addCost()}
                     />
 
-                    <IconMenu
-                        iconButtonElement={<IconButton
-                            style={{position: 'relative', top: '5px'}}><MoreVertIcon/></IconButton>}
-                        anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-                        targetOrigin={{horizontal: 'left', vertical: 'top'}}
-                        className="ml10"
-                    >
-                        <MenuItem primaryText="增加小区" onClick={() => this.addTown()} leftIcon={<ContentAdd/>}/>
-                        <MenuItem primaryText="导出Excel" leftIcon={<Download/>}/>
-                    </IconMenu>
+                    {/*<IconMenu*/}
+                        {/*iconButtonElement={<IconButton*/}
+                            {/*style={{position: 'relative', top: '5px'}}><MoreVertIcon/></IconButton>}*/}
+                        {/*anchorOrigin={{horizontal: 'left', vertical: 'top'}}*/}
+                        {/*targetOrigin={{horizontal: 'left', vertical: 'top'}}*/}
+                        {/*className="ml10"*/}
+                    {/*>*/}
+                        {/*<MenuItem primaryText="增加小区" onClick={() => this.addTown()} leftIcon={<ContentAdd/>}/>*/}
+                        {/*<MenuItem primaryText="导出Excel" leftIcon={<Download/>}/>*/}
+                    {/*</IconMenu>*/}
 
                 </div>
                 <MyTable

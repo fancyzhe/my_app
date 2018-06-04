@@ -5,16 +5,30 @@
 
 import React from "react";
 import {MuiThemeProvider} from "material-ui/styles/index";
-import {Dialog, Drawer, FontIcon, MenuItem, Paper} from "material-ui";
+import {
+  Dialog,
+  Divider,
+  Drawer,
+  FontIcon,
+  List,
+  ListItem,
+  makeSelectable,
+  MenuItem,
+  Paper,
+  Subheader
+} from "material-ui";
 import {BottomNavigation, BottomNavigationItem} from "material-ui/BottomNavigation/index";
 import {Link} from "react-router";
 import Cost from "./user/cost";
 import History from "./user/history";
 import './user/user.css'
 import $ from 'jquery'
+import _ from 'lodash'
 import {Local} from "../common/utils";
 import ChangeUserInfo from "./user/changeInfo";
 import ChangeUserPwd from "./user/changePwd";
+
+let SelectableList = makeSelectable(List);
 
 class User extends React.Component {
 
@@ -62,7 +76,16 @@ class User extends React.Component {
     <div className="center">
       <Paper className="paper" zDepth={5}>
         <h1>公告</h1>
-        <h2>{this.state.Msg}</h2>
+        <SelectableList style={{textAlign: 'left'}}>
+          {
+            _.map(this.state.Msg, item => (
+            <div>
+              <ListItem>{item.time}&nbsp;&nbsp;&nbsp;&nbsp;{item.text}</ListItem>
+              <Divider style={{width:'100%'}}/>
+            </div>
+            ))
+          }
+        </SelectableList>
       </Paper>
       <MuiThemeProvider>
         <Drawer

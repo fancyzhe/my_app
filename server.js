@@ -39,15 +39,22 @@ function connet() {
   let connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '123456',
+    password: '123',
     database: 'test',
+    useConnectionPooling: true
   });
+  let del = connection._protocol._delegateError;
+  connection._protocol._delegateError = function (err, sequence) {
+    if (err.fatal) {
+      console.trace('fatal error: ' + err.message);
+    }
+    return del.call(this, err, sequence);
+  };
 
 
   //登陆
   app.post('/login_post', urlencodedParser, function (req, res) {
     let sql = 'select * from login where id=' + req.body.id;
-    console.log(sql);
     let data = {};
     connection.query(sql, function (err, result, fields) {
       if (err) throw err;
@@ -90,13 +97,15 @@ function connet() {
 
   //管理员
   app.get('/getCost', urlencodedParser, (req, res) => {
-    let townName = req.query.currentTown == 'ALL_VALUE' || !req.query.currentTown ? true : `town = (select name from town where id = '${req.query.currentTown}')`;
+    console.log(req.query);
+    let townName = req.query.currentTown === 'null' ? true : `town = '${req.query.currentTown}'`;
     if (req.query.currentTown === '全部') townName = true;
     let isOwe = req.query.isOwe === 'true' ? 'water < 0 or manage<0' : 'water > 0 and manage > 0';
     let findName = req.query.findName ? `name LIKE '%${req.query.findName}%'` : true;
-    let sql = `select distinct * from cost where ${townName} and (${isOwe}) and ${findName}`;
+    let sql = `select distinct * from cost where (${townName}) and (${isOwe}) and ${findName} limit ${(req.query.page - 1) * 10},10`;
     let sql1 = `SELECT COUNT(*) AS COUNT FROM cost WHERE ${townName} and (${isOwe}) and ${findName}`;
     console.log(sql);
+    console.log(sql1);
     let data = {data: [], total: 0};
     connection.query(sql, function (err, result, fields) {
       if (err) throw err;
@@ -551,11 +560,15 @@ function connet() {
 
   app.get('/getMsgByUser', (req, res) => {
     let sql = `select * from msg where townName = '${req.query.town}'`;
+    console.log(sql);
+    let data = [];
     req.query.town && connection.query(sql, (err, result) => {
       _.map(result, item => {
-        res.send(item.text)
-      })
-    })
+        data.push(item);
+      });
+      res.send(data);
+    });
+
   });
 
   app.get('/getUserInfo', (req, res) => {
@@ -597,7 +610,7 @@ function connet() {
     })
   });
 
-  app.listen(3001);
+  app.listen(3031);
 
 
   connection.connect(function () {
